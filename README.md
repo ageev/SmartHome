@@ -29,3 +29,4 @@ from secrets import SoftName
 ```python
 key = SoftName['key']
 ```
+Всё. Теперь скрипт чист. Все пароли в одном файле.
