@@ -12,7 +12,7 @@ SoftName = {
   }
 ```
 
-Чтобы им пользоваться нужно добавить в Python фаил это:
+Чтобы им пользоваться нужно добавить в шапку скрипта:
 ```python
 import sys
 from pathlib import Path
