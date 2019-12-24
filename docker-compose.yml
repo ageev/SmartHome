@@ -1,0 +1,65 @@
+---
+version: "2"
+services:
+  qbittorrent:
+    image: linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1029
+      - PGID=100
+      - TZ=Europe/Amsterdam
+      - WEBUI_PORT=6004
+    volumes:
+      - /volume1/docker/qbittorrent:/config
+      - /volume2/media:/media
+    ports:
+      - 6882:6882
+      - 6882:6882/udp
+      - 6004:6004
+    restart: unless-stopped
+    network_mode: "bridge"
+
+  jackett:
+    image: linuxserver/jackett:latest
+    container_name: jackett
+    environment:
+      - PUID=1029
+      - PGID=100
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /volume1/docker/jackett:/config
+      - /volume2/media:/media
+    ports:
+      - 6002:9117
+    restart: unless-stopped
+    network_mode: "bridge"
+
+  radarr:
+    image: linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1029
+      - PGID=100
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /volume1/docker/radarr:/config
+      - /volume2/media:/media
+    ports:
+      - 6003:7878
+    restart: unless-stopped
+    network_mode: "bridge"
+
+  iperf3:
+    image: networkstatic/iperf3:latest
+    container_name: iperf3
+    command: -s
+    environment:
+      - PUID=1029
+      - PGID=100
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /volume1/docker/iperf3:/config
+    ports:
+      - 5201:5201
+    restart: unless-stopped
+    network_mode: "bridge"
