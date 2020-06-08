@@ -10,7 +10,9 @@ Chat_id можно узнать так https://stackoverflow.com/questions/32423
 2. скопировать папку telegrambot и secrets.py куда-нибудь себе
 3. настроить планировщик чтобы каждую минуту запускал скрипт. Например, так:
 (sudo crontab -e)
+```
 * * * * * /usr/bin/python3 /home/r00t/nas/telegram/torrent_watcher.py >> /var/log/crontab_errors.log 2>&1
+```
 4. готово!
 
 ## secrets.py
