@@ -11,7 +11,7 @@ Chat_id можно узнать так https://stackoverflow.com/questions/32423
 3. настроить планировщик чтобы каждую минуту запускал скрипт. Например, так:
 (sudo crontab -e)
 ```
-* * * * * /usr/bin/python3 /home/a/scripts/telegram/torrent_watcher.py >> /var/log/crontab_errors.log 2>&1
+* * * * * /usr/bin/python3 /home/artem/scripts/telegram/torrent_watcher.py >> /var/log/crontab_errors.log 2>&1
 ```
 4. готово!
 
