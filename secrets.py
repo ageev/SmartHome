@@ -9,17 +9,13 @@ ENVIRONMENT = "Production"
 
 if ENVIRONMENT == "Production":
     # General
-    NAS_IP = "192.168.7."
+    NAS_IP = "192.168.1.1"
     ADDRESS_BOOK = {
-        '192.168.7.101' : '', 
-        '192.168.7.102' : '', 
-        '192.168.7.176' : '', 
-        '192.168.7.144' : '',
+        '192.168.1.101' : '', 
         }
 
     # Telegram
     Telegram = {
-        "url" : "",
         "token" : ":",
         "chat_id" : "",
     }
@@ -39,7 +35,7 @@ if ENVIRONMENT == "Production":
 
     # Synology surveillance station
     SurvStation = {
-        "login" : "APIUSER",
+        "login" : "",
         "password" : "",
         "ip" : NAS_IP,
         "port" : "5001",
