@@ -1,6 +1,17 @@
 # SmartHouse
 ## torrent watcher
-get torrent files from qBittorent and send updates to telegram chat
+Используем телеграм бота для мониторинга очереди qBittorent
+1. в файл secrets.py нужно внести свои данные:
+- qBittorent IP и порт
+- Telegram token и chat_id 
+Создать бота и достать токен можно через @botfather в Телеграм. После того, как бот создан, нужно отправить "/setjoingroups" -> Enable чтобы бот мог присоединятся к группам.  
+Chat_id можно узнать так https://stackoverflow.com/questions/32423837/telegram-bot-how-to-get-a-group-chat-id#32572159
+
+2. скопировать папку telegrambot и secrets.py куда-нибудь себе
+3. настроить планировщик чтобы каждую минуту запускал скрипт. Например, так:
+(sudo crontab -e)
+* * * * * /usr/bin/python3 /home/r00t/nas/telegram/torrent_watcher.py >> /var/log/crontab_errors.log 2>&1
+4. готово!
 
 ## secrets.py
 очень удобно хранить все пароли/токены в одном файле. Тогда можно добавить его в .gitignore и ваши секреты не утекут в сеть когда запустишь git push.
