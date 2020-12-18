@@ -1,4 +1,11 @@
 # SmartHouse
+## Radarr https://habr.com/ru/post/505814/
+Радарр 3 не дает обновлять листы IMDB чаще одного раза в 6 часов.
+Чтобы обойти это ограничение можно добавить вот это в планировщик
+```bash
+curl -X POST "http://localhost:7878/api/v3/command?apikey=dadada" -H "accept: application/json" -d '{"name":"ImportListSync"}'
+```
+
 ## torrent watcher
 Используем телеграм бота для мониторинга очереди qBittorent
 1. в файл secrets.py нужно внести свои данные:
