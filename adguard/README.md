@@ -93,7 +93,6 @@ Custom blocking rules:
 ||us.urcatwalkstar.com^$important
 ||client-telemetry.roblox.com^$important
 ||ephemeralcounters.api.roblox.com^$important
-@@||tracker.zum.bi^$client='192.168.7.127'
 ||alt2-mtalk.google.com^$important
 ||acs.m.taobao.com^$important
 ||ae01.alicdn.com^$important
