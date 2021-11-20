@@ -1,6 +1,7 @@
 # How to install ADGUARD HOME docker container on Synology NAS
 ## Adguard vs Pi-hole
 I switched fully to Adguard now and here is why:
+
 Pros of Adguard
 - fast search
 - nice GUI
