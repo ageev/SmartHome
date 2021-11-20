@@ -97,7 +97,7 @@ Custom blocking rules:
 ```
 # Step 3. Additional configurations
 You need to figure out this by your own, but here is few tips I do:
-- I've added all family devices to (Settings > Client Settings). For kid's tablets I've switched off all unneeded services 
+- I've added all family devices to (Settings > Client Settings). For kid's tablets I've switched off all unneeded services (e.g. Amazon, ebay, OK.ru ....)
 - I've added some internal network devices to custom blocking rules (filters > custom rules). This is needed for the internal DNS resolution to work
 
 ```bash
