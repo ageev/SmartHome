@@ -113,6 +113,17 @@ You need to figure out this by your own, but here is few things I did:
 192.168.1.1 router.local
 192.168.1.2 nas.local
 ```
+## Autoupdating docker
+I've switched off my autoupdate after few bugs, but here is how you can do it:
+- go to Task Scheduler
+- add a task to be run as root
+- paste this to "user-defined script" window:
+```bash
+cd /volume1/docker/
+docker-compose pull #get new versions
+docker-compose up -d #recreate containers
+docker system prune -a -f #clean docker
+```
 
 # Step 4. Adding proper route to docker's macvlan network adapter
 Docker's macvlan adapters are available for LAN users, but are not available for DSM/Docker users. Generaly speaking that's not an issue, but if you want, for example, to add adguard to your home-assistant container running on the same docker (like I did) you need this.
