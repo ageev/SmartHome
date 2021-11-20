@@ -11,7 +11,11 @@ Pros of Pi-hole:
 - opensource & community driven
 
 # Step 1. Installation
-- copy the docker compose content to your docker compose (e.g. to /volume1/docker/docker-compose.yml)
+
+I use Synology NAS DS218+ with 16Gb of memory to run almost everything at my home. Adguard is one of many docker containers I have. 
+
+So here are the installation steps for Docker on Synology NAS:
+- adjust and copy the docker compose content to your docker compose (e.g. to /volume1/docker/docker-compose.yml)
 - SSH to NAS
 - "cd /volume1/docker"
 - "sudo docker-compose up -d"
