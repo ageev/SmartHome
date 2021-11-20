@@ -119,14 +119,14 @@ if [ "$1" = "start" ];
 then
     sleep 60
     ip link add dlink0 link ovs_eth0 type macvlan mode bridge
-    ip addr add 192.168.7.127/32 dev dlink0
+    ip addr add 192.168.1.127/32 dev dlink0
     ip link set dlink0 up
-    ip route add 192.168.7.8/32 dev dlink0
+    ip route add 192.168.1.7/32 dev dlink0
 fi
 ```
-* 192.168.7.127/32 - just a random IP to use as a virtual adapter's IP
+* 192.168.1.127/32 - just a random IP to use as a virtual adapter's IP
 * dlink0 - new virtual network interface name
 * ovs_eth0 - Synology DSM network interface name
-* 192.168.7.8/32 - pi-hole container's IP
+* 192.168.1.7/32 - pi-hole container's IP
 
 "sleep 60" is needed for script to work properly, otherwise it fails. 
