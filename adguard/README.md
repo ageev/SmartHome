@@ -96,8 +96,12 @@ Custom blocking rules:
 ||alt2-mtalk.google.com^$important
 ```
 # Step 3. Additional configurations
-You need to figure out this by your own, but here is few tips I do:
-- I've added all family devices to (Settings > Client Settings). For kid's tablets I've switched off all unneeded services (e.g. Amazon, ebay, OK.ru ....)
+You need to figure out this by your own, but here is few things I did:
+- Adjusted router's DHCP scope to serve Adguard IP as a primary DNS
+- NAS still uses static DNS. I don't want things to get broken if Adguard container is restarted
+- I still have Pi-hole on Raspberry Pi Zero W. That's my secondary DNS
+- My router redirects all DNS requests to Adguard, except requests from NAS, Adguard itself and Pi-hole (this is called DNSFilter in Asus routers)
+- I've added all family devices to Adguard (Settings > Client Settings). For kid's tablets I've switched off all unneeded services (e.g. Amazon, ebay, OK.ru ....)
 - I've added some internal network devices to custom blocking rules (filters > custom rules). This is needed for the internal DNS resolution to work
 
 ```bash
