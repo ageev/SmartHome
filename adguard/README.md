@@ -15,6 +15,58 @@ Pros of Pi-hole:
 - "cd /volume1/docker"
 - "sudo docker-compose up -d"
 
+docker-compose.yml
+```yaml
+## install new versions
+# cd /volume1/docker
+# sudo docker-compose pull
+# sudo docker-compose up -d
+## clean docker
+# sudo docker system prune -a  
+## rebuild containers
+# sudo docker-compose up -d --build
+
+---
+version: "2"
+services:
+
+  adguard:
+    image: adguard/adguardhome:latest
+    container_name: adguard
+    hostname: adguard
+    domainname: local
+    mac_address: 00:fa:c0:fa:c0:aa
+    cap_add:
+      - NET_ADMIN
+    networks:
+      macvlan_network:
+         ipv4_address: 192.168.1.7  #ip of your adguard container
+    dns:
+      - 192.168.1.1
+      - 1.1.1.1
+    environment:
+      - PUID=<YOUR_PUID> # user and group ID of your docker NAS user. Needed for additional security, can be removed
+      - PGID=<YOUR_PGID>
+      - TZ=Europe/Amsterdam # your TZ
+    volumes:
+      - /volume1/docker/adguard/work:/opt/adguardhome/work
+      - /volume1/docker/adguard/conf:/opt/adguardhome/conf
+    restart: unless-stopped
+    
+networks:
+  macvlan_network:
+    driver: macvlan
+    enable_ipv6: false
+    driver_opts:
+      parent: ovs_eth0
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
+          #ip_range: 192.168.1.0/24
+```
+
+
 # Step 2. Configuration
 I use all the default lists and this one: 
 - https://abp.oisd.nl/
@@ -45,9 +97,19 @@ Custom blocking rules:
 ||acs.m.taobao.com^$important
 ||ae01.alicdn.com^$important
 ```
+# Step 3. Additional configurations
+You need to figure out this by your own, but here is few tips I do:
+- I've added all family devices to (Settings > Client Settings). For kid's tablets I've switched off all unneeded services 
+- I've added some internal network devices to custom blocking rules (filters > custom rules). This is needed for the internal DNS resolution to work
 
-# Step 3. Adding proper route to docker's macvlan network adapter
-Docker's macvlan adapters are available for LAN users, but are not available for DSM/Docker users. Generaly speaking that's not an issue, but if you want, for example, to add pi-hole to your home-assistant container running on the same docker (like I did) you need this.
+```bash
+#internal hosts
+192.168.1.1 router.local
+192.168.1.2 nas.local
+```
+
+# Step 4. Adding proper route to docker's macvlan network adapter
+Docker's macvlan adapters are available for LAN users, but are not available for DSM/Docker users. Generaly speaking that's not an issue, but if you want, for example, to add adguard to your home-assistant container running on the same docker (like I did) you need this.
 1. create a file in /usr/local/etc/rc.d folder with .sh extention (this is a DSM script autostart directory[1])
 2. chmod 755 <filename>
 3. andjust & copy this into the file
