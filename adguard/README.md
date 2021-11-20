@@ -94,8 +94,6 @@ Custom blocking rules:
 ||client-telemetry.roblox.com^$important
 ||ephemeralcounters.api.roblox.com^$important
 ||alt2-mtalk.google.com^$important
-||acs.m.taobao.com^$important
-||ae01.alicdn.com^$important
 ```
 # Step 3. Additional configurations
 You need to figure out this by your own, but here is few tips I do:
