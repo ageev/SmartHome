@@ -1,0 +1,46 @@
+version: "2"
+services:
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    hostname: pihole
+    domainname: local
+    mac_address: 00:fa:c0:fa:c0:aa
+    cap_add:
+      - NET_ADMIN
+    networks:
+      pihole_network:
+         ipv4_address: 192.168.7.8
+    dns:
+      - 192.168.7.1
+      - 1.1.1.1
+    environment:
+      - PUID=1029 #put your PUID here
+      - PGID=100
+      - TZ=Europe/Amsterdam
+      - WEBPASSWORD=p@ssw0rd #your p@ssw0rd
+      - DNSSEC=true
+      - DNS_BOGUS_PRIV=true
+      - DNS_FQDN_REQUIRED=true
+      - REV_SERVER=true
+      - REV_SERVER_DOMAIN=local
+      - REV_SERVER_TARGET=192.168.7.1 #router's IP
+      - REV_SERVER_CIDR=192.168.0.0/16 #your LAN subnet
+      - ServerIP=192.168.7.8  #pi-hole IP (again)
+      - DNS1=208.67.222.222 # OpenDNS
+      - DNS2=1.1.1.1 # CloudFlare
+    volumes:
+      - /volume1/docker/pihole:/etc/pihole/
+      - /volume1/docker/pihole/dnsmasq:/etc/dnsmasq.d/
+    restart: unless-stopped
+    
+networks:
+  pihole_network:
+    driver: macvlan
+    driver_opts:
+      parent: ovs_eth0
+    ipam:
+      config:
+        - subnet: 192.168.7.0/24
+          gateway: 192.168.7.1
+          #ip_range: 192.168.0.0/16
