@@ -5,7 +5,7 @@ I switched fully to Adguard now and here is why:
 Pros of Adguard
 - fast search
 - nice GUI
-- supports all the fancy stuff: DoH, DoT...
+- supports all the fancy stuff: DoH, DoT, QUIC (certificate is required)
 
 Pros of Pi-hole:
 - opensource & community driven
@@ -100,7 +100,7 @@ Custom blocking rules:
 ||alt2-mtalk.google.com^$important
 ```
 # Step 3. Additional configurations
-You need to figure out this by your own, but here is few things I did:
+You need to figure out this by your own, but here are few things I did:
 - Adjusted router's DHCP scope to serve Adguard IP as a primary DNS
 - NAS still uses static DNS. I don't want things to get broken if Adguard container is restarted
 - I still have Pi-hole on Raspberry Pi Zero W. That's my secondary DNS
