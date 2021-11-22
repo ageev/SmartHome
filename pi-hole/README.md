@@ -1,3 +1,5 @@
+### I moved to Adguard Home https://github.com/ageev/SmartHouse/tree/master/adguard
+
 # Setting up pi-hole on Synology with docker using macvlan
 There are multiple ways to have pi-hole installed: native app, Virtual Machine, docker host, docker macvlan. I tried them all, docker macvlan is the best one (macvlan == separate virtual network adapter). Only last option gives you opportunety to run pi-hole on 80/443 opened ports. 
 
