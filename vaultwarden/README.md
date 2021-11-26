@@ -1,6 +1,26 @@
 # Setting up the Vaultwarden with Caddy and Gandi DNS on Synology NAS
-## Vaultwarden
-Vaultwarden is an opensource fork of the BitWarden
+## KeePass vs BitWarden
+I've been using KeePass for many years. It's always a challange to synchronize the databases used on multiple devices. Maybe a better solution will be to use the client-server approach here and store all your passwords in a cetralized database. Bitwarden is an opensource solution, but standalone image is a paid service. Vaultwarden is a free alternative. It also works with official Windows / Android clients, developed by Bitwarden, which are actually great.
+Vaultwarden can also work for small companies. The Send feature can be quite usefull in the enterprise world.
+I only started recently to use Bitwarden/Vaultwarden, so many things are new for me too. 
+
+## Asumptions and requirements
+Those are conditions I have. Yours maybe different, keep this in mind
+1. Docker on Synology NAS DS218+ with DSM 7.0.1
+2. No ports/services published externally. If I need to access the vaultwarden from the internet - I use VPN
+3. Because no HTTP(S) ports are available from the internet, I need to use the DNS-1 ACME challenge to get the Let's Encrypt cert
+4. I use Gandi to manage my domains
+5. 80/443 ports are already in use on my NAS
+
+## Vaultwarden design
+Vaultwarden needs https, so everyone is using Caddy (reverse proxy) + let's encrypt certs. 
+So to use Vaultwarden you need:
+* 2 containers: Caddy, Vaultwarden
+* domain/subdomain name for HTTPS cert
+
+## Setting up Caddy
+So I need a custom Caddy build. The one which will work with Gandi DNS to pass the ACME challenge to get the Let's Encrypt cert. 
+
 caddyfile
 ```
 {
