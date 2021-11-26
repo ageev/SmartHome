@@ -21,7 +21,7 @@ So to use Vaultwarden you need:
 ## Setting up Caddy
 I need to build a custom Caddy docker image with Gandi support
 
-1. create a file /volume1/docker/Dockerfile
+1. create a file ```/volume1/docker/Dockerfile```
 ```
 FROM caddy:builder AS builder
 RUN xcaddy build --with github.com/caddy-dns/gandi
@@ -31,7 +31,7 @@ COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 ```
 
 2. create a directory ```/volume1/docker/caddy```
-3. create a file /volume1/docker/caddy/caddyfile
+3. create a file ```/volume1/docker/caddy/caddyfile```
 
 caddyfile
 ```
