@@ -9,17 +9,29 @@ Those are conditions I have. Yours maybe different, keep this in mind
 1. Docker on Synology NAS DS218+ with DSM 7.0.1
 2. No ports/services published externally. If I need to access the vaultwarden from the internet - I use VPN
 3. Because no HTTP(S) ports are available from the internet, I need to use the DNS-1 ACME challenge to get the Let's Encrypt cert
-4. I use Gandi to manage my domains
+4. I use Gandi to manage my domain names. Caddy has a module for Gandi, so that's not a problem
 5. 80/443 ports are already in use on my NAS
 
 ## Vaultwarden design
-Vaultwarden needs https, so everyone is using Caddy (reverse proxy) + let's encrypt certs. 
+Vaultwarden needs https, so everyone is using Caddy (reverse proxy) + let's encrypt certs. Caddy can automatically get&renew HTTPS certs. 
 So to use Vaultwarden you need:
 * 2 containers: Caddy, Vaultwarden
 * domain/subdomain name for HTTPS cert
 
 ## Setting up Caddy
-So I need a custom Caddy build. The one which will work with Gandi DNS to pass the ACME challenge to get the Let's Encrypt cert. 
+I need to build a custom Caddy docker image with Gandi support
+
+1. create a file /volume1/docker/Dockerfile
+```
+FROM caddy:builder AS builder
+RUN xcaddy build --with github.com/caddy-dns/gandi
+
+FROM caddy:latest
+COPY --from=builder /usr/bin/caddy /usr/bin/caddy
+```
+
+2. create a directory ```/volume1/docker/caddy```
+3. create a file /volume1/docker/caddy/caddyfile
 
 caddyfile
 ```
@@ -63,14 +75,9 @@ caddyfile
   }
 }
 ```
-Dockerfile
-```
-FROM caddy:builder AS builder
-RUN xcaddy build --with github.com/caddy-dns/gandi
 
-FROM caddy:latest
-COPY --from=builder /usr/bin/caddy /usr/bin/caddy
-```
+4. create/edit /volume1/docker/docker-compose.yml file
+
 docker-compose.yml
 ```yaml
 ---
@@ -84,7 +91,7 @@ services:
       - PGID=<users group PGID>
       - TZ=Europe/Amsterdam
       - ACME_AGREE=true
-      - DOMAIN=*.example.com #wildcard domains are convinient - you can reuse them in other containers
+      - DOMAIN=*.example.com # i suggest to get the wildcard cert - you can reuse them in other containers
       - EMAIL=<email>
       - GANDI_API_TOKEN=<token>
       - LOG_FILE=/var/log/caddy/caddy.log
@@ -105,14 +112,14 @@ vaultwarden:
       - TZ=Europe/Amsterdam
       - WEBSOCKET_ENABLED=true # Required to use websockets
 #      - SIGNUPS_ALLOWED=false   # set to false to disable signups
-      - DOMAIN=https://pass.example.com
+      - DOMAIN=https://pass.example.com # change this!
 #      - SMTP_HOST=[MAIL-SERVER]
 #      - SMTP_FROM=[E-MAIL]
 #      - SMTP_PORT=587
 #      - SMTP_SSL=true
 #      - SMTP_USERNAME=[E-MAIL]
 #      - SMTP_PASSWORD=[SMTP-PASS]
-      - ADMIN_TOKEN=<random_token> # openssl rand -base64 48
+      - ADMIN_TOKEN=<random_token> # run <openssl rand -base64 48> to get random token
       - ROCKET_PORT=8088
 #      - YUBICO_CLIENT_ID=[OPTIONAL]
 #      - YUBICO_SECRET_KEY=[OPTIONAL]
@@ -127,3 +134,13 @@ vaultwarden:
     restart: unless-stopped
     network_mode: "host"
 ```
+
+5. SSH to NAS & run docker-compose
+
+```bash
+cd /volume1/docker
+sudo docker-compose up -d --build
+```
+
+6. give Caddy few minutes to get the cert. Go to "https://<your_domain>:4443". You should see the BitWarden login page
+7. You can set some admin settings here "https://<your_domain>:4443/admin" using the token specified in the docker-compose file
