@@ -76,7 +76,7 @@ caddyfile
 }
 ```
 
-4. create/edit /volume1/docker/docker-compose.yml file
+4. create/edit ```/volume1/docker/docker-compose.yml``` file
 
 docker-compose.yml
 ```yaml
