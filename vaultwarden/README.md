@@ -2,7 +2,7 @@
 ## Vaultwarden
 Vaultwarden is an opensource fork of the BitWarden
 caddyfile
-```json
+```
 {
   #default http port needs to be changed or Caddy will not start if it's already in use. Even if you don't use HTTP
   http_port 4080
@@ -51,6 +51,8 @@ RUN xcaddy build --with github.com/caddy-dns/gandi
 FROM caddy:latest
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 ```
+docker-compose.yml
+```yaml
 ---
 version: "3.9"
 services:
@@ -104,3 +106,4 @@ vaultwarden:
       - /volume1/docker/vaultwarden:/data
     restart: unless-stopped
     network_mode: "host"
+```
