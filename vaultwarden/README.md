@@ -103,7 +103,7 @@ services:
     restart: unless-stopped
     network_mode: "host"
   
-vaultwarden:
+  vaultwarden:
     container_name: vaultwarden
     image: vaultwarden/server:latest
     environment:
@@ -144,3 +144,8 @@ sudo docker-compose up -d --build
 
 6. give Caddy few minutes to get the cert. Go to "https://<your_domain>:4443". You should see the BitWarden login page
 7. You can set some admin settings here "https://<your_domain>:4443/admin" using the token specified in the docker-compose file
+8. I use Caddy's certificate in some other containers. To do this you just need to mount the certificate folder. 
+E.g.
+```
+/volume1/docker/caddy/data/caddy/certificates:/opt/adguardhome/cert
+```
