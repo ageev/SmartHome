@@ -19,6 +19,11 @@ So to use Vaultwarden you need:
 * 2 containers: Caddy, Vaultwarden
 * domain/subdomain name for HTTPS cert
 
+## Preparation steps - docker user
+I have a separate user for docker with very limited access rights. That's why you see "PUID" and "PGID" parameters in the docker-compose file below. They tell docker to start the container using the special user context. Now if container is malicious it will not be able to harm me much. 
+
+PUID is a unique number, to get yours SSH to your NAS and run ```id <docker_user>```. Docker user should have sufficient rights to read/write to /volume1/docker/<container> dir
+
 ## Setting up Caddy
 I need to build a custom Caddy docker image with Gandi support
 
@@ -31,8 +36,15 @@ FROM caddy:latest
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 ```
 
-2. create a directory ```/volume1/docker/caddy```
-3. create a file ```/volume1/docker/caddy/caddyfile```
+2. create directories 
+```
+/volume1/docker/caddy
+/volume1/docker/caddy/data
+/volume1/docker/caddy/config
+/volume1/docker/caddy/log
+/volume1/docker/vaultwarden
+```
+6. create a file ```/volume1/docker/caddy/caddyfile```
 
 caddyfile
 ```
