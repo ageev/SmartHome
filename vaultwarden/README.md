@@ -129,7 +129,7 @@ services:
       - LOG_LEVEL=warn
       - ROCKET_WORKERS=10
       - SHOW_PASSWORD_HINT=false
-      - DISABLE_ICON_DOWNLOAD=true
+#      - DISABLE_ICON_DOWNLOAD=true
     volumes:
       - /volume1/docker/vaultwarden:/data
     restart: unless-stopped
