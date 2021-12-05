@@ -89,8 +89,6 @@ Custom blocking rules:
 ||in.appcenter.ms^$important
 ||mtalk.google.com^
 ||pushserver.mfms.ru^$important
-||todo-ta-g7g.amazon.com^$important
-||device-messaging-na.amazon.com^$important
 ||xboxlive.com^$important
 ||dls.di.atlas.samsung.com^$important
 ||i.67yo.net^$important
