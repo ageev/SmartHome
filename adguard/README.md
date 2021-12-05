@@ -130,7 +130,7 @@ Docker's macvlan adapters are available for LAN users, but are not available for
 3. andjust & copy this into the file
 
 ```bash
-#!/bin/bash
+#!/bin/sh
 
 if [ "$1" = "start" ];
 then
