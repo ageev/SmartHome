@@ -27,3 +27,4 @@ Here is the config, you probably need to transform it to oneliner
 }
 ```
 save it, test it via GUI. 
+@@FULLTEXT@@ == @@PREFIX@@\\n@@TEXT@@
