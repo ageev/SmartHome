@@ -1,4 +1,4 @@
-# Send Synology NAS notifications to Telegram group
+# Send Synology NAS notifications to Telegram group using webhooks in DSM7
 ## Prerequisites
 1. Telegram bot token
 2. Group ChatID
@@ -10,7 +10,7 @@ Those are broken. I created one manually and then just edited the file directly
 sudo vi /usr/syno/etc/synowebhook.conf
 ```
 
-Here is the config, you need to transform it to oneliner
+Here is the config, you probably need to transform it to oneliner
 ```json
 {"Telegram Bot":
   {"needssl":true,
@@ -26,3 +26,4 @@ Here is the config, you need to transform it to oneliner
   }
 }
 ```
+save it, test it via GUI. 
