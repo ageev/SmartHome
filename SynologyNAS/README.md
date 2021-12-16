@@ -15,16 +15,17 @@ Here is the config, you probably need to transform it to oneliner
 {"Telegram Bot":
   {"needssl":true,
   "port":443,
-  "prefix":"A new system event occurred on your %HOSTNAME% on %DATE% at %TIME%.",
+  "prefix":"_A new system event occurred on your %HOSTNAME% on_ *%DATE%* _at_ *%TIME%*.",
   "req_method":"get",
   "req_header":"{}",
   "req_param":"{}",
   "sepchar":" ",
-  "template":"https://api.telegram.org/bot<PUT YOUR TELEGRAM TOKEN HERE>/sendMessage?chat_id=<YOUR_CHAT_ID>&parse_mode=Markdown&text=@@FULLTEXT@@",
+  "template":"https://api.telegram.org/bot<PUT YOUR TELEGRAM TOKEN HERE>/sendMessage?chat_id=<YOUR_CHAT_ID>&parse_mode=Markdown&text=@@PREFIX@@%0A@@TEXT@@",
   "type":"custom",
   "url":""
   }
 }
 ```
 save it, test it via GUI. 
-@@FULLTEXT@@ == @@PREFIX@@\\n@@TEXT@@
+
+@@FULLTEXT@@ == @@PREFIX@@%0A@@TEXT@@
