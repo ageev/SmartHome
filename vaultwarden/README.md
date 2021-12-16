@@ -13,6 +13,9 @@ Those are conditions I have. Yours maybe different, keep this in mind
 4. I use Gandi to manage my domain names. Caddy has a module for Gandi, so that's not a problem
 5. 80/443 ports are already in use on my NAS
 
+You need a real domain name to get HTTPS certificate. You need a proper HTTPS certificate for Bitwarden browser plugins to work.
+So I have a DNS record at Gandi (let's say vw.example.com) which points to my local NAS IP.  
+
 ## Vaultwarden design
 Vaultwarden needs https, so everyone is using Caddy (reverse proxy) + let's encrypt certs. Caddy can automatically get&renew HTTPS certs. 
 So to use Vaultwarden you need:
@@ -44,7 +47,7 @@ COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 /volume1/docker/caddy/log
 /volume1/docker/vaultwarden
 ```
-6. create a file ```/volume1/docker/caddy/caddyfile```
+6. create a file ```/volume1/docker/caddy/caddyfile```. This file has some variables like DOMAIN or EMAIL, which are defined later in the docker-compose file
 
 caddyfile
 ```
@@ -104,7 +107,7 @@ services:
       - PGID=<users group PGID>
       - TZ=Europe/Amsterdam
       - ACME_AGREE=true
-      - DOMAIN=*.example.com # i suggest to get the wildcard cert - you can reuse them in other containers
+      - DOMAIN=*.example.com # i suggest to get the wildcard cert - you can reuse them in other containers!
       - EMAIL=<email>
       - GANDI_API_TOKEN=<token>
       - LOG_FILE=/var/log/caddy/caddy.log
@@ -125,7 +128,7 @@ services:
       - TZ=Europe/Amsterdam
       - WEBSOCKET_ENABLED=true # Required to use websockets
 #      - SIGNUPS_ALLOWED=false   # set to false to disable signups
-      - DOMAIN=https://pass.example.com # change this!
+      - DOMAIN=https://vw.example.com # change this to the actual domain you use. It should be real & match the certificate issued by Caddy
 #      - SMTP_HOST=[MAIL-SERVER]
 #      - SMTP_FROM=[E-MAIL]
 #      - SMTP_PORT=587
