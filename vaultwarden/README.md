@@ -25,6 +25,8 @@ So to use Vaultwarden you need:
 ## Preparation steps - docker user
 I have a separate user for docker with very limited access rights. That's why you see "PUID" and "PGID" parameters in the docker-compose file below. They tell docker to start the container using the special user context. Now if container is malicious it will not be able to harm me much. 
 
+One problem here - if Caddy is launched with user level permissions - you can't use low ports (e.g. <1000); you can't use 80/443 in Caddy's config.
+
 PUID is a unique number, to get yours SSH to your NAS and run ```id <docker_user>```. Docker user should have sufficient rights to read/write to /volume1/docker/<container> dir
 
 ## Setting up Caddy
