@@ -29,3 +29,6 @@ Here is the config, you probably need to transform it to oneliner
 save it, test it via GUI. 
 
 @@FULLTEXT@@ == @@PREFIX@@%0A@@TEXT@@
+
+
+to fully enjoy the benefits you need to instal the Synology Log center. In "Notification" menu you can set the fillter using words "signed in" (for web) and "logged in" (for SSH). This will generate telegram messages when someone is logged in on your NAS
