@@ -56,20 +56,20 @@ caddyfile
 {
   #default http port needs to be changed or Caddy will not start if it's already in use. Even if you don't use HTTP
   http_port 4080
-  acme_dns gandi {env.GANDI_API_TOKEN}
+  acme_dns gandi {$GANDI_API_TOKEN}
   #try to uncomment this if caddy goes to ZeroSSL or another servers for the cert and you get errors. DNS challenge is not supported for every endpoint
   #acme_ca https://acme-v02.api.letsencrypt.org/directory
-  email {env.EMAIL}
+  email {$EMAIL}
 }
 
 # start HTTPS on 4443
 {$DOMAIN}:4443 {
   tls {
-    dns gandi {env.GANDI_API_TOKEN}
+    dns gandi {$GANDI_API_TOKEN}
   }
 
   log {
-    output file {env.LOG_FILE}
+    output file {$LOG_FILE}
     level debug
   }
 
