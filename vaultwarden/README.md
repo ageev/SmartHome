@@ -165,7 +165,7 @@ sudo docker-compose up -d --build
 6. give Caddy few minutes to get the cert. Go to "https://<your_domain>:4443". You should see the BitWarden login page
 7. You can set some admin settings here "https://<your_domain>:4443/admin" using the token specified in the docker-compose file. Don't forget to change "Domain URL" in General settings to https://<your_domain>:**4443**. Otherwise attachment download will not work.
 If you want to disable the admin panel - remove/comment "ADMIN_TOKEN" string from your docker-compose file AND from ```/volume1/docker/vaultwarden/config.json```
-8. I use Caddy's certificate in some other containers. To do this you just need to mount the certificate folder. 
+8. I use Caddy's certificate also to secure my Adblock container. That's convinient because let's encrypt certs are issued only for 3 month and caddy manages all the updates. To do this you just need to mount the certificate folder. 
 E.g.
 ```
 /volume1/docker/caddy/data/caddy/certificates:/opt/adguardhome/cert
