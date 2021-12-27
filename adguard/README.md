@@ -125,25 +125,23 @@ docker system prune -a -f #clean docker
 
 # Step 4. Adding proper route to docker's macvlan network adapter
 Docker's macvlan adapters are available for LAN users, but are not available for DSM/Docker users. Generaly speaking that's not an issue, but if you want, for example, to add adguard to your home-assistant container running on the same docker (like I did) you need this.
-1. create a file in /usr/local/etc/rc.d folder with .sh extention (this is a DSM script autostart directory[1])
-2. chmod 755 <filename>
-3. andjust & copy this into the file
 
+Create a bootup task for root user (aka "user-defined scrip") in Synology tasks with this content:
 ```bash
-#!/bin/sh
-
-if [ "$1" = "start" ];
-then
-    sleep 60
-    ip link add dlink0 link ovs_eth0 type macvlan mode bridge
-    ip addr add 192.168.1.127/32 dev dlink0
-    ip link set dlink0 up
-    ip route add 192.168.1.7/32 dev dlink0
-fi
+#sleep 60
+ip link add xlink0 link ovs_eth0 type macvlan mode bridge
+ip addr add 192.168.1.127/32 dev xlink0
+ip link set xlink0 up
+ip route add 192.168.1.7/32 dev xlink0
+ip route add 192.168.1.8/32 dev xlink0
 ```
+
+
+
 * 192.168.1.127/32 - just a random IP to use as a virtual adapter's IP
 * dlink0 - new virtual network interface name
 * ovs_eth0 - Synology DSM network interface name
-* 192.168.1.7/32 - pi-hole container's IP
+* 192.168.1.7/32 - 1st container's IP
+* 192.168.1.8/32 - another macwlan conteiner's IP... list all containers with macvlan interface here
 
 "sleep 60" is needed for script to work properly, otherwise it fails. 
