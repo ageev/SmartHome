@@ -139,7 +139,7 @@ ip route add 192.168.1.8/32 dev xlink0
 
 
 * 192.168.1.127/32 - just a random IP to use as a virtual adapter's IP
-* dlink0 - new virtual network interface name
+* xlink0 - new virtual network interface name
 * ovs_eth0 - Synology DSM network interface name
 * 192.168.1.7/32 - 1st container's IP
 * 192.168.1.8/32 - another macwlan conteiner's IP... list all containers with macvlan interface here
