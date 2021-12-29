@@ -45,7 +45,7 @@ services:
       - NET_ADMIN
     networks:
       macvlan_network:
-         ipv4_address: 192.168.1.7  #ip of your adguard container
+         ipv4_address: 192.168.1.9  #ip of your adguard container. I choose 192.168.1.8/29 subnet for my macvlans
     dns:
       - 192.168.1.1
       - 1.1.1.1
@@ -68,7 +68,7 @@ networks:
       config:
         - subnet: 192.168.1.0/24
           gateway: 192.168.1.1
-          #ip_range: 192.168.1.0/24
+          ip_range: 192.168.1.8/29
 ```
 
 
@@ -128,20 +128,11 @@ Docker's macvlan adapters are available for LAN users, but are not available for
 
 Create a bootup task for root user (aka "user-defined scrip") in Synology tasks with this content:
 ```bash
-#sleep 60
-ip link add xlink0 link ovs_eth0 type macvlan mode bridge
-ip addr add 192.168.1.127/32 dev xlink0
-ip link set xlink0 up
-ip route add 192.168.1.7/32 dev xlink0
-ip route add 192.168.1.8/32 dev xlink0
+ip link add macvlan0 link ovs_eth0 type macvlan mode bridge
+ip addr add 192.168.1.8/29 dev macvlan0
+ip link set macvlan0 up
 ```
 
-
-
-* 192.168.1.127/32 - just a random IP to use as a virtual adapter's IP
-* xlink0 - new virtual network interface name
+* 192.168.1.8/29 - IP range in my network dedicated to docker's macvlan. Make sure this range is excluded from the DHCP scope!
+* macvlan0 - new virtual network interface name
 * ovs_eth0 - Synology DSM network interface name
-* 192.168.1.7/32 - 1st container's IP
-* 192.168.1.8/32 - another macwlan conteiner's IP... list all containers with macvlan interface here
-
-"sleep 60" is needed for script to work properly, otherwise it fails. 
