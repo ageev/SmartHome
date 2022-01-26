@@ -6,7 +6,17 @@
 curl -X POST "http://localhost:7878/api/v3/command?apikey=dadada" -H "accept: application/json" -d '{"name":"ImportListSync"}'
 ```
 
+# USB ZigBee donlge on DSM 7 (Synology)
+
+(as a root) create /etc/modules-load.d/user.conf (the directory modules-load.d does not exist, create it; the file can be named whatever you like, but it must end with .conf). Put just these two lines there:
+```
+usbserial
+cdc-acm
+```
+
 ## torrent watcher
+UPDATE! Я теперь мониторю торренты через интеграцию Transmission в Home Assistant. Можно создать правило автоматизации, которое будет посылать нужные вам уведомления в телеграм чат
+
 Используем телеграм бота для мониторинга очереди qBittorent
 1. в файл secrets.py нужно внести свои данные:
 - qBittorent IP и порт
@@ -21,32 +31,3 @@ Chat_id можно узнать так https://stackoverflow.com/questions/32423
 * * * * * /usr/bin/python3 /home/artem/scripts/telegram/torrent_watcher.py >> /var/log/crontab_errors.log 2>&1
 ```
 4. готово!
-
-## secrets.py
-очень удобно хранить все пароли/токены в одном файле. Тогда можно добавить его в .gitignore и ваши секреты не утекут в сеть когда запустишь git push.
-Структура файла проста. Это обычный питон словарь:
-```python
-# Description
-SoftName = {
-  "key" : "value",
-  }
-```
-
-Чтобы им пользоваться нужно добавить в шапку скрипта:
-```python
-import sys
-from pathlib import Path
-here = Path(__file__).parent.absolute()
-repository_root = (here / ".." ).resolve()   # перейти на папку выше. Когда файл secrets.py лежит в корне
-sys.path.insert(0, str(repository_root))
-```
-
-потом импортировать нужный словарик
-```python
-from secrets import SoftName
-```
-и в нужном месте просто вызвать..
-```python
-key = SoftName['key']
-```
-Всё. Теперь скрипт чист. Все пароли в одном файле.
