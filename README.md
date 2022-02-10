@@ -1,9 +1,12 @@
 # SmartHouse
 ## Radarr https://habr.com/ru/post/505814/
 Радарр 3 не дает обновлять листы IMDB чаще одного раза в 6 часов.
-Чтобы обойти это ограничение можно добавить вот это в планировщик
+Чтобы обойти это ограничение можно добавить вот это в планировщик (убедитесь, что прописали верный хост и токен!)
 ```bash
-curl -X POST "http://localhost:7878/api/v3/command?apikey=dadada" -H "accept: application/json" -d '{"name":"ImportListSync"}'
+curl -i -s -k -X $'POST' \
+    -H $'Host: nas.local:7878' -H $'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0' -H $'Accept: application/json, text/javascript, */*; q=0.01' -H $'Accept-Language: en-US,en;q=0.5' -H $'Accept-Encoding: gzip, deflate' -H $'Content-Type: application/json' -H $'X-Api-Key: <YOUR_SECRET_TOKEN_HERE!!!!' -H $'X-Requested-With: XMLHttpRequest' -H $'Content-Length: 25' -H $'Origin: http://ds.local:7878' -H $'DNT: 1' -H $'Connection: close' -H $'Referer: http://ds.local:7878/system/tasks' \
+    --data-binary $'{\"name\":\"ImportListSync\"}' \
+    $'http://nas.local:7878/api/v3/command'
 ```
 
 # USB ZigBee donlge on DSM 7 (Synology)
