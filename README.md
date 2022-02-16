@@ -10,6 +10,8 @@ curl -i -s -k -X $'POST' \
 ```
 
 # USB ZigBee donlge on DSM 7 (Synology)
+read here https://www.zigbee2mqtt.io/guide/installation/02_docker.html#docker-on-synology-dsm-7-0 OR alternative setup:
+
 
 (as a root) create /etc/modules-load.d/user.conf (the directory modules-load.d does not exist, create it; the file can be named whatever you like, but it must end with .conf). Put just these two lines there:
 ```
