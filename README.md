@@ -8,6 +8,7 @@ curl -i -s -k -X $'POST' \
     --data-binary $'{\"name\":\"ImportListSync\"}' \
     $'http://nas.local:7878/api/v3/command'
 ```
+(UPDATE) я больше не использую Jackett, заменил на Prowlarr
 
 # USB ZigBee donlge on DSM 7 (Synology)
 read here https://www.zigbee2mqtt.io/guide/installation/02_docker.html#docker-on-synology-dsm-7-0 OR alternative setup:
