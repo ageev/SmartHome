@@ -32,3 +32,14 @@ save it, test it via GUI.
 
 
 to fully enjoy the benefits you need to instal the Synology Log center. In "Notification" menu you can set the fillter using words "signed in" (for web) and "logged in" (for SSH). This will generate telegram messages when someone is logged in on your NAS
+
+
+# USB ZigBee donlge on DSM 7 (Synology)
+read here https://www.zigbee2mqtt.io/guide/installation/02_docker.html#docker-on-synology-dsm-7-0 OR alternative setup:
+
+
+(as a root) create /etc/modules-load.d/user.conf (the directory modules-load.d does not exist, create it; the file can be named whatever you like, but it must end with .conf). Put just these two lines there:
+```
+usbserial
+cdc-acm
+```
