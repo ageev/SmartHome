@@ -10,16 +10,6 @@ curl -i -s -k -X $'POST' \
 ```
 (UPDATE) я больше не использую Jackett, заменил на Prowlarr
 
-# USB ZigBee donlge on DSM 7 (Synology)
-read here https://www.zigbee2mqtt.io/guide/installation/02_docker.html#docker-on-synology-dsm-7-0 OR alternative setup:
-
-
-(as a root) create /etc/modules-load.d/user.conf (the directory modules-load.d does not exist, create it; the file can be named whatever you like, but it must end with .conf). Put just these two lines there:
-```
-usbserial
-cdc-acm
-```
-
 ## torrent watcher
 UPDATE! Я теперь мониторю торренты через интеграцию Transmission в Home Assistant. Можно создать правило автоматизации, которое будет посылать нужные вам уведомления в телеграм чат
 
