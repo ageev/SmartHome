@@ -37,9 +37,25 @@ to fully enjoy the benefits you need to instal the Synology Log center. In "Noti
 # USB ZigBee donlge on DSM 7 (Synology)
 read here https://www.zigbee2mqtt.io/guide/installation/02_docker.html#docker-on-synology-dsm-7-0 OR alternative setup:
 
-
 (as a root) create /etc/modules-load.d/user.conf (the directory modules-load.d does not exist, create it; the file can be named whatever you like, but it must end with .conf). Put just these two lines there:
 ```
 usbserial
 cdc-acm
+```
+
+## Sonoff Zigbee 3.0 Dongle Plus
+1. get your CPU architecture. Run ```uname -a``` and note the CPU codename. Example: ```Linux DS218 4.4.180+ #42218 SMP Mon Oct 18 19:17:56 CST 2021 x86_64 GNU/Linux synology_apollolake_218+``` -> apollolake
+2. donwload ```cp210x.ko``` file from http://www.jadahl.com/iperf-arp-scan/DSM_7.0/ -> your_cpu_architecture_folder!
+```
+cd /lib/modules
+wget http://www.jadahl.com/iperf-arp-scan/DSM_7.0/apollolake/cp210x.ko
+```
+3. Create a bootup task in Synology Task Scheduler. This is my task for both old and new Sonoff zigbee sticks. Chmod section is needed for zigbee2mqtt container to run with user level permissions
+```
+modprobe usbserial
+modprobe ftdi_sio
+modprobe cdc-acm
+insmod /lib/modules/cp210x.ko
+sudo chmod 666 /dev/ttyACM0
+sudo chmod 666 /dev/ttyUSB0
 ```
