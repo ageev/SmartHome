@@ -45,7 +45,7 @@ cdc-acm
 
 ## Sonoff Zigbee 3.0 Dongle Plus
 1. get your CPU architecture. Run ```uname -a``` and note the CPU codename. Example: ```Linux DS218 4.4.180+ #42218 SMP Mon Oct 18 19:17:56 CST 2021 x86_64 GNU/Linux synology_apollolake_218+``` -> apollolake
-2. donwload ```cp210x.ko``` file from http://www.jadahl.com/iperf-arp-scan/DSM_7.0/ -> your_cpu_architecture_folder!
+2. donwload ```cp210x.ko``` file from http://www.jadahl.com/iperf-arp-scan/DSM_7.0/ or https://github.com/robertklep/dsm7-usb-serial-drivers. Pick the right version for your CPU architecture
 ```
 cd /lib/modules
 wget http://www.jadahl.com/iperf-arp-scan/DSM_7.0/apollolake/cp210x.ko
