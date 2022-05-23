@@ -1,4 +1,46 @@
 # SmartHouse
+## "Алиса, найди пульт от телевизора"
+Моя самая любимая интеграция. 
+
+Что нужно:
+1. колонка с Алисой
+2. home assistant с интеграцией YandexStation (https://github.com/AlexxIT/YandexStation) установленной через HACS
+3. Nvidia Shield TV, подключенный к Home Assisstant через интеграцию AndroidTV с включенным ADB Debug (через Wifi и режим разработчика на ShieldTV)
+
+### Шаг 1 - добавить сценарий в Яндексе
+Добавляем сценарий: Если я скажу "Алиса, найди пульт от телевизора", Алиса скажет "Пультик-пультик, ты где?"
+
+### Шаг 2 - добавляем автоматизацию в Home Assistant
+```
+alias: 'ALISA find REMOTE 📺 '
+description: ''
+trigger:
+  - platform: event
+    event_type: yandex_speaker
+    event_data:
+      value: Пультик-пультик, ты где?
+condition: []
+action:
+  - service: script.remote_finder
+    data: {}
+mode: single
+```
+
+### Шаг 3 - создаем скрипт script.remote_finder
+Открываем вкладку scripts в Home Assisstant и создаем новый скрипт:
+```
+alias: TV Remote Finder
+icon: mdi:target
+mode: single
+sequence:
+  - service: androidtv.adb_command
+    data:
+      command: >-
+        am start -a android.intent.action.VIEW -d -n
+        com.nvidia.remotelocator/.ShieldRemoteLocatorActivity
+      entity_id: media_player.ShieldADB
+```
+
 ## Radarr https://habr.com/ru/post/505814/
 Радарр 3 не дает обновлять листы IMDB чаще одного раза в 6 часов.
 Чтобы обойти это ограничение можно добавить вот это в планировщик (убедитесь, что прописали верный хост и токен!)
