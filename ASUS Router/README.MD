@@ -28,7 +28,7 @@ else
 fi
 ```
 DDNS with Gandi and wget instead of curl
-```
+```bash
 #!/bin/sh
 
 IP=$(ip route get 1 | awk '{print $NF;exit}')
