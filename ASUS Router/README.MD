@@ -27,3 +27,13 @@ else
         /sbin/ddns_custom_updated 0
 fi
 ```
+DDNS with Gandi and wget instead of curl
+```
+#!/bin/sh
+
+IP=$(ip route get 1 | awk '{print $NF;exit}')
+DOMAIN="example.com"
+SUBDOMAIN="vpn"
+
+wget --method=PUT --header="Content-Type: application/json" --header="X-Api-Key: <YOUR_TOKEN_HERE>" --body-data='{"rrset_ttl": 10800, "rrset_values": ["'${IP}'"]}' https://dns.api.gandi.net/api/v5/domains/${DOMAIN}/records/${SUBDOMAIN}/A
+```
