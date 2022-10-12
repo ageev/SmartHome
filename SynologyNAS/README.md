@@ -38,7 +38,7 @@ to fully enjoy the benefits you need to instal the Synology Log center. In "Noti
 ## Sonoff Zigbee 3.0 Dongle Plus
 1. get your CPU architecture. Run ```uname -a``` and note the CPU codename. Example: ```Linux DS218 4.4.180+ #42218 SMP Mon Oct 18 19:17:56 CST 2021 x86_64 GNU/Linux synology_apollolake_218+``` -> apollolake
 
-2. add a task to the Scheduler. Run at startup as a root
+2. add a task to the Scheduler. Adjust the URL to match the CPU architecture. Run at boot-up as a root
 ```bash
 if [ ! -f /lib/modules/cp210x.ko ]; then
     cd /lib/modules
@@ -51,6 +51,8 @@ modprobe cdc-acm
 insmod /lib/modules/cp210x.ko
 chmod 666 /dev/ttyUSB0
 ```
+Some comments here. After DSM upgrade the ```cp210x.io``` file will disappear. The boot-up script will catch this and redownload it.  
+
 
 ## Route to docker
 ```bash
