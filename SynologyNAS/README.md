@@ -48,7 +48,6 @@ cdc-acm
 2. donwload ```cp210x.ko``` file from http://www.jadahl.com/iperf-arp-scan/DSM_7.0/ or https://github.com/robertklep/dsm7-usb-serial-drivers. Pick the right version for your CPU architecture
 ```
 cd /lib/modules
-#wget http://www.jadahl.com/iperf-arp-scan/DSM_7.0/apollolake/cp210x.ko
 sudo wget https://github.com/robertklep/dsm7-usb-serial-drivers/raw/main/modules/apollolake/cp210x.ko
 ```
 
