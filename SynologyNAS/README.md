@@ -61,9 +61,12 @@ ip addr add 10.0.1.8/29 dev macvlan0
 ip link set macvlan0 up
 ```
 ## Sync Radarr every 5 min
+Radarr can be nicely integrated with IMDB list. So every time you add anything to your IMDB watchlist - Radarr will catch it and lanch the download. 
+BUT because Radarr uses it's own servers for that they've set up a throttling mechanism - you can check all lists minimum every 7 hours...
+To bypass this check you can trigger a "list update" task manually in Radarr GUI. I use Burp Suite to catch such requests and export them to curl & set a synology task scheduler to run those every 5 min. 
 ```bash
 curl -i -s -k -X $'POST' \
-    -H $'Host: ds.local:7878' -H $'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0' -H $'Accept: application/json, text/javascript, */*; q=0.01' -H $'Accept-Language: en-US,en;q=0.5' -H $'Accept-Encoding: gzip, deflate' -H $'Content-Type: application/json' -H $'X-Api-Key: <PUT_YOUR_API_KEY_HERE>' -H $'X-Requested-With: XMLHttpRequest' -H $'Content-Length: 25' -H $'Origin: http://ds.local:7878' -H $'DNT: 1' -H $'Connection: close' -H $'Referer: http://ds.local:7878/system/tasks' \
+    -H $'Host: ds.local:7878' -H $'Content-Type: application/json' -H $'X-Api-Key: <PUT_YOUR_API_KEY_HERE>' -H $'Referer: http://ds.local:7878/system/tasks' \
     --data-binary $'{\"name\":\"ImportListSync\"}' \
-    $'http://ds.local:7878/api/v3/command'
+    $'http://<NAS_IP>:7878/api/v3/command'
 ```
