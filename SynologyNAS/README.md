@@ -48,8 +48,10 @@ cdc-acm
 2. donwload ```cp210x.ko``` file from http://www.jadahl.com/iperf-arp-scan/DSM_7.0/ or https://github.com/robertklep/dsm7-usb-serial-drivers. Pick the right version for your CPU architecture
 ```
 cd /lib/modules
-wget http://www.jadahl.com/iperf-arp-scan/DSM_7.0/apollolake/cp210x.ko
+#wget http://www.jadahl.com/iperf-arp-scan/DSM_7.0/apollolake/cp210x.ko
+sudo wget https://github.com/robertklep/dsm7-usb-serial-drivers/raw/main/modules/apollolake/cp210x.ko
 ```
+
 3. Create a bootup task in Synology Task Scheduler. This is my task for both old and new Sonoff zigbee sticks. Chmod section is needed for zigbee2mqtt container to run with user level permissions
 ```
 modprobe usbserial
