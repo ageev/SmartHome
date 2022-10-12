@@ -1,3 +1,72 @@
+Nginx Proxy Manager (aka, NPM) is a tool which allows you:
+1. deploy HTTPS inside your network
+2. publish something in a secure way to internet 
+3. auto manages your HTTPS certs (via let's encrypt bot)
+
+Disadvantages: you need a custom config for most of the apps you publish. Sometimes it's a serious pain in the ***. Google "nginx proxy %appname%" and be ready to try a lot of configs. I still fail to find good settings for DSM and some other stuff
+
+# Setting up NPM with Synology
+ports 80/443 are not available in DSM. If you NPM with Docker+macvlan you will not see your docker containers. 
+Best solution I've found so far - Install Synology VM Manager, setup Virtual DSM, setup another Docker instance in the Virtual DSM. Setup your NPM docker there. 
+
+# Docker-compose for NGM
+```bash
+## install new versions
+# cd /volume1/docker
+# sudo docker-compose pull
+# sudo docker-compose up -d
+## clean docker
+# sudo docker system prune -a  
+## rebuild containers
+# sudo docker-compose up -d --build
+
+---
+version: "3.9"
+networks:
+  macvlan_network:
+    driver: macvlan
+    enable_ipv6: false
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: 10.0.1.0/24
+          gateway: 10.0.1.1
+          ip_range: 10.0.1.16/29
+
+services:
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager'
+    container_name: nginx_proxy_manager
+    hostname: nginx_proxy_manager
+    #user: 1027:100
+    domainname: local
+    mac_address: 00:fa:c0:fa:c0:af
+    cap_add:
+      - NET_ADMIN
+    dns:
+      - 10.0.1.9
+    environment:
+     - PUID=1027
+     - PGID=100
+     - TZ=Europe/Amsterdam
+     - DB_MYSQL_HOST=10.0.1.5
+     - DB_MYSQL_PORT=3306
+     - DB_MYSQL_USER=npm
+     - DB_MYSQL_PASSWORD=p@55w0rd #shutka!
+     - DB_MYSQL_NAME=npm
+      # Uncomment this if IPv6 is not enabled on your host
+     - DISABLE_IPV6=true
+    volumes:
+      - /volume1/docker/nginx_proxy_manager/config.json:/app/config/production.json
+      - /volume1/docker/nginx_proxy_manager/data:/data
+      - /volume1/docker/nginx_proxy_manager/letsencrypt:/etc/letsencrypt
+    restart: unless-stopped
+    networks:
+      macvlan_network:
+        ipv4_address: 10.0.1.17
+```
+
 # Configs for NGINX proxy manager
 add a URL in NPM. Enable everything in SSL tab, enable Web Sockets. Paste those configs to the "Advanced" tab
 replace <ip> with the real IP
@@ -133,5 +202,3 @@ location / {
     proxy_pass http://<ip>:8088;
  }
 ```
- ```
- 
