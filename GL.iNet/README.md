@@ -13,3 +13,4 @@ config switch_vlan
         option description 'WAN_t-mobile'
         option ports '1t 5t'
 ```
+3. restart network: ```/etc/init.d/network restart```
