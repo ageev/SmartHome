@@ -1,9 +1,10 @@
 # Overview
-GL.iNet router tunning
+GL.iNet [GL-AXT1800](https://www.gl-inet.com/products/gl-axt1800/) router tunning
 
 ## VLAN configuration (for T-Mobile internet)
-edit ```/etc/config/network```:
-1. replace ```option device 'eth0'``` with ```option device 'eth0.300'``` for WAN interface
+- SSH to GL-AXT1800
+- edit ```/etc/config/network```:
+1. replace ```option device 'eth0'``` with ```option device 'eth0.300'``` for WAN interface (optionally for WAN6 too)
 2. add switch
 ```bash
 config switch_vlan
