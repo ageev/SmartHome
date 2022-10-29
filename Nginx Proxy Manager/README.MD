@@ -172,6 +172,15 @@ location /api/websocket {
     proxy_set_header Connection "upgrade";
     }
  ```
+ add this to ```configuration.yaml`` of your HA
+ ```bash
+ http:
+  use_x_forwarded_for: true
+  trusted_proxies: 
+    - 10.0.0.x/32 #nginx proxy manager ip
+  #ip_ban_enabled: true 	        # use this to enable auto IP ban
+  #login_attempts_threshold: 3 
+  ```
  
  ## Vaultwarden
  add subdomain (e.g., vw.domain.com)
