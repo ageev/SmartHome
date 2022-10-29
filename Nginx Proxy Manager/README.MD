@@ -172,7 +172,7 @@ location /api/websocket {
     proxy_set_header Connection "upgrade";
     }
  ```
- add this to ```configuration.yaml`` of your HA
+ add this to ```configuration.yaml``` of your HA
  ```bash
  http:
   use_x_forwarded_for: true
