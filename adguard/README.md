@@ -10,7 +10,7 @@ Pros of Adguard
 Pros of Pi-hole:
 - opensource & community driven
 
-*Nice alternative is to use nextdns.io
+*Nice alternative is to use nextdns.io (fully cloud-based solution)*
 
 # Step 1. Installation
 - adjust and copy the docker compose content to your docker compose file (e.g. to /volume1/docker/docker-compose.yml)
