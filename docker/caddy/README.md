@@ -1,7 +1,7 @@
 # Caddy
 
 Caddy is a proxy server, which works with ACME.
-Currently I replaced Caddy with NGINX Proxy Manager
+! Currently I replaced Caddy with NGINX Proxy Manager
 
 # Installation
 
@@ -24,6 +24,9 @@ COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 ```
 
 3. create a file ```/volume1/docker/caddy/caddyfile```. This file has some variables like DOMAIN or EMAIL, which are defined later in the docker-compose file
+
+! Config below is relevan for VaultWarden
+
 ```
 {
   #default http port needs to be changed or Caddy will not start if it's already in use. Even if you don't use HTTP
