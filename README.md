@@ -4,7 +4,7 @@
 ![Стартовая страница Homer](Pictures/start_page.jpg)
 На НАСе крутятся:
 - Synology Photos - отличный каталогизатор семейных фотографий. Я немного причесываю семейный архив (скриптами)[https://github.com/ageev/others] время от времени
--- HyperBackup - универсальный бэкапер от Synology
+  - HyperBackup - универсальный бэкапер от Synology
 - S
 
 # SmartHouse
