@@ -64,3 +64,7 @@ sudo docker exec tool-acme.sh acme.sh --set-notify --notify-hook telegram
 sudo docker exec tool-acme.sh acme.sh --issue -d *.domain.com -k 4096 -ak 4096 --dns dns_gandi_livedns --dnssleep 300
 sudo docker exec tool-acme.sh acme.sh --deploy -d *.domain.com --deploy-hook synology_dsm
 ```
+внутри контейнера есть cron job, который пробегается периодически по папкам в конфиге. Посмотреть его можно так:
+```
+sudo docker exec acme.sh crontab -l
+```
