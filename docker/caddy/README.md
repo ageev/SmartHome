@@ -26,7 +26,7 @@ COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
 3. create a file ```/volume1/docker/caddy/caddyfile```. This file has some variables like DOMAIN or EMAIL, which are defined later in the docker-compose file
 
-! Config below is relevan for VaultWarden
+| :exclamation: Config below is relevan for [VaultWarden](https://github.com/ageev/SmartHouse/tree/master/docker/vaultwarden) |
 
 ```
 {
