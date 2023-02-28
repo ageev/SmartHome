@@ -5,6 +5,7 @@ Sonoff и Tuya нужно перешивать с бубном, но резул�
 Обновлять этот контейнер следует осторожно. Один раз он всё мне поломал. Ну и обновлять прошивки у ESP32 каждый месяц так же дурное занятие. Работает твой ИоТ? Не трож!
 
 ## docker-compose.yml
+
 ```yml
 ---
 version: "3.9"
@@ -13,7 +14,7 @@ services:
     image: esphome/esphome
     container_name: esphome
     hostname: esphome
-    user: 1029:100 # !! Disable to build the FW !! otherwise you will see permissions denied messages
+    user: 1029:100 # !! CHANGE ME!!! Or disable to build the FW !! otherwise you will see permission denied messages
     environment:
       - TZ=Europe/Zurich
     volumes:
