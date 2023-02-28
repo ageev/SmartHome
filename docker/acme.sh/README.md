@@ -44,13 +44,12 @@ services:
       - SYNO_Hostname=dsm.domain.com #NAS's address. CHANGE ME!
       - SYNO_Port="5001"
       - SYNO_Username=acme
-      - SYNO_Password=<PASSWORD>
+      - SYNO_Password=<PASSWORD>  # CHANGE ME!
 #      - SYNO_DID= #copy did cookie parameter from browser's DSM admin session
       - SYNO_Certificate=*.domain.com # CHANGE ME!
       - SYNO_Create=1
     network_mode: host
     volumes:
-      # please create those folders manualy!
       - /volume1/docker/acme/config:/acme.sh
       - /volume1/docker/acme/key:/key
     command: daemon
