@@ -33,8 +33,8 @@ services:
     image: neilpang/acme.sh
     container_name: acme.sh
     environment:
-      - PUID=1029
-      - PGID=100
+      - PUID=1029  # CHANGE ME!
+      - PGID=100   # CHANGE ME!
       - TZ=Europe/Zurich
       - GANDI_LIVEDNS_KEY=<YOUR_GANDI_TOKEN>
       - TELEGRAM_BOT_APITOKEN=<TELEGA_TOKEN>
