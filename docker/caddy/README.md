@@ -5,28 +5,26 @@ Currently I replaced Caddy with NGINX Proxy Manager
 
 # Installation
 
-I need to build a custom Caddy docker image with Gandi support
+Caddy's docker doesnt support Gandi DNS API out-of-the-box, so I need to compile it
 
-    create a file /volume1/docker/Dockerfile
-
+1. Create the file ```/volume1/docker/Dockerfile```
+```
 FROM caddy:builder AS builder
 RUN xcaddy build --with github.com/caddy-dns/gandi
 
 FROM caddy:latest
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
-
-    create directories
-
+```
+2. Create directories
+```
 /volume1/docker/caddy
 /volume1/docker/caddy/data
 /volume1/docker/caddy/config
 /volume1/docker/caddy/log
-/volume1/docker/vaultwarden
+```
 
-    create a file /volume1/docker/caddy/caddyfile. This file has some variables like DOMAIN or EMAIL, which are defined later in the docker-compose file
-
-caddyfile
-
+3. create a file ```/volume1/docker/caddy/caddyfile```. This file has some variables like DOMAIN or EMAIL, which are defined later in the docker-compose file
+```
 {
   #default http port needs to be changed or Caddy will not start if it's already in use. Even if you don't use HTTP
   http_port 4080
@@ -68,3 +66,4 @@ caddyfile
     -Server
   }
 }
+```
