@@ -103,7 +103,7 @@ You need to figure out this by your own, but here are few things I did:
 - My router redirects all DNS requests to Adguard, except requests from NAS, Adguard itself and Pi-hole (this is called DNSFilter in Asus routers with Merlin's firmware)
 - I've added all family devices to Adguard (Settings > Client Settings). For kid's tablets I've switched off all unneeded services (e.g. Amazon, ebay, OK.ru ....)
 - I've added some internal network devices to custom blocking rules (filters > custom rules). This is needed for the internal DNS resolution to work
-- I also have Caddy container for Vaultwarden which handles Let's Encrypt wildcard cert for my domain. I have mounted the cert folder from Caddy to AdGuard (see docker-compose config above) and now use this cert to protect AdGuard also
+- I also have (ACME.SH)[https://github.com/ageev/SmartHouse/tree/master/docker/acme.sh] container which handles HTTPS certificates. I have mounted the cert folder from ACME.SH to AdGuard (see docker-compose config above) and now use this cert to protect AdGuard also
 - I've added A record to my domain name, pointed to the local AdGuard IP (e.g. dns 10800 IN A 192.168.1.9). Now I can use dns.example.com url to access AdGuard locally
 
 ```bash
