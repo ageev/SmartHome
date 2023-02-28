@@ -32,13 +32,14 @@ docker-compose.yml
 # sudo docker-compose up -d --build
 
 ---
-version: "2"
+version: "3.9"
 services:
 
   adguard:
     image: adguard/adguardhome:latest
     container_name: adguard
     hostname: adguard
+    user: 1029:100 #put your docker used ID (UID) and group ID (GID) here!
     domainname: local
     mac_address: 00:fa:c0:fa:c0:aa
     cap_add:
@@ -50,13 +51,11 @@ services:
       - 192.168.1.1
       - 1.1.1.1
     environment:
-      - PUID=<YOUR_PUID> # user and group ID of your docker NAS user. Needed for additional security, can be removed
-      - PGID=<YOUR_PGID>
       - TZ=Europe/Amsterdam # your TZ
     volumes:
       - /volume1/docker/adguard/work:/opt/adguardhome/work
       - /volume1/docker/adguard/conf:/opt/adguardhome/conf
-      #- /volume1/docker/caddy/data/caddy/certificates:/opt/adguardhome/cert #this string is needed if you want to reuse Caddy's certs for AdGuard
+      - /volume1/docker/acme/config/<cert_path>:/opt/adguardhome/cert #this string is needed if you want to use ACME issued HTTPS cert
     restart: unless-stopped
     
 networks:
