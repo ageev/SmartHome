@@ -2,6 +2,8 @@
 
 # Железо
 ## Sonoff Zigbee 3.0 dongle
+У хомяка есть родная интеграция Zigbee. Она была раньше плохая, и я спрыгнул на [zigbee2mqtt](https://github.com/ageev/SmartHome/tree/master/docker/zigbee2mqtt). Сейчас бы уже, наверное, остался на родной. 
+Про настройку донгла почитайте в разделе zigbee2mqtt
 ## APC UPS
 
 # Установка
