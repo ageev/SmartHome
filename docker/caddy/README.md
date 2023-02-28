@@ -1,7 +1,8 @@
 # Caddy
 
 Caddy is a proxy server, which works with ACME.
-! Currently I replaced Caddy with NGINX Proxy Manager
+| :exclamation:  Currently I replaced Caddy with NGINX Proxy Manager   |
+|-----------------------------------------|
 
 # Installation
 
