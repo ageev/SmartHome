@@ -10,14 +10,14 @@
   - Virtual Machine Manager - тут у меня крутится VitrualDSM (виртуальный НАС)
   - Surveillance Station - отличный менеджер камер наблюдения
 - docker - тут всё самое основное
-  - [adguard](https://github.com/ageev/SmartHouse/tree/master/adguard) - продвинутая резалка рекламы. Лучше чем pihole
+  - [adguard](https://github.com/ageev/SmartHouse/tree/master/adguard) - продвинутая резалка рекламы. Лучше чем [pihole](https://github.com/ageev/SmartHouse/tree/master/pi-hole)
   - caddy - вебсервер с поддержкой ACME (автоматическая выдача HTTPS сертификатов) - *заменил на Nginx Proxy Manager + acme.sh*
   - esphome - генератор прошивок и дэшборд для ESP32 (дешевый чип с поддержкой Wi-Fi и BLE). Позволяет перепрошивать всякие Tuya Smart и прочии девайсы для интеграции с Home Assistant
   - home-assistant (HA, homeass, хомяк)- универсальный интеграционный сервис умного дома. За счёт огромного количества аддонов позволяет связывать в единую систему очень разные компоненты. Например, Яндекс Станцию и Телеграм, датчики IKEA и вентилятор Xiaomi. Примеры автоматизаций внутри
   - homer - простой вебсервер, на котором удобно сделать стартовую страницу умного дома. Скриншот из Гомера вы видите выше. Когда мне нужно что-то открыть в домашней сети - я использую стартовую страницу Гомера
   - transmission - качалка торрентов. Выбрал её потому что у нее самая удобная интеграция с HA. Использую с плагином для браузера Torrent Control - позволяет скачивать всё сразу на НАС
   - [acme.sh](https://github.com/ageev/SmartHouse/tree/master/acme.sh) - позволяет автоматизировать получение HTTPS сертификатов, посылает уведомоления в телегу, может пушить обновления сразу на НАС
-  - vaultwarden - форк BitWarden - очень хороший менеджер паролей с клиентами под все платформы
+  - [vaultwarden](https://github.com/ageev/SmartHouse/tree/master/vaultwarden) - форк BitWarden - очень хороший менеджер паролей с клиентами под все платформы
   - [nginx proxy manager](https://github.com/ageev/SmartHouse/tree/master/Nginx%20Proxy%20Manager) - единое окно (ну почти) для всех внутренних веб-порталов. Позволяет сделать "зеленый замочек" (HTTP -> HTTPS) там, где его отродясь не было. Один минус NGM - нужно искать уникальный кастомный прокси конфиг под каждое приложение. С Traefik такой проблемы нет. Надо сравнить
   - mariadb - база данных. Нужна для Nginx Proxy Manager
   - mosquitto - MQTT брокер. Нужен для zigbee2mqtt. Работает с очередью запросов к ZigBee устройствам для умного дома
