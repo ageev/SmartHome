@@ -1,7 +1,7 @@
 # Живи с умом!
 Основа моего умного дома - NAS Synology DS218+, в который я вставил 2 планки старой ноутбучной памяти, тем самым, нарастив её до 16 Гб. 
 На НАСе крутятся:
-![Стартовая страница Homer](.Pictures/start_page.png)
+![Стартовая страница Homer](Pictures/start_page.png)
 - Synology Photo
 
 # SmartHouse
