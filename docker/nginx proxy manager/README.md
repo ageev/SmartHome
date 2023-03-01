@@ -1,7 +1,7 @@
 Nginx Proxy Manager (aka, NPM) is a tool which allows you:
 1. deploy HTTPS inside your network
 2. publish something in a secure way to internet 
-3. auto manages your HTTPS certs (via let's encrypt bot)
+3. auto manages your HTTPS certs (via let's encrypt ACME bot)
 
 Disadvantages: you need a custom config for most of the apps you publish. Sometimes it's a serious pain in the ***. Google "nginx proxy %appname%" and be ready to try a lot of configs. I still fail to find good settings for DSM and some other stuff
 
@@ -156,14 +156,14 @@ location ~ ^/(.*)
 add a subdomain (e.g., ha.domain.com)\
 ```
  location / {
-    proxy_pass http://<CHANGE ME>:8123;
+    proxy_pass http://<ip>:8123;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
   }
 
 location /api/websocket {
-    proxy_pass http://<CHANGE ME>:8123/api/websocket;
+    proxy_pass http://<ip>:8123/api/websocket;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -177,7 +177,7 @@ location /api/websocket {
  http:
   use_x_forwarded_for: true
   trusted_proxies: 
-    - 192.168.1.19/32 #nginx proxy manager ip
+    - 192.168.1.17/32 #nginx proxy manager ip
   #ip_ban_enabled: true 	        # use this to enable auto IP ban
   #login_attempts_threshold: 3 
   ```
