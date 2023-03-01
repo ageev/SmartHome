@@ -20,8 +20,8 @@
   - [vaultwarden](https://github.com/ageev/SmartHouse/tree/master/vaultwarden) - форк BitWarden - очень хороший менеджер паролей с клиентами под все платформы
   - [nginx proxy manager](https://github.com/ageev/SmartHouse/tree/master/Nginx%20Proxy%20Manager) - единое окно (ну почти) для всех внутренних веб-порталов. Позволяет сделать "зеленый замочек" (HTTP -> HTTPS) там, где его отродясь не было. Один минус NGM - нужно искать уникальный кастомный прокси конфиг под каждое приложение. С Traefik такой проблемы нет. Надо сравнить
   - mariadb - база данных. Нужна для Nginx Proxy Manager
-  - mosquitto - MQTT брокер. Нужен для zigbee2mqtt. Работает с очередью запросов к ZigBee устройствам для умного дома
-  - zigbee2mqtt - позволяет интегрировать Zigbee устройства умного дома с home-assistant. Работает с USB стиком Sonoff Zigbee 3.0, воткнутым в USB порт НАСа. В целом, можно было использовать и встроенный в Home Assistant zigbee модуль
+  - [mosquitto](https://github.com/ageev/SmartHome/tree/master/docker/zigbee2mqtt) - MQTT брокер. Нужен для zigbee2mqtt. Работает с очередью запросов к ZigBee устройствам для умного дома
+  - [zigbee2mqtt](https://github.com/ageev/SmartHome/tree/master/docker/zigbee2mqtt) - позволяет интегрировать Zigbee устройства умного дома с home-assistant. Работает с USB стиком Sonoff Zigbee 3.0, воткнутым в USB порт НАСа. В целом, можно было использовать и встроенный в Home Assistant zigbee модуль
   - plex - каталогизатор видео. Позволяет на лету транскодировать видеопотоки (если железо позволяет. DS218+ позволяет) под различные разрешения и устройства. Ну то есть можно стримить мультики на детские планшеты, и они сами могут выбирать, что смотреть. Пользуюсь редко. В основном, фильмы смотрим через NFS шары и Kodi
   - prowlarr - интегратор торрент треккеров. Даешь ему команду найти торрент - он ищет сразу по всем твоим любимым треккерам. Используется в связке с radarr
   - radarr - менеджер домашней видеобиблиотеки. Работает как-то так:
