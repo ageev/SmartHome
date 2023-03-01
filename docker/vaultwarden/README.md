@@ -1,10 +1,7 @@
 # Setting up the Vaultwarden with Caddy and Gandi DNS on Synology NAS
 ## KeePass vs BitWarden
 I've been using KeePass for many years. It's always a challange to synchronize the databases used on multiple devices. Maybe a better solution will be to use the client-server approach here and store all your passwords in a cetralized database. Bitwarden is an opensource solution, but standalone image is a paid service. Vaultwarden is a free alternative. It also works with official Windows / Android clients, developed by Bitwarden, which are actually great.
-Vaultwarden can also work for small companies. The Send feature can be quite usefull in the enterprise world.
-
-I only started recently to use Bitwarden/Vaultwarden, so many things are new for me too. 
-
+I recommend to install Bitwarden's browsers plugins and the mobile app (enable fingerprint login)
 ## Asumptions and requirements
 Those are conditions I have. Yours maybe different, keep this in mind
 1. Docker on Synology NAS DS218+ with DSM 7.0.1
