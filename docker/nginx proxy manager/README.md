@@ -6,7 +6,7 @@ Nginx Proxy Manager (aka, NPM) is a tool which allows you:
 Disadvantages: you need a custom config for most of the apps you publish. Sometimes it's a serious pain in the ***. Google "nginx proxy %appname%" and be ready to try a lot of configs. I still fail to find good settings for DSM and some other stuff
 
 # Setting up NPM with Synology
-ports 80/443 are not available in DSM. If you NPM with Docker+macvlan you will not see your docker containers. 
+Ports 80/443 are not available for docker in DSM (system uses this ports). If you want to use NPM with Docker+macvlan you will not see your docker containers. 
 Best solution I've found so far - Install Synology VM Manager, setup Virtual DSM, setup another Docker instance in the Virtual DSM. Setup your NPM docker there. 
 
 # Docker-compose for NGM
