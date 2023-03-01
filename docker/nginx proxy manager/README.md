@@ -30,30 +30,30 @@ networks:
       parent: eth0
     ipam:
       config:
-        - subnet: 10.0.1.0/24
-          gateway: 10.0.1.1
-          ip_range: 10.0.1.16/29
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
+          ip_range: 192.168.1.16/29
 
 services:
   nginx-proxy-manager:
     image: 'jc21/nginx-proxy-manager'
     container_name: nginx_proxy_manager
     hostname: nginx_proxy_manager
-    #user: 1027:100
+    #user: 1027:100   #CHANGE ME!
     domainname: local
     mac_address: 00:fa:c0:fa:c0:af
     cap_add:
       - NET_ADMIN
     dns:
-      - 10.0.1.9
+      - 192.168.1.9 # CHANGE ME!
     environment:
-     - PUID=1027
-     - PGID=100
+     - PUID=1027 # CHANGE ME!
+     - PGID=100  # CHANGE ME!
      - TZ=Europe/Amsterdam
-     - DB_MYSQL_HOST=10.0.1.5
+     - DB_MYSQL_HOST=192.168.1.5  #CHANGE ME!
      - DB_MYSQL_PORT=3306
      - DB_MYSQL_USER=npm
-     - DB_MYSQL_PASSWORD=p@55w0rd #shutka!
+     - DB_MYSQL_PASSWORD=p@55w0rd #CHANGE ME!
      - DB_MYSQL_NAME=npm
       # Uncomment this if IPv6 is not enabled on your host
      - DISABLE_IPV6=true
@@ -64,7 +64,7 @@ services:
     restart: unless-stopped
     networks:
       macvlan_network:
-        ipv4_address: 10.0.1.17
+        ipv4_address: 192.168.1.17
 ```
 
 # Configs for NGINX proxy manager
@@ -130,7 +130,7 @@ location /zigbee {
 add a subdomain (e.g., code-server.domain.com)
 ```
 location / {
-    proxy_pass http://ip:8443;
+    proxy_pass http://<ip>:8443;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -148,7 +148,7 @@ location = /robots.txt {
 location ~ ^/(.*)
 {
     # Connect to local port
-    proxy_pass http://ip:8443;
+    proxy_pass http://<ip>:8443;
 }
 ```
 
@@ -156,14 +156,14 @@ location ~ ^/(.*)
 add a subdomain (e.g., ha.domain.com)\
 ```
  location / {
-    proxy_pass http://ip:8123;
+    proxy_pass http://<CHANGE ME>:8123;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
   }
 
 location /api/websocket {
-    proxy_pass http://ip:8123/api/websocket;
+    proxy_pass http://<CHANGE ME>:8123/api/websocket;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -177,7 +177,7 @@ location /api/websocket {
  http:
   use_x_forwarded_for: true
   trusted_proxies: 
-    - 10.0.0.x/32 #nginx proxy manager ip
+    - 192.168.1.19/32 #nginx proxy manager ip
   #ip_ban_enabled: true 	        # use this to enable auto IP ban
   #login_attempts_threshold: 3 
   ```
