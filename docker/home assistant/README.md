@@ -29,6 +29,10 @@ services:
 #      - /dev/ttyACM0:/dev/ttyACM0 # old SONOFF stick
 #      - /dev/ttyUSB0:/dev/ttyUSB0 # sonoff zigbee 3.0 dongle plus 
 ```
+## HACS
+HACS - это *неофициальный* магазин аддонов к хомяку. Это то место, где Хомяк становится понастоящему мощной штукой.
+HACS подтягивает интеграции с GitHab. 
+
 ## Полезные автоматизации
 
 ## "Алиса, найди пульт от телевизора"
