@@ -6,6 +6,7 @@
 
 Я создал DNS А запись для собственного домена, указывающую на Гомера, и добавил конфигурацию [NPM](https://github.com/ageev/SmartHome/tree/master/docker/nginx%20proxy%20manager)
 Теперь мне не нужно запоминать адреса внутренней сети. Я просто вбиваю в браузер <my_domain.com> и вижу все ссылки.
+Еще я установил [тему на Гомера](https://github.com/walkxcode/homer-theme). Мои иконки разных приложений в файле [tools.zip](https://github.com/ageev/SmartHome/raw/master/docker/homer/tools.zip)
 
 # docker-compose.yml
 ```yml
