@@ -14,7 +14,7 @@ Best solution I've found so far - Install Synology VM Manager, setup Virtual DSM
 Disadvantages:
 - you now have 2 dockers, 2 DSMs to manage
 
-## Docker-compose for NGM (VirtualDSM)
+## Docker-compose for NGM (for VirtualDSM)
 ```yml
 ## install new versions
 # cd /volume1/docker
@@ -72,7 +72,8 @@ services:
         ipv4_address: 192.168.1.17
 ```
 
-## docker-compose.yml for MariaDB
+## docker-compose.yml for MariaDB (main docker on a normal DSM)
+
 ```yml
 ---
 version: "3.9"
@@ -82,8 +83,8 @@ services:
     container_name: mariadb
     hostname: mariadb
     environment:
-     - PUID=1029
-     - PGID=100
+     - PUID=1029 #change me!
+     - PGID=100 #change me!
      - TZ=Europe/Zurich
      - MYSQL_ROOT_PASSWORD= #change me!
      - MYSQL_DATABASE=npm
