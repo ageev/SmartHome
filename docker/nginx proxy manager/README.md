@@ -74,6 +74,27 @@ services:
 
 ## docker-compose.yml for MariaDB
 ```yml
+---
+version: "3.9"
+services:
+  mariadb:
+    image: linuxserver/mariadb
+    container_name: mariadb
+    hostname: mariadb
+    environment:
+     - PUID=1029
+     - PGID=100
+     - TZ=Europe/Zurich
+     - MYSQL_ROOT_PASSWORD= #change me!
+     - MYSQL_DATABASE=npm
+     - MYSQL_USER=npm
+     - MYSQL_PASSWORD= #change me!
+    volumes:
+     - /volume1/docker/mariadb:/config
+    ports:
+     - "3306:3306"
+    restart: unless-stopped
+    network_mode: "bridge"
 
 ```
 
