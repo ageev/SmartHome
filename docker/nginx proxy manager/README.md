@@ -15,7 +15,7 @@ Disadvantages:
 - you now have 2 dockers, 2 DSMs to manage
 
 ## Docker-compose for NGM (VirtualDSM)
-```bash
+```yml
 ## install new versions
 # cd /volume1/docker
 # sudo docker-compose pull
