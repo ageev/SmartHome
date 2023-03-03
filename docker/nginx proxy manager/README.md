@@ -1,18 +1,20 @@
+#Nginx Proxy Manager
 Nginx Proxy Manager (aka, NPM) is a tool which allows you:
 1. deploy HTTPS inside your network
 2. publish something in a secure way to internet 
 3. auto manages your HTTPS certs (via let's encrypt ACME bot)
 
-Disadvantages: you need a custom config for most of the apps you publish. Sometimes it's a serious pain in the ***. Google "nginx proxy %appname%" and be ready to try a lot of configs. Traefik can forward traffic directly from the docker. So I may move to Traefik one day... 
+Disadvantages: you need a custom config for most of the apps you publish. Sometimes it's a serious pain in the *** . Google "nginx proxy %appname%" and be ready to try a lot of configs. Traefik can forward traffic directly from the docker. So I may move to Traefik one day... 
 
-# Setting up NPM with Synology
+## Setting up NPM with Synology
 I want NPM to directly handle HTTP/HTTPS traffic on the standard ports (80/443, TCP). Unfortunately those are not available for docker for Synology NAS. DSM uses those ports for itself (just to redirect the traffic to 5001..). Also docker container can't see macvlan docker containers (no local route), so you need 2 dockers.
 Best solution I've found so far - Install Synology VM Manager, setup Virtual DSM (you have 1 free license), setup another Docker instance in the Virtual DSM. Setup your NPM docker there. 
+![NPM network scheme](https://github.com/ageev/SmartHome/raw/master/Pictures/npm_network.jpg)
 
 Disadvantages:
 - you now have 2 dockers, 2 DSMs to manage
 
-# Docker-compose for NGM
+## Docker-compose for NGM (VirtualDSM)
 ```bash
 ## install new versions
 # cd /volume1/docker
@@ -68,6 +70,11 @@ services:
     networks:
       macvlan_network:
         ipv4_address: 192.168.1.17
+```
+
+## docker-compose.yml for MariaDB
+```yml
+
 ```
 
 # Configs for NGINX proxy manager
