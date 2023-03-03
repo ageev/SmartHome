@@ -9,7 +9,7 @@ Disadvantages: you need a custom config for most of the apps you publish. Someti
 ## Setting up NPM with Synology
 I want NPM to directly handle HTTP/HTTPS traffic on the standard ports (80/443, TCP). Unfortunately those are not available for docker for Synology NAS. DSM uses those ports for itself (just to redirect the traffic to 5001..). Also docker container can't see macvlan docker containers (no local route), so you need 2 dockers.
 Best solution I've found so far - Install Synology VM Manager, setup Virtual DSM (you have 1 free license), setup another Docker instance in the Virtual DSM. Setup your NPM docker there. 
-![NPM network scheme](https://github.com/ageev/SmartHome/raw/master/Pictures/npm_network.jpg)
+![NPM network scheme](https://github.com/ageev/SmartHome/raw/master/Pictures/npm.jpg)
 
 Disadvantages:
 - you now have 2 dockers, 2 DSMs to manage
