@@ -3,11 +3,14 @@ Nginx Proxy Manager (aka, NPM) is a tool which allows you:
 2. publish something in a secure way to internet 
 3. auto manages your HTTPS certs (via let's encrypt ACME bot)
 
-Disadvantages: you need a custom config for most of the apps you publish. Sometimes it's a serious pain in the ***. Google "nginx proxy %appname%" and be ready to try a lot of configs. I still fail to find good settings for DSM and some other stuff
+Disadvantages: you need a custom config for most of the apps you publish. Sometimes it's a serious pain in the ***. Google "nginx proxy %appname%" and be ready to try a lot of configs. Traefik can forward traffic directly from the docker. So I may move to Traefik one day... 
 
 # Setting up NPM with Synology
-Ports 80/443 are not available for docker in DSM (system uses this ports). If you want to use NPM with Docker+macvlan you will not see your docker containers. 
-Best solution I've found so far - Install Synology VM Manager, setup Virtual DSM, setup another Docker instance in the Virtual DSM. Setup your NPM docker there. 
+I want NPM to directly handle HTTP/HTTPS traffic on the standard ports (80/443, TCP). Unfortunately those are not available for docker for Synology NAS. DSM uses those ports for itself (just to redirect the traffic to 5001..). Also docker container can't see macvlan docker containers (no local route), so you need 2 dockers.
+Best solution I've found so far - Install Synology VM Manager, setup Virtual DSM (you have 1 free license), setup another Docker instance in the Virtual DSM. Setup your NPM docker there. 
+
+Disadvantages:
+- you now have 2 dockers, 2 DSMs to manage
 
 # Docker-compose for NGM
 ```bash
