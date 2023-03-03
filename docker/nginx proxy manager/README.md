@@ -14,7 +14,7 @@ Best solution I've found so far - Install Synology VM Manager, setup Virtual DSM
 Disadvantages:
 - you now have 2 dockers, 2 DSMs to manage
 
-## Docker-compose for NGM (for VirtualDSM)
+## docker-compose.yml for NGM (for VirtualDSM)
 ```yml
 ## install new versions
 # cd /volume1/docker
