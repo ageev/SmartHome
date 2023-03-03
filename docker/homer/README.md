@@ -2,6 +2,7 @@
 Гомер - это простой вебсервер, который берёт содержимое ```config.yml``` и преобразует его в вебстраницу.
 Гомер очень удобен в виде стартовой страницы для всех сервисов вашего умного дома. 
 Вот такой:
+
 ![Стартовая страница Homer](https://github.com/ageev/SmartHome/tree/master/Pictures/start_page.jpg)
 
 Я создал DNS А запись для собственного домена, указывающую на Гомера, и добавил конфигурацию [NPM](https://github.com/ageev/SmartHome/tree/master/docker/nginx%20proxy%20manager)
