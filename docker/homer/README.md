@@ -3,7 +3,7 @@
 Гомер очень удобен в виде стартовой страницы для всех сервисов вашего умного дома. 
 Вот такой:
 
-![Стартовая страница Homer](https://github.com/ageev/SmartHome/tree/master/Pictures/start_page.jpg)
+![Стартовая страница Homer](https://github.com/ageev/SmartHome/raw/master/Pictures/start_page.jpg)
 
 Я создал DNS А запись для собственного домена, указывающую на Гомера, и добавил конфигурацию [NPM](https://github.com/ageev/SmartHome/tree/master/docker/nginx%20proxy%20manager)
 Теперь мне не нужно запоминать адреса внутренней сети. Я просто вбиваю в браузер <my_domain.com> и вижу все ссылки.
