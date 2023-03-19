@@ -3,13 +3,14 @@ So yeeligh smart lights only work using the LAN Mode if both sorce and destinati
 I pushed all lights to YazFi guest wifi network.
 
 NAT is needed to keep the LAN control option.
-1. login to your ASUS router
-2.```nano /jffs/addons/YazFi.d/userscripts.d/nat_to_guest.sh```
+* login to your ASUS router
+* ```nano /jffs/addons/YazFi.d/userscripts.d/nat_to_guest.sh```
 ```bash
 #!/bin/sh
 #iptables -I YazFiFORWARD -i wl0.1 -o br0 -d 10.0.1.5 -j ACCEPT
 iptables -t nat -A POSTROUTING -o wl0.1 -s 10.0.1.5 -j MASQUERADE
 ```
+where ```10.0.1.5``` is Home Assistant IP
 
 # DynDNS for ASUS with Gandi
 
