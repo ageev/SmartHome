@@ -11,7 +11,7 @@ NAT is needed to keep the LAN control option.
 iptables -t nat -A POSTROUTING -o wl0.1 -s 10.0.1.5 -j MASQUERADE
 ```
 
-#DynDNS for ASUS with Gandi
+# DynDNS for ASUS with Gandi
 
 ```bash
 #!/bin/bash
