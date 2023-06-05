@@ -7,10 +7,12 @@
 На НАСе крутятся:
 - Софт Synology
   - Synology Photos - отличный каталогизатор семейных фотографий. Я немного причесываю семейный архив [скриптами](https://github.com/ageev/others) время от времени
-  - HyperBackup - универсальный бэкапер. Работает практически со всеми облаками и имеет очень гибкие политики бэкапа
+  - HyperBackup - универсальный бэкапер. Работает практически со всеми облаками и имеет очень гибкие политики бэкапа. Я бэкаплю много и часто, в основном, в Azure, предварительно всё хорошенько зашифровав
   - CloudSync - синхронизирует локальную папку на НАСе с каким-нибудь облаком
-  - Virtual Machine Manager - тут у меня крутится VitrualDSM (виртуальный НАС)
+  - Virtual Machine Manager - тут у меня крутится VitrualDSM (виртуальный НАС). Раньше была ещё Убунту, но сейчас всё в докере
   - Surveillance Station - отличный менеджер камер наблюдения
+  - НАС шарит папку Media со всей домашней сетью, где лежат скачанные фильмы
+- Python скрипты через планировщик
 - docker - тут всё самое основное
   - [adguard](https://github.com/ageev/SmartHouse/tree/master/adguard) - продвинутая резалка рекламы. Лучше чем [pihole](https://github.com/ageev/SmartHouse/tree/master/pi-hole)
   - [caddy](https://github.com/ageev/SmartHouse/tree/master/docker/caddy) - вебсервер с поддержкой ACME (автоматическая выдача HTTPS сертификатов) - *заменил на Nginx Proxy Manager + acme.sh*
