@@ -10,12 +10,12 @@
 Воткнуть свой роутер в сеть отеля - это удобно. Не нужно подключать планшеты/телефоны/ноутбуки к новому вайфаю, т.к. на роутере настроена домашняя сеть. Быстрый вайфай + встроенный ВПН до дома чтобы, например, скачать кино. Мини Алиса (с USB-c!) и умная розетка позволяют выключать свет не вставая с дивана (супер опция для тех, кто проходил весь день). 
 Модем Huawei, даже прошитый хакнутой прошивкой - опция так себе. Как-нибудь проапгрейжу до внешнего кейса + miniPCI WAN карты (на 4pda отличная тема про [это](https://4pda.to/forum/index.php?showtopic=994474))
 Роутеры gl.inet - прям отличный девайс! Интерфейс очень понравился, внутри - openwrt. 
-Amazon Fire TV 4k Pro - лучший стик, на распродаже оч дёшев. Можно убрать всё гавно от Амазона (см @amazonfiretvrus в телеге), поставить [FLauncher](https://gitlab.com/flauncher/flauncher), [SmartTubeNext](https://github.com/yuliskov/SmartTubeNext), [AerialView](https://github.com/theothernt/AerialViews), NUС и Kodi
-
-![Стартовая страница Homer](Pictures/start_page.jpg)
-Вот так выглядит домашний веб сервер Homer (ниже про него подробней)
+Amazon Fire TV 4k Pro - лучший стик, на распродаже оч дёшев. Можно убрать всё гавно от Амазона (см @amazonfiretvrus в телеге), поставить [FLauncher](https://gitlab.com/flauncher/flauncher), [SmartTubeNext](https://github.com/yuliskov/SmartTubeNext), [AerialView](https://github.com/theothernt/AerialViews), NUM - No UI Movies и Kodi
 
 ## Софт
+![Стартовая страница Homer](Pictures/start_page.jpg)
+
+Вот так выглядит домашний веб сервер Homer (ниже про него подробней)
 На НАСе крутятся:
 - Софт Synology
   - Synology Photos - отличный каталогизатор семейных фотографий. Я немного причесываю семейный архив [скриптами](https://github.com/ageev/others) время от времени
