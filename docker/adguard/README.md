@@ -1,5 +1,5 @@
 # How to install ADGUARD HOME docker container on Synology NAS
-## Adguard vs Pi-hole
+## Adguard vs Pi-hole vs NextDNS
 I switched fully to Adguard now and here is why:
 
 Pros of Adguard
@@ -10,7 +10,9 @@ Pros of Adguard
 Pros of Pi-hole:
 - opensource & community driven
 
-*Nice alternative is to use nextdns.io (fully cloud-based solution)*
+Pros of NextDNS:
+- no CPU consumption (because it's a cloud)
+- very advanced solution
 
 # Step 1. Installation
 - adjust and copy the docker compose content to your docker compose file (e.g. to /volume1/docker/docker-compose.yml)
