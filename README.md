@@ -28,7 +28,7 @@ Amazon Fire TV 4k Pro - лучший стик, на распродаже оч д
   - Virtual Machine Manager - тут у меня крутится VitrualDSM (виртуальный НАС). Раньше была ещё Убунту, но сейчас всё в докере
   - Surveillance Station - отличный менеджер камер наблюдения
   - НАС шарит папку Media со всей домашней сетью, где лежат скачанные фильмы
-- Python скрипты через планировщик
+- Python скрипты, которые я запускаю через планировщик Synology
 - docker - тут всё самое основное
   - [adguard](https://github.com/ageev/SmartHouse/tree/master/adguard) - продвинутая резалка рекламы. Лучше чем [pihole](https://github.com/ageev/SmartHouse/tree/master/pi-hole)
   - [caddy](https://github.com/ageev/SmartHouse/tree/master/docker/caddy) - вебсервер с поддержкой ACME (автоматическая выдача HTTPS сертификатов) - *заменил на Nginx Proxy Manager + acme.sh*
