@@ -57,12 +57,12 @@ services:
     network_mode: "bridge"
 ```
 
-после установки контейнера нужно выполнить ряд команд в консоли НАСа:
+после установки контейнера нужно выполнить ряд команд в консоли НАСа (замени domain.com на свой домен!):
 ```
 sudo docker exec acme.sh acme.sh --register-account -m <YOUR EMAIL>
-sudo docker exec tool-acme.sh acme.sh --set-notify --notify-hook telegram
-sudo docker exec tool-acme.sh acme.sh --issue -d *.domain.com -k 4096 -ak 4096 --dns dns_gandi_livedns --dnssleep 300
-sudo docker exec tool-acme.sh acme.sh --deploy -d *.domain.com --deploy-hook synology_dsm
+sudo docker exec acme.sh acme.sh --set-notify --notify-hook telegram
+sudo docker exec acme.sh acme.sh --issue -d *.domain.com -k 4096 -ak 4096 --dns dns_gandi_livedns --dnssleep 300
+sudo docker exec acme.sh acme.sh --deploy -d *.domain.com --deploy-hook synology_dsm
 ```
 внутри контейнера есть cron job, который пробегается периодически по папкам в конфиге. Посмотреть его можно так:
 ```
