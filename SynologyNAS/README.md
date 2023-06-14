@@ -42,7 +42,7 @@ to fully enjoy the benefits you need to instal the Synology Log center. In "Noti
 ```bash
 if [ ! -f /lib/modules/cp210x.ko ]; then
     cd /lib/modules
-    wget https://github.com/robertklep/dsm7-usb-serial-drivers/raw/main/modules/apollolake/cp210x.ko
+    wget https://github.com/robertklep/dsm7-usb-serial-drivers/raw/main/modules/apollolake/dsm-7.2/cp210x.ko
 fi
 
 modprobe usbserial
