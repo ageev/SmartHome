@@ -54,3 +54,6 @@ wget --method=PUT --header="Content-Type: application/json" --header="X-Api-Key:
 # for Burp proxy add this to the end
 # -e use_proxy=yes -e http_proxy=127.0.0.1:8080 -e https_proxy=127.0.0.1:8080 --no-check-certificate
 ```
+
+# clear DNS leases
+```killall dnsmasq; rm /var/lib/misc/dnsmasq.leases; service restart_dnsmasq```
