@@ -13,7 +13,9 @@ iptables -t nat -A POSTROUTING -o wl0.1 -s 10.0.1.5 -j MASQUERADE
 where ```10.0.1.5``` is Home Assistant IP
 
 # Asus Router Home assistant addon
-You can add a parental contol switch to your HA with this integration, and switch off internet for some devices (e.g., kids tablets) inside your automations. 
+Install "ASUS Router" custom integration via HACS to your Home Assistant. 
+You can add a parental contol switch to your HA now. 
+Block internet access to entertaiment devices via "Parental Controls" tab on the router. Switch on parental controls through the Home Assistant when you need to disable internet for those devices.
 
 # Wifi Jail
 put your smart devices who need access to WiFi but not to Internet (e.g., soundbar) into the isolated part of the network.
