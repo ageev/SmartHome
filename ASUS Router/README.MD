@@ -16,7 +16,7 @@ where ```10.0.1.5``` is Home Assistant IP
 You can add a parental contol switch to your HA with this integration, and switch off internet for some devices (e.g., kids tablets) inside your automations. 
 
 # Wifi Jail
-```iptables -I FORWARD -m iprange --src-range 192.168.1.200-219 -j REJECT```
+```iptables -I FORWARD -m iprange --src-range 10.0.1.230-10.0.1.254 -j REJECT```
 Remove a range from your DHCP scope and block that range with iptables. 
 Now if you need to have a device with Wifi access and now internet just create a static assignment for it in this IP range.
 
