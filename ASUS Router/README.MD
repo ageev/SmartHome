@@ -16,7 +16,8 @@ where ```10.0.1.5``` is Home Assistant IP
 You can add a parental contol switch to your HA with this integration, and switch off internet for some devices (e.g., kids tablets) inside your automations. 
 
 # Wifi Jail
-put your smart devices who needs access to WiFi but not to internet (e.g., soundbar) into the isolated part of the network:
+put your smart devices who need access to WiFi but not to Internet (e.g., soundbar) into the isolated part of the network.
+Add this to ```/jffs/scripts/firewall-start```:
 ```
 iptables -I FORWARD -m iprange --src-range 10.0.1.230-10.0.1.254 -j REJECT
 ```
