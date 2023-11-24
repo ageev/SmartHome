@@ -69,5 +69,5 @@ sudo docker exec acme.sh acme.sh --deploy -d *.domain.com --deploy-hook synology
 sudo docker exec acme.sh crontab -l
 ```
 
-#Ссылки
-[*] https://github.com/acmesh-official/acme.sh/wiki/deployhooks#20-deploy-the-certificate-to-synology-dsm
+# Ссылки
+1. https://github.com/acmesh-official/acme.sh/wiki/deployhooks#20-deploy-the-certificate-to-synology-dsm
