@@ -62,9 +62,12 @@ services:
 sudo docker exec acme.sh acme.sh --register-account -m <YOUR EMAIL>
 sudo docker exec acme.sh acme.sh --set-notify --notify-hook telegram
 sudo docker exec acme.sh acme.sh --issue -d *.domain.com -k 4096 -ak 4096 --dns dns_gandi_livedns --dnssleep 300
-sudo docker exec acme.sh acme.sh --deploy -d *.domain.com --deploy-hook synology_dsm
+sudo docker exec acme.sh acme.sh --deploy -d *.domain.com --deploy-hook synology_dsm --insecure
 ```
 внутри контейнера есть cron job, который пробегается периодически по папкам в конфиге. Посмотреть его можно так:
 ```
 sudo docker exec acme.sh crontab -l
 ```
+
+#Ссылки
+[*] https://github.com/acmesh-official/acme.sh/wiki/deployhooks#20-deploy-the-certificate-to-synology-dsm
