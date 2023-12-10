@@ -26,7 +26,7 @@ iptables -I FORWARD -m iprange --src-range 10.0.1.230-10.0.1.254 -j REJECT
 Now go to the management portal and assign a static IP from that IP range (do not forget to exclude it from the DHCP scope!).
 
 # DynDNS for ASUS with Gandi
-(Merlin Wiki)[https://github.com/RMerl/asuswrt-merlin/wiki/Cu stom-DDNS/a5d71302d2e976c38d72d23a8ccdc13c1c3b6449]
+[Merlin Wiki](https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS/a5d71302d2e976c38d72d23a8ccdc13c1c3b6449)
 
 ```bash
 #!/bin/bash
