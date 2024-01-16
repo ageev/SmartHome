@@ -71,3 +71,77 @@ wget --method=PUT --header="Content-Type: application/json" --header="X-Api-Key:
 
 # clear DNS leases
 ```killall dnsmasq; rm /var/lib/misc/dnsmasq.leases; service restart_dnsmasq```
+
+# Super Power!
+
+```bash
+#!/bin/sh
+
+# get power
+# wl txpwr
+# wl txpwr_target_max
+
+# Allow all channels
+nvram set location_code=#a
+nvram set 0:ccode=#a
+nvram set 0:regrev=0
+nvram set 1:ccode=#a
+nvram set 1:regrev=0
+nvram set territory_code=CN/02
+nvram set wl_country_code=#a
+nvram set wl_reg_mode=h
+nvram set wl0_country_code=#a
+nvram set wl0_country_rev=0
+nvram set wl0_reg_mode=h
+nvram set wl1_chlist="36 40 44 48 52 56 60 64 100 104 108 112 116 120 124 128 132 13                                                                                                                       >
+nvram set wl1_country_code=#a
+nvram set wl1_country_rev=0
+nvram set wl1_reg_mode=h
+nvram set acs_unii4=1
+nvram set wl_acs_excl_chans_dfs=
+nvram set wl_acs_excl_chans=
+nvram set wl0_acs_dfs=1
+nvram set wl0_acs_excl_chans_base=
+nvram set wl0_acs_excl_chans=
+nvram set wl1_acs_dfs=1
+nvram set wl1_acs_excl_chans_base=
+nvram set wl1_acs_excl_chans=
+
+# Channel selection
+# nvram set wl0_chanspec=0 # auto select
+# nvram set wl1_chanspec=0 # auto select
+# nvram set wl_chanspec=0 # auto select
+# nvram set wl0_sel_channel=7/80 # force 2.4GHz channel
+# nvram set wl1_sel_channel=149/80 # force 5GHz channel
+
+# Set TX-Power (risky!)
+nvram set 0:maxp2ga0=120
+nvram set 0:maxp2ga1=120
+nvram set 0:maxp2ga2=120
+nvram set 1:maxp5gb0a0=120
+nvram set 1:maxp5gb0a1=120
+nvram set 1:maxp5gb0a2=120
+nvram set 1:maxp5gb0a3=120
+nvram set 1:maxp5gb1a0=120
+nvram set 1:maxp5gb1a1=120
+nvram set 1:maxp5gb1a2=120
+nvram set 1:maxp5gb1a3=120
+nvram set 1:maxp5gb2a0=120
+nvram set 1:maxp5gb2a1=120
+nvram set 1:maxp5gb2a2=120
+nvram set 1:maxp5gb2a3=120
+nvram set 1:maxp5gb3a0=120
+nvram set 1:maxp5gb3a1=120
+nvram set 1:maxp5gb3a2=120
+nvram set 1:maxp5gb3a3=120
+nvram set 1:maxp5gb4a0=120
+nvram set 1:maxp5gb4a1=120
+nvram set 1:maxp5gb4a2=120
+nvram set 1:maxp5gb4a3=120
+nvram set wl0_txpower=500
+nvram set wl1_txpower=500
+nvram set wl_txpower=500
+
+# Commit changes
+nvram commit
+```
