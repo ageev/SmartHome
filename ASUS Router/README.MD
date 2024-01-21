@@ -79,7 +79,7 @@ Be carefull. In this mode with auto wifi channel selection router may jump to th
 How to pick a good wifi channel.
 1. run Inssider (PC) or Wifiman (Android). 
 2. find the least used channel
-3. check (wiki page)[https://en.wikipedia.org/wiki/List_of_WLAN_channels] to make sure that this channel has 160Mhz band
+3. check [wiki page](https://en.wikipedia.org/wiki/List_of_WLAN_channels) to make sure that this channel has 160Mhz band
 
 ```bash
 #!/bin/sh
