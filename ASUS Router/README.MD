@@ -73,11 +73,18 @@ wget --method=PUT --header="Content-Type: application/json" --header="X-Api-Key:
 ```killall dnsmasq; rm /var/lib/misc/dnsmasq.leases; service restart_dnsmasq```
 
 # Super Power!
+Change router's country to unlock full power and all wifi channels. 
+Be carefull. In this mode with auto wifi channel selection router may jump to the wifi channel, not available in your country. Clients will not be able to see or use it. Use manual channel assigment. 
+
+How to pick a good wifi channel.
+1. run Inssider (PC) or Wifiman (Android). 
+2. find the least used channel
+3. check (wiki page)[https://en.wikipedia.org/wiki/List_of_WLAN_channels] to make sure that this channel has 160Mhz band
 
 ```bash
 #!/bin/sh
 
-# get power
+# Use those commands to get current TX power.
 # wl txpwr
 # wl txpwr_target_max
 
@@ -113,34 +120,6 @@ nvram set wl1_acs_excl_chans=
 # nvram set wl_chanspec=0 # auto select
 # nvram set wl0_sel_channel=7/80 # force 2.4GHz channel
 # nvram set wl1_sel_channel=149/80 # force 5GHz channel
-
-# Set TX-Power (risky!)
-nvram set 0:maxp2ga0=120
-nvram set 0:maxp2ga1=120
-nvram set 0:maxp2ga2=120
-nvram set 1:maxp5gb0a0=120
-nvram set 1:maxp5gb0a1=120
-nvram set 1:maxp5gb0a2=120
-nvram set 1:maxp5gb0a3=120
-nvram set 1:maxp5gb1a0=120
-nvram set 1:maxp5gb1a1=120
-nvram set 1:maxp5gb1a2=120
-nvram set 1:maxp5gb1a3=120
-nvram set 1:maxp5gb2a0=120
-nvram set 1:maxp5gb2a1=120
-nvram set 1:maxp5gb2a2=120
-nvram set 1:maxp5gb2a3=120
-nvram set 1:maxp5gb3a0=120
-nvram set 1:maxp5gb3a1=120
-nvram set 1:maxp5gb3a2=120
-nvram set 1:maxp5gb3a3=120
-nvram set 1:maxp5gb4a0=120
-nvram set 1:maxp5gb4a1=120
-nvram set 1:maxp5gb4a2=120
-nvram set 1:maxp5gb4a3=120
-nvram set wl0_txpower=500
-nvram set wl1_txpower=500
-nvram set wl_txpower=500
 
 # Commit changes
 nvram commit
