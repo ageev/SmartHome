@@ -1,4 +1,5 @@
 # Free space in NVRAM
+Script below will remove empty NVRAM parameters (e.g., "var=")
 ```bash
 for line in `nvram show | grep ^[^=]*=$ `; do var=${line%*=}; nvram unset $var; done; nvram commit
 ```
