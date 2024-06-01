@@ -57,6 +57,9 @@ Remove the specific rule (e.g., first one)
 ```bash
 iptables -D FORWARD 1
 ```
+```bash
+route del -net 192.168.7.0 netmask 255.255.255.0 dev tun21
+```
 
 # DynDNS for ASUS with Gandi
 [Merlin Wiki](https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS/a5d71302d2e976c38d72d23a8ccdc13c1c3b6449)
