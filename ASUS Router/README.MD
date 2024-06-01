@@ -1,3 +1,20 @@
+# OpenVPN setup on Asus routers
+https://www.youtube.com/watch?v=cHaD-Bofj9A
+
+```bash
+easyrsa --batch init-pki
+easyrsa --batch --silent --silent-ssl --days=3650 --req-cn="OpenVPN Server" --digest=sha512 build-ca nopass
+easyrsa --batch --silent --silent-ssl --req-cn="OpenVPN Server Key" gen-req Server nopass
+easyrsa --batch --silent --silent-ssl --days=3650 sign-req server Server
+easyrsa --batch --silent --silent-ssl --req-cn="user1" gen-req User1 nopass
+easyrsa --batch --silent --silent-ssl --days=3650 sign-req client User1
+easyrsa --batch --silent --silent-ssl --req-cn="user2" gen-req User2 nopass
+easyrsa --batch --silent --silent-ssl --days=3650 sign-req client User2
+easyrsa --batch --silent --silent-ssl --req-cn="user3" gen-req User3 nopass
+easyrsa --batch --silent --silent-ssl --days=3650 sign-req client User3
+easyrsa gen-dh --silent --silent-ssl
+```
+
 # YazFi + Yeelight + Home Assisstant
 So yeeligh smart lights only work using the LAN Mode if both sorce and destination IPs belong to the same subnet.
 I pushed all lights to YazFi guest wifi network.
