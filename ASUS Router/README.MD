@@ -4,8 +4,19 @@ Script below will remove empty NVRAM parameters (e.g., "var="). Will clear some 
 for line in `nvram show | grep ^[^=]*=$ `; do var=${line%*=}; nvram unset $var; done; nvram commit
 ```
 
-# OpenVPN setup on Asus routers
+# Site-to-site VPN between 2 Asus routers.
+On "Master router" start OpenVPN server. "Master router" must have VPN port available from Internet. "Slave router" may have local-only IP.
+Same VPN connection will be used for both site-to-site and regular VPN. 
+
+Master router local IP: A.A.A.0/24 (pls change to your own range)
+Slave router local IP: B.B.B.0/24
+Master router VPN IP: VPN.VPN.VPN.0/24
+
+1. Generate proper certs for different users. See the video here:
+
 https://www.youtube.com/watch?v=cHaD-Bofj9A
+
+.. and create few certs for multiple users. User1 will be used solely for Slave router connection. It will have a dedicated routing rule attached to it so all hosts from Master router's LAN can access all systems in Slave router's LAN and vise versa. User2 and User3 will be just normal users.
 
 ```bash
 easyrsa --batch init-pki
@@ -20,6 +31,26 @@ easyrsa --batch --silent --silent-ssl --req-cn="user3" gen-req User3 nopass
 easyrsa --batch --silent --silent-ssl --days=3650 sign-req client User3
 easyrsa gen-dh --silent --silent-ssl
 ```
+2. In OpenVPN server general settings set "Both" to access both LAN and Internet.
+3. In OpenVPN advanced settings:
+Manage Client-Specific Options - Yes
+Allow Client <-> Client - No
+Allow only specified clients - No
+
+Add new entry into "Allowed clients" list:
+User1 B.B.B.0 255.255.255.0 Push=Yes
+
+4. Go to Slave router. Add new OpenVPN client and upload the .ovpn file generated for User1.
+Automatic start at boot time - Yes
+Create NAT on tunnel - Yes
+Inbound Firewall - Allow
+Redirect Internet traffic through tunnel - No* (or Yes, if you want to route internet traffic too)
+
+5. Slave router, go to "VPN Director" tab. 
+Add new rule:
+Some_name, Local IP = B.B.B.0/24, Remote IP = A.A.A.0/24, iface=OVPN1
+
+6. done! Check Satus page on Master router. 
 
 # YazFi + Yeelight + Home Assisstant
 So yeeligh smart lights only work using the LAN Mode if both sorce and destination IPs belong to the same subnet.
