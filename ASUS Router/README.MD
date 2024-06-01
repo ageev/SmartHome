@@ -1,3 +1,8 @@
+# Free space in NVRAM
+```bash
+for line in `nvram show | grep ^[^=]*=$ `; do var=${line%*=}; nvram unset $var; done; nvram commit
+```
+
 # OpenVPN setup on Asus routers
 https://www.youtube.com/watch?v=cHaD-Bofj9A
 
