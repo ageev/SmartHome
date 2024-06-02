@@ -53,6 +53,7 @@ chmod 666 /dev/ttyUSB0
 ```
 Some comments here. After DSM upgrade the ```cp210x.io``` file will disappear. The boot-up script will catch this and redownload it.  
 
+If your ZigBee works slow, just re-plug the Sonoff stick!
 
 ## Route to docker
 ```bash
