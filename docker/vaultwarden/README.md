@@ -151,7 +151,10 @@ services:
     volumes:
       - /volume1/docker/vaultwarden:/data
     restart: unless-stopped
-    network_mode: "host"
+    ports:
+      - 8088:8088
+      - 3012:3012
+    network_mode: "bridge"
 ```
 
 5. SSH to NAS & run docker-compose
