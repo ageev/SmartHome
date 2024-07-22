@@ -4,7 +4,7 @@ I've been using KeePass for many years. It's always a challange to synchronize t
 I recommend to install Bitwarden's browsers plugins and the mobile app (enable fingerprint login)
 ## Asumptions and requirements
 Those are conditions I have. Yours maybe different, keep this in mind
-1. Docker on Synology NAS DS218+ with DSM 7.0.1
+1. Docker on Synology NAS DS723+ with DSM 7.1
 2. No ports/services published externally. If I need to access the vaultwarden from the internet - I use VPN
 3. Because no HTTP(S) ports are available from the internet, I need to use the DNS-1 ACME challenge to get the Let's Encrypt cert
 4. I use Gandi to manage my domain names. Caddy has a module for Gandi, so that's not a problem
@@ -14,6 +14,8 @@ You need a real domain name to get HTTPS certificate. You need a proper HTTPS ce
 So I have a DNS record at Gandi (let's say vw.example.com) which points to my local NAS IP.  
 
 ## Vaultwarden design
+[UPDATE] I moved to Nginx Proxy Manager for all certificate needs. Caddy is kept here for historical reasons. I don't use it anymore. 
+
 Vaultwarden needs https, so everyone is using Caddy (reverse proxy) + let's encrypt certs. Caddy can automatically get&renew HTTPS certs. 
 So to use Vaultwarden you need:
 * 2 containers: Caddy, Vaultwarden
