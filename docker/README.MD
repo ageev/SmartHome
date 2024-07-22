@@ -31,3 +31,4 @@ iptables -A DOCKER-USER -s 172.19.0.0/16 -d 10.0.0.0/8 -j RETURN
 iptables -A DOCKER-USER -s 172.19.0.0/16 -j DROP
 iptables -A DOCKER-USER -j RETURN
 ```
+Note: Synology's iptables doesnt support REJECT -> so I used DROP instead. REJECT is almost instant, while DROP cancels connection attempt after few seconds delay. 
