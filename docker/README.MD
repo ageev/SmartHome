@@ -14,7 +14,7 @@ networks:
       config:
         - subnet: 172.19.0.0/16
 ```
-2. For those containers who need access to internet add this:
+2. For those containers who doesnt need access to internet add this:
 ```bash
 services:
   container_name
