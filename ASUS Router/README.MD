@@ -41,16 +41,91 @@ Add new entry into "Allowed clients" list:
 User1 B.B.B.0 255.255.255.0 Push=Yes
 
 4. Go to Slave router. Add new OpenVPN client and upload the .ovpn file generated for User1.
+
 Automatic start at boot time - Yes
 Create NAT on tunnel - Yes
+
 Inbound Firewall - Allow
-Redirect Internet traffic through tunnel - No* (or Yes, if you want to route internet traffic too)
+
+Redirect Internet traffic through tunnel - "VPN Director"
 
 5. Slave router, go to "VPN Director" tab. 
+
 Add new rule:
 Some_name, Local IP = B.B.B.0/24, Remote IP = A.A.A.0/24, iface=OVPN1
 
+For mass adding VPN director rule see "Mass adding VPN Director rules" section below
+
 6. done! Check Satus page on Master router. 
+
+# Mass adding VPN Director rules
+If you need to redirect traffic to YouTube, for example, via your VPN, do the following.
+
+Step 1. Getting the list of YouTube IPs. 
+
+It's hard. I got the list from here https://forummikrotik.ru/viewtopic.php?t=16909&start=90 
+
+Step 2. Convert the list to VPN Director's format. Replace 192.168.7.0/24 with your local IP!
+```bash
+cat << 'EOF' > /tmp/rules
+142.250.184.0/24
+107.0.0.0/8
+142.250.185.0/24
+3.0.0.0/8
+216.58.212.0/24
+93.158.134.0/24
+74.125.71.0/24
+216.58.206.0/24
+142.250.186.0/24
+42.192.32.0/24
+74.125.206.0/24
+173.194.0.0/16
+172.217.0.0/16
+142.250.0.0/16
+74.125.0.0/16
+216.58.0.0/16
+74.0.0.0/8
+3.76.0.0/16
+3.78.0.0/16
+216.239.32.0/16
+64.233.0.0/16
+8.222.0.0/16
+107.155.0.0/16
+35.207.0.0/16
+3.66.0.0/16
+18.140.0.0/16
+23.2.0.0/16
+99.81.0.0/16
+54.0.0.0/16
+77.241.0.0/16
+216.239.0.0/16
+108.177.0.0/16
+184.86.0.0/16
+52.0.0.0/16
+63.35.0.0/16
+101.34.0.0/16
+34.252.0.0/16
+45.57.0.0/16
+169.254.0.0/16
+34.0.0.0/16
+184.0.0.0/16
+87.0.0.0/16
+213.59.0.0/16
+EOF
+
+rulelist=''; n=1
+
+while read line; do
+    rulelist="${rulelist}<1>YouTube$((n++))>192.168.7.0/24>$line>OVPN1"
+done < /tmp/rules
+
+echo "$rulelist"
+```
+
+Step 3. Overwrite the existing VPN Director configuration file. Existing records will be deleted! You can use ">>" instead of ">" to append
+```bash
+echo "$rulelist" > /jffs/openvpn/vpndirector_rulelist
+```
 
 # YazFi + Yeelight + Home Assisstant
 So yeeligh smart lights only work using the LAN Mode if both sorce and destination IPs belong to the same subnet.
