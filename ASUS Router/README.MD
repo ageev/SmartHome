@@ -173,29 +173,53 @@ route del -net 192.168.7.0 netmask 255.255.255.0 dev tun21
 ```bash
 #!/bin/bash
 
-APIKEY="<GANDI_API_KEY>" # Your 24-character API key
-DOMAIN="example.com" # The domain to be updated
-SUBDOMAINS="" # starnge way to create arrays in SH. Append new subdomain to existing array every time
-SUBDOMAINS="${SUBDOMAINS} mail"
-SUBDOMAINS="${SUBDOMAINS} start"    # The Sub-Domain to update, use {$@,*} to update base domain (*.example.com), or change to "home" for home.example     >
+APIKEY_GANDI=""
+APIKEY_CLOUDFLARE=""
 
-IP=$(ip route get 1 | awk '{print $NF;exit}')
+#IP=$(ip route get 1 | awk '{print $NF;exit}')
 # if external IP is not known to router. More here https://openwrt.org/docs/guide-user/services/ddns/client#detecting_public_ip
-#IP="$(curl -fs4 https://myip.dnsomatic.com/)"
+IP="$(curl -fs4 http://checkip.amazonaws.com)"
 
-for i in ${SUBDOMAINS};
-do
-   curl -fs -o /dev/null -X PUT -H "Content-Type: application/json" \
-        -H "X-Api-Key: ${APIKEY}" \
-        -d "{\"rrset_ttl\": 10800, \"rrset_values\": [\"${IP}\"]}" \
-        "https://dns.api.gandi.net/api/v5/domains/${DOMAIN}/records/${i}/A"
-done
+# 1st domain
+
+ZONE_ID="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" # get it from your Cloudflare dashboard
+RECORD_ID="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" # curl ... "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" | json_pp
+RECORD_NAME="sub.domain.com"
+
+curl -fs -o /dev/null -X PUT -H "Content-Type: application/json" \
+   -H "Authorization: Bearer ${APIKEY_CLOUDFLARE}" \
+   --data "{\"type\":\"A\",\"name\":\"${RECORD_NAME}\",\"content\":\"${IP}\",\"ttl\":1,\"proxied\":false}" \
+   "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${RECORD_ID}"
+
+# 2nd domain
+
+DOMAIN="domain.com"
+SUBDOMAIN="sub1"
+
+curl -fs -o /dev/null -X PUT -H "Content-Type: application/json" \
+   -H "X-Api-Key: ${APIKEY_GANDI}" \
+   -d "{\"rrset_ttl\": 10800, \"rrset_values\": [\"${IP}\"]}" \
+   "https://dns.api.gandi.net/api/v5/domains/${DOMAIN}/records/${SUBDOMAIN}/A"
+
+# 3rd domain
+
+DOMAIN="domain.com"
+SUBDOMAIN="sub2"
+
+curl -fs -o /dev/null -X PUT -H "Content-Type: application/json" \
+   -H "X-Api-Key: ${APIKEY_GANDI}" \
+   -d "{\"rrset_ttl\": 10800, \"rrset_values\": [\"${IP}\"]}" \
+   "https://dns.api.gandi.net/api/v5/domains/${DOMAIN}/records/${SUBDOMAIN}/A"
 
 if [ $? -eq 0 ]; then
         /sbin/ddns_custom_updated 1
 else
         /sbin/ddns_custom_updated 0
 fi
+
+
+# Update NEXT DNS
+curl -fs -o /dev/null "https://link-ip.nextdns.io/123123/123123"
 ```
 DDNS with Gandi and wget instead of curl
 ```bash
