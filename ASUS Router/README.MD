@@ -129,6 +129,7 @@ echo "$rulelist" > /jffs/openvpn/vpndirector_rulelist
 
 # YazFi + Yeelight + Home Assisstant
 !UPDATE I re-programmed all my Yeelights to use ESPHOME (soldering required!)
+
 So yeeligh smart lights only work using the LAN Mode if both sorce and destination IPs belong to the same subnet.
 I pushed all lights to YazFi guest wifi network.
 
