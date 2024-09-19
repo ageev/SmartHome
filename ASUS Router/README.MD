@@ -70,63 +70,28 @@ It's hard. I got the list from here https://rockblack.su/vpn/dopolnitelno/diapaz
 
 Step 2. Convert the list to VPN Director's format. Replace 192.168.7.0/24 with your local IP!
 ```bash
-cat << 'EOF' > /tmp/rules
-142.250.184.0/24
-107.0.0.0/8
-142.250.185.0/24
-3.0.0.0/8
-216.58.212.0/24
-93.158.134.0/24
-74.125.71.0/24
-216.58.206.0/24
-142.250.186.0/24
-42.192.32.0/24
-74.125.206.0/24
-173.194.0.0/16
-172.217.0.0/16
-142.250.0.0/16
-74.125.0.0/16
-216.58.0.0/16
-74.0.0.0/8
-3.76.0.0/16
-3.78.0.0/16
-216.239.32.0/16
-64.233.0.0/16
-8.222.0.0/16
-107.155.0.0/16
-35.207.0.0/16
-3.66.0.0/16
-18.140.0.0/16
-23.2.0.0/16
-99.81.0.0/16
-54.0.0.0/16
-77.241.0.0/16
-216.239.0.0/16
-108.177.0.0/16
-184.86.0.0/16
-52.0.0.0/16
-63.35.0.0/16
-101.34.0.0/16
-34.252.0.0/16
-45.57.0.0/16
-169.254.0.0/16
-34.0.0.0/16
-184.0.0.0/16
-87.0.0.0/16
-213.59.0.0/16
-EOF
+#!/bin/sh
 
-rulelist=''; n=1
+#Add existing rules here
+rulelist='<1>OFFICE_LAN>192.168.7.0/24>10.0.1.0/24>OVPN1'
+n=1
 
-while read line; do
+# add ip ranges here. Max 199 rules!
+list="188.114.0.0/16, 172.64.0.0/16, 104.18.0.0/16, 64.233.0.0/16, 8.8.4.0/24, 8.8.8.0/24, 8.34.0.0/16, 8.35.0.0/16, 23.236.0.0/16, 23.251.0.0/16, 34.0.0.0/10, 35.184.0.0/13, 35.192.0.0/14, 35.196.0.0/15"
+
+# Set IFS to handle both commas and spaces
+IFS=', '
+
+# Loop through the list and construct the rulelist
+for line in $list; do
     rulelist="${rulelist}<1>YouTube$((n++))>192.168.7.0/24>$line>OVPN1"
-done < /tmp/rules
+done
 
+# Output the result
 echo "$rulelist"
-```
+echo "Number of elements: $n"
 
-Step 3. Overwrite the existing VPN Director configuration file. Existing records will be deleted! You can use ">>" instead of ">" to append
-```bash
+# apply the list
 echo "$rulelist" > /jffs/openvpn/vpndirector_rulelist
 ```
 
