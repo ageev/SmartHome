@@ -208,16 +208,15 @@ wget --method=PUT --header="Content-Type: application/json" --header="X-Api-Key:
 
 # Super Power!
 Change router's country to unlock full power and all wifi channels. 
-Be carefull. In this mode with auto wifi channel selection router may jump to the wifi channel, not available in your country. Clients will not be able to see or use it. Use manual channel assigment. 
+Be carefull. In this mode with auto wifi channel selection router may jump to the wifi channel, not available in your country. Clients will not be able to see or use it. Use manual channel assigment if needed.
 
 How to pick a good wifi channel.
 1. run Inssider (PC) or Wifiman (Android). 
 2. find the least used channel
 3. check [wiki page](https://en.wikipedia.org/wiki/List_of_WLAN_channels) to make sure that this channel has 160Mhz band
+4. Run this once.
 
 ```bash
-#!/bin/sh
-
 # IMPORTANT! BACKUP NVRAM FIRST!
 # nvram dump > dump.txt
 
@@ -225,39 +224,40 @@ How to pick a good wifi channel.
 # wl txpwr
 # wl txpwr_target_max
 
-# Allow all channels
-nvram set location_code=#a
+# Per interface (depends on your router. This one is for GT-AXE16000)
+# wl -i eth7 txpwr_adj_est
+# wl -i eth8 txpwr_adj_est
+# wl -i eth9 txpwr_adj_est
+# wl -i eth10 txpwr_adj_est
+
+# I have 4 bands -> I need to set country 4 times. You may have 2 or 3
 nvram set 0:ccode=#a
 nvram set 0:regrev=0
 nvram set 1:ccode=#a
 nvram set 1:regrev=0
-nvram set territory_code=CN/02
+nvram set 2:ccode=#a
+nvram set 2:regrev=0
+nvram set 3:ccode=#a
+nvram set 3:regrev=0
+nvram set 4:ccode=#a
+nvram set 4:regrev=0
+nvram set location_code=#a
 nvram set wl_country_code=#a
-nvram set wl_reg_mode=h
+nvram set wl_country_rev=0
+nvram set wl0_country_abbrev_override=US
 nvram set wl0_country_code=#a
 nvram set wl0_country_rev=0
-nvram set wl0_reg_mode=h
-nvram set wl1_chlist="36 40 44 48 52 56 60 64 100 104 108 112 116 120 124 128 132 136 140 149 153 157 161 165 169 173 177"
+nvram set wl1_country_abbrev_override=US
 nvram set wl1_country_code=#a
 nvram set wl1_country_rev=0
-nvram set wl1_reg_mode=h
-nvram set acs_unii4=1
-nvram set wl_acs_excl_chans_dfs=
-nvram set wl_acs_excl_chans=
-nvram set wl0_acs_dfs=1
-nvram set wl0_acs_excl_chans_base=
-nvram set wl0_acs_excl_chans=
-nvram set wl1_acs_dfs=1
-nvram set wl1_acs_excl_chans_base=
-nvram set wl1_acs_excl_chans=
-
-# Channel selection
-# nvram set wl0_chanspec=0 # auto select
-# nvram set wl1_chanspec=0 # auto select
-# nvram set wl_chanspec=0 # auto select
-# nvram set wl0_sel_channel=7/80 # force 2.4GHz channel
-# nvram set wl1_sel_channel=149/80 # force 5GHz channel
-
-# Commit changes
+nvram set wl2_country_abbrev_override=US
+nvram set wl2_country_code=#a
+nvram set wl2_country_rev=0
+nvram set wl3_country_abbrev_override=US
+nvram set wl3_country_code=#a
+nvram set wl3_country_rev=0
 nvram commit
 ```
+
+# Get client specific connection details
+Run this to get the list of clients per interface ```wl -i eth7 assoclist```. Pick one and run this ```wl -i eth7 sta_info MAC ADDRESS OF CLIENT```
