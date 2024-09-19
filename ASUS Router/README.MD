@@ -252,7 +252,10 @@ How to pick a good wifi channel.
 ```bash
 #!/bin/sh
 
-# Use those commands to get current TX power.
+# IMPORTANT! BACKUP NVRAM FIRST!
+# nvram dump > dump.txt
+
+# Use those commands to get the current TX power.
 # wl txpwr
 # wl txpwr_target_max
 
