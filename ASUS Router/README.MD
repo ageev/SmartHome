@@ -64,15 +64,13 @@ For mass adding VPN director rule see "Mass adding VPN Director rules" section b
 # Mass adding VPN Director rules
 If you need to redirect traffic to YouTube, for example, via your VPN, do the following.
 
-Step 1. Getting the list of YouTube IPs. 
+Step 1. Get the list of YouTube IPs from here https://rockblack.su/vpn/dopolnitelno/diapazon-ip-adresov
 
-It's hard. I got the list from here https://rockblack.su/vpn/dopolnitelno/diapazon-ip-adresov
-
-Step 2. Convert the list to VPN Director's format. Replace 192.168.7.0/24 with your local IP!
+Step 2. Create a script and run it. 
 ```bash
 #!/bin/sh
 
-#Add existing rules here
+#Add existing rules here. Use your LAN IP instead of 192.168.7.0/24!
 rulelist='<1>OFFICE_LAN>192.168.7.0/24>10.0.1.0/24>OVPN1'
 n=1
 
@@ -82,7 +80,7 @@ list="188.114.0.0/16, 172.64.0.0/16, 104.18.0.0/16, 64.233.0.0/16, 8.8.4.0/24, 8
 # Set IFS to handle both commas and spaces
 IFS=', '
 
-# Loop through the list and construct the rulelist
+# Loop through the list and construct the rulelist. Replace 192.168.7.0/24 with your LAN IP!
 for line in $list; do
     rulelist="${rulelist}<1>YouTube$((n++))>192.168.7.0/24>$line>OVPN1"
 done
