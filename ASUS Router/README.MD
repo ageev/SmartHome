@@ -63,7 +63,7 @@ If you need to redirect traffic to YouTube, for example, via your VPN, do the fo
 
 Step 1. Getting the list of YouTube IPs. 
 
-It's hard. I got the list from here https://forummikrotik.ru/viewtopic.php?t=16909&start=90 
+It's hard. I got the list from here https://rockblack.su/vpn/dopolnitelno/diapazon-ip-adresov
 
 Step 2. Convert the list to VPN Director's format. Replace 192.168.7.0/24 with your local IP!
 ```bash
