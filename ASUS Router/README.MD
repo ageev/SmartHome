@@ -1,5 +1,6 @@
 # Free space in NVRAM
-Script below will remove empty NVRAM parameters (e.g., "var="). Will clear some memory
+Script below will remove empty NVRAM parameters (e.g., "var="). Will clear some memory, looks harmless, but MAY ACTUALLY BREAK THINGS!
+So backup NVRAM first with ```nvram dump > backup.txt``` 
 ```bash
 for line in `nvram show | grep ^[^=]*=$ `; do var=${line%*=}; nvram unset $var; done; nvram commit
 ```
@@ -9,7 +10,9 @@ On "Master router" start OpenVPN server. "Master router" must have VPN port avai
 Same VPN connection will be used for both site-to-site and regular VPN. 
 
 Master router local IP: A.A.A.0/24 (pls change to your own range)
+
 Slave router local IP: B.B.B.0/24
+
 Master router VPN IP: VPN.VPN.VPN.0/24
 
 1. Generate proper certs for different users. See the video here:
