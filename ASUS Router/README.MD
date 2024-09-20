@@ -36,16 +36,21 @@ easyrsa gen-dh --silent --silent-ssl
 ```
 2. In OpenVPN server general settings set "Both" to access both LAN and Internet.
 3. In OpenVPN advanced settings:
+
 Manage Client-Specific Options - Yes
+
 Allow Client <-> Client - No
+
 Allow only specified clients - No
 
 Add new entry into "Allowed clients" list:
+
 User1 B.B.B.0 255.255.255.0 Push=Yes
 
 4. Go to Slave router. Add new OpenVPN client and upload the .ovpn file generated for User1.
 
 Automatic start at boot time - Yes
+
 Create NAT on tunnel - Yes
 
 Inbound Firewall - Allow
@@ -55,6 +60,7 @@ Redirect Internet traffic through tunnel - "VPN Director"
 5. Slave router, go to "VPN Director" tab. 
 
 Add new rule:
+
 Some_name, Local IP = B.B.B.0/24, Remote IP = A.A.A.0/24, iface=OVPN1
 
 For mass adding VPN director rule see "Mass adding VPN Director rules" section below
