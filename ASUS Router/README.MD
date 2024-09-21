@@ -49,13 +49,9 @@ User1 B.B.B.0 255.255.255.0 Push=Yes
 
 4. Go to Slave router. Add new OpenVPN client and upload the .ovpn file generated for User1.
 
-Automatic start at boot time - Yes
-
-Create NAT on tunnel - Yes
-
-Inbound Firewall - Allow
-
-Redirect Internet traffic through tunnel - "VPN Director"
+- Create NAT on tunnel - Yes
+- Inbound Firewall - Allow
+- Redirect Internet traffic through tunnel - "VPN Director"
 
 5. Slave router, go to "VPN Director" tab. 
 
