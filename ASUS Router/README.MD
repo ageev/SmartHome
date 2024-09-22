@@ -82,7 +82,9 @@ Slave router local IP: B.B.B.0/24
 
 Master router VPN IP: VPN.VPN.VPN.0/24
 
-1. Generate proper certs for different users. See the video here:
+1. Generate proper certs for different users - https://github.com/RMerl/asuswrt-merlin.ng/wiki/Generating-OpenVPN-keys-using-Easy-RSA
+
+See the video here:
 
 https://www.youtube.com/watch?v=cHaD-Bofj9A
 
