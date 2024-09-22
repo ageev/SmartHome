@@ -220,7 +220,7 @@ IP="$(curl -fs4 http://checkip.amazonaws.com)"
 # 1st domain
 
 ZONE_ID="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" # get it from your Cloudflare dashboard
-RECORD_ID="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" # curl ... "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" | json_pp
+RECORD_ID="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" # curl -H "Authorization: Bearer ${APIKEY_CLOUDFLARE}" "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" | json_pp
 RECORD_NAME="sub.domain.com"
 
 curl -fs -o /dev/null -X PUT -H "Content-Type: application/json" \
