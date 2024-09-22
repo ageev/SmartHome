@@ -4,6 +4,61 @@ So backup NVRAM first with ```nvram dump > backup.txt```
 ```bash
 for line in `nvram show | grep ^[^=]*=$ `; do var=${line%*=}; nvram unset $var; done; nvram commit
 ```
+# Super Power!
+Change router's country to unlock full power and all wifi channels. 
+Be carefull. In this mode with auto wifi channel selection router may jump to the wifi channel, not available in your country. Clients will not be able to see or use it. Use manual channel assigment if needed.
+
+How to pick a good wifi channel.
+1. run Inssider (PC) or Wifiman (Android). 
+2. find the least used channel
+3. check [wiki page](https://en.wikipedia.org/wiki/List_of_WLAN_channels) to make sure that this channel has 160Mhz band
+4. Run this once.
+
+```bash
+# IMPORTANT! BACKUP NVRAM FIRST!
+# nvram dump > dump.txt
+
+# Use those commands to get the current TX power.
+# wl txpwr
+# wl txpwr_target_max
+
+# Per interface (depends on your router. This one is for GT-AXE16000)
+# wl -i eth7 txpwr_adj_est
+# wl -i eth8 txpwr_adj_est
+# wl -i eth9 txpwr_adj_est
+# wl -i eth10 txpwr_adj_est
+
+# I have 4 bands (AXE16000) -> I need to set country 4 times. You may have 2 or 3 bands -> wl3, wl2 may not needed. Check existing NVRAM dump and adjust accordingly
+nvram set 0:ccode=#a
+nvram set 0:regrev=0
+nvram set 1:ccode=#a
+nvram set 1:regrev=0
+nvram set 2:ccode=#a
+nvram set 2:regrev=0
+nvram set 3:ccode=#a
+nvram set 3:regrev=0
+nvram set 4:ccode=#a
+nvram set 4:regrev=0
+nvram set location_code=#a
+nvram set wl_country_code=#a
+nvram set wl_country_rev=0
+nvram set wl0_country_abbrev_override=US
+nvram set wl0_country_code=#a
+nvram set wl0_country_rev=0
+nvram set wl1_country_abbrev_override=US
+nvram set wl1_country_code=#a
+nvram set wl1_country_rev=0
+nvram set wl2_country_abbrev_override=US
+nvram set wl2_country_code=#a
+nvram set wl2_country_rev=0
+nvram set wl3_country_abbrev_override=US
+nvram set wl3_country_code=#a
+nvram set wl3_country_rev=0
+nvram commit
+```
+
+# Get client specific connection details
+Run this to get the list of clients per interface ```wl -i eth7 assoclist```. Pick one and run this ```wl -i eth7 sta_info MAC ADDRESS OF CLIENT```
 
 # Site-to-site VPN between 2 Asus routers.
 On "Master router" start OpenVPN server. "Master router" must have VPN port available from Internet. "Slave router" may have local-only IP.
@@ -207,59 +262,3 @@ wget --method=PUT --header="Content-Type: application/json" --header="X-Api-Key:
 
 # clear DNS leases
 ```killall dnsmasq; rm /var/lib/misc/dnsmasq.leases; service restart_dnsmasq```
-
-# Super Power!
-Change router's country to unlock full power and all wifi channels. 
-Be carefull. In this mode with auto wifi channel selection router may jump to the wifi channel, not available in your country. Clients will not be able to see or use it. Use manual channel assigment if needed.
-
-How to pick a good wifi channel.
-1. run Inssider (PC) or Wifiman (Android). 
-2. find the least used channel
-3. check [wiki page](https://en.wikipedia.org/wiki/List_of_WLAN_channels) to make sure that this channel has 160Mhz band
-4. Run this once.
-
-```bash
-# IMPORTANT! BACKUP NVRAM FIRST!
-# nvram dump > dump.txt
-
-# Use those commands to get the current TX power.
-# wl txpwr
-# wl txpwr_target_max
-
-# Per interface (depends on your router. This one is for GT-AXE16000)
-# wl -i eth7 txpwr_adj_est
-# wl -i eth8 txpwr_adj_est
-# wl -i eth9 txpwr_adj_est
-# wl -i eth10 txpwr_adj_est
-
-# I have 4 bands -> I need to set country 4 times. You may have 2 or 3
-nvram set 0:ccode=#a
-nvram set 0:regrev=0
-nvram set 1:ccode=#a
-nvram set 1:regrev=0
-nvram set 2:ccode=#a
-nvram set 2:regrev=0
-nvram set 3:ccode=#a
-nvram set 3:regrev=0
-nvram set 4:ccode=#a
-nvram set 4:regrev=0
-nvram set location_code=#a
-nvram set wl_country_code=#a
-nvram set wl_country_rev=0
-nvram set wl0_country_abbrev_override=US
-nvram set wl0_country_code=#a
-nvram set wl0_country_rev=0
-nvram set wl1_country_abbrev_override=US
-nvram set wl1_country_code=#a
-nvram set wl1_country_rev=0
-nvram set wl2_country_abbrev_override=US
-nvram set wl2_country_code=#a
-nvram set wl2_country_rev=0
-nvram set wl3_country_abbrev_override=US
-nvram set wl3_country_code=#a
-nvram set wl3_country_rev=0
-nvram commit
-```
-
-# Get client specific connection details
-Run this to get the list of clients per interface ```wl -i eth7 assoclist```. Pick one and run this ```wl -i eth7 sta_info MAC ADDRESS OF CLIENT```
