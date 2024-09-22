@@ -1,4 +1,16 @@
-# Free space in NVRAM
+# ASUS router hacks
+ASUS builds nice routers. Best hardware and worst software.. If you really want a good router - check gl.inet. 
+
+# List of hacks
+- improve power by changing country
+- setup site-to-site VPN
+- setup IP-network-based routing
+
+## Prerequisite
+- ASUS router with Merlin firmware
+
+# Free NVRAM space
+Some old ASUS routers with a new firmware may have a "no free space" NVRAM problem. Best way to clean NVRAM is to factory reset the device. If that's not possible - use this. 
 Script below will remove empty NVRAM parameters (e.g., "var="). Will clear some memory, looks harmless, but MAY ACTUALLY BREAK THINGS!
 So backup NVRAM first with ```nvram dump > backup.txt``` 
 ```bash
