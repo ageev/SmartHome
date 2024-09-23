@@ -189,7 +189,7 @@ Block internet access to entertaiment devices via "Parental Controls" tab on the
 put your smart devices who need access to WiFi but not to Internet (e.g., soundbar) into the isolated part of the network.
 Add this to ```/jffs/scripts/firewall-start```:
 ```
-iptables -I FORWARD -m iprange --src-range 10.0.1.230-10.0.1.254 -j REJECT
+iptables -I FORWARD -m iprange --src-range 10.0.1.231-10.0.1.254 -j REJECT
 ```
 Now go to the management portal and assign a static IP from that IP range (do not forget to exclude it from the DHCP scope!).
 
