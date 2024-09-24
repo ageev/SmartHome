@@ -35,7 +35,7 @@ iptables -A DOCKER-USER -j RETURN
 View routes
 
 ```bash
-iptables -L DOCKER-USER --line-numbers
+sudo iptables -L DOCKER-USER --line-numbers
 ```
 
 Note: Synology's iptables doesnt support REJECT -> so I used DROP instead. REJECT is almost instant, while DROP cancels connection attempt after few seconds delay. 
