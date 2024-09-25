@@ -220,21 +220,14 @@ APIKEY_CLOUDFLARE="12312312312312312"
 IP="$(curl -fs4 http://checkip.amazonaws.com)"
 
 # CloudFlare
-cloudflare_dns_update() {
-   for domain in $domains
-      do
-         ZONE_ID="aaaaaa" # get it from your Cloudflare dashboard
-         RECORD_ID="bbbbbbb" # curl ... "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" | json_pp
-         status=$(curl -s -X PUT -H "Content-Type: application/json" \
-           -H "Authorization: Bearer ${APIKEY_CLOUDFLARE}" \
-           --data "{\"type\":\"A\",\"name\":\"${domain}\",\"content\":\"${IP}\",\"ttl\":1,\"proxied\":false}" \
-           "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${RECORD_ID}")
-         logger -s -t ddns "Domain $domain reports $status"
-      done
-}
-
-domains="1.com 3.com"
-cloudflare_dns_update
+ZONE_ID="aaaaaa" # get it from your Cloudflare dashboard
+RECORD_ID="bbbbbbb" # curl ... "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" | json_pp
+DOMAIN="1.com"
+status=$(curl -s -X PUT -H "Content-Type: application/json" \
+   -H "Authorization: Bearer ${APIKEY_CLOUDFLARE}" \
+   --data "{\"type\":\"A\",\"name\":\"${DOMAIN}\",\"content\":\"${IP}\",\"ttl\":1,\"proxied\":false}" \
+   "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${RECORD_ID}")
+logger -s -t ddns "Domain $domain reports $status"
 
 # Gandi
 gandi_dns_update() {
