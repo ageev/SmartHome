@@ -225,10 +225,9 @@ cloudflare_dns_update() {
       do
          ZONE_ID="aaaaaa" # get it from your Cloudflare dashboard
          RECORD_ID="bbbbbbb" # curl ... "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" | json_pp
-         RECORD_NAME="vpn.itsec.pro"
          status=$(curl -s -X PUT -H "Content-Type: application/json" \
            -H "Authorization: Bearer ${APIKEY_CLOUDFLARE}" \
-           --data "{\"type\":\"A\",\"name\":\"${RECORD_NAME}\",\"content\":\"${IP}\",\"ttl\":1,\"proxied\":false}" \
+           --data "{\"type\":\"A\",\"name\":\"${domain}\",\"content\":\"${IP}\",\"ttl\":1,\"proxied\":false}" \
            "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${RECORD_ID}")
          logger -s -t ddns "Domain $domain reports $status"
       done
