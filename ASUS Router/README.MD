@@ -212,43 +212,47 @@ route del -net 192.168.7.0 netmask 255.255.255.0 dev tun21
 ```bash
 #!/bin/bash
 
-APIKEY_GANDI=""
-APIKEY_CLOUDFLARE=""
+APIKEY_GANDI="123123123123"
+APIKEY_CLOUDFLARE="12312312312312312"
 
 #IP=$(ip route get 1 | awk '{print $NF;exit}')
 # if external IP is not known to router. More here https://openwrt.org/docs/guide-user/services/ddns/client#detecting_public_ip
 IP="$(curl -fs4 http://checkip.amazonaws.com)"
 
-# 1st domain
+# CloudFlare
+cloudflare_dns_update() {
+   for domain in $domains
+      do
+         ZONE_ID="aaaaaa" # get it from your Cloudflare dashboard
+         RECORD_ID="bbbbbbb" # curl ... "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" | json_pp
+         RECORD_NAME="vpn.itsec.pro"
+         status=$(curl -s -X PUT -H "Content-Type: application/json" \
+           -H "Authorization: Bearer ${APIKEY_CLOUDFLARE}" \
+           --data "{\"type\":\"A\",\"name\":\"${RECORD_NAME}\",\"content\":\"${IP}\",\"ttl\":1,\"proxied\":false}" \
+           "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${RECORD_ID}")
+         logger -s -t ddns "Domain $domain reports $status"
+      done
+}
 
-ZONE_ID="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" # get it from your Cloudflare dashboard
-RECORD_ID="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" # curl -H "Authorization: Bearer ${APIKEY_CLOUDFLARE}" "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" | json_pp
-RECORD_NAME="sub.domain.com"
+domains="1.com 3.com"
+cloudflare_dns_update
 
-curl -fs -o /dev/null -X PUT -H "Content-Type: application/json" \
-   -H "Authorization: Bearer ${APIKEY_CLOUDFLARE}" \
-   --data "{\"type\":\"A\",\"name\":\"${RECORD_NAME}\",\"content\":\"${IP}\",\"ttl\":1,\"proxied\":false}" \
-   "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${RECORD_ID}"
+# Gandi
+gandi_dns_update() {
+   for sub in $subdomains
+      do
+         status=$(curl -s -X PUT -H "Content-Type: application/json" \
+           -H "X-Api-Key: ${APIKEY_GANDI}" \
+           -d "{\"rrset_ttl\": 10800, \"rrset_values\": [\"${IP}\"]}" \
+           "https://dns.api.gandi.net/api/v5/domains/${domain}/records/${sub}/A")
+         logger -s -t ddns "Domain $sub.$domain reports $status"
+      done
+}
 
-# 2nd domain
+domain="2.com"
+subdomains="www mail post web"
+gandi_dns_update
 
-DOMAIN="domain.com"
-SUBDOMAIN="sub1"
-
-curl -fs -o /dev/null -X PUT -H "Content-Type: application/json" \
-   -H "X-Api-Key: ${APIKEY_GANDI}" \
-   -d "{\"rrset_ttl\": 10800, \"rrset_values\": [\"${IP}\"]}" \
-   "https://dns.api.gandi.net/api/v5/domains/${DOMAIN}/records/${SUBDOMAIN}/A"
-
-# 3rd domain
-
-DOMAIN="domain.com"
-SUBDOMAIN="sub2"
-
-curl -fs -o /dev/null -X PUT -H "Content-Type: application/json" \
-   -H "X-Api-Key: ${APIKEY_GANDI}" \
-   -d "{\"rrset_ttl\": 10800, \"rrset_values\": [\"${IP}\"]}" \
-   "https://dns.api.gandi.net/api/v5/domains/${DOMAIN}/records/${SUBDOMAIN}/A"
 
 if [ $? -eq 0 ]; then
         /sbin/ddns_custom_updated 1
@@ -256,11 +260,11 @@ else
         /sbin/ddns_custom_updated 0
 fi
 
-
-# Update NEXT DNS
-curl -fs -o /dev/null "https://link-ip.nextdns.io/123123/123123"
+# Update NEXT DNS and AdGuard DNS
+curl -fs -o /dev/null "https://link-ip.nextdns.io/aaa/bbbb"
+curl -fs -o /dev/null "https://linkip.adguard-dns.com/linkip/asdasd/asdasd"
 ```
-DDNS with Gandi and wget instead of curl
+DDNS with Gandi and wget instead of curl (may be usefull for old ASUS routers)
 ```bash
 #!/bin/sh
 
