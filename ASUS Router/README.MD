@@ -6,8 +6,9 @@ ethctl eth0 media-type
 ```
 # ASUS GT-AXE1600 port mapping
 
-[10G eth6][10G eth5]   [2.5G eth0]   [1G eth2][1G eth1]
-                                     [1G eth4][1G eth3]
+[10G eth6][10G eth5]----[2.5G eth0]----[1G eth2][1G eth1]
+
+---------------------------------------[1G eth4][1G eth3]
 
 Wifi:
 * eth10 - 2.4GHz
