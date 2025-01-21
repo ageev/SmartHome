@@ -1,13 +1,9 @@
-# ASUS router hacks
+# ASUS router hacks (Merlin FW)
 ASUS builds nice routers. Best hardware and worst software.. If you really want a good router - check gl.inet. 
-
-# List of hacks
-- improve power by changing country
-- setup site-to-site VPN
-- setup IP-network-based routing
-
-## Prerequisite
-- ASUS router with Merlin firmware
+# Get interface speed
+```
+ethctl eth0 media-type
+```
 
 # Free NVRAM space
 Some old ASUS routers with a new firmware may have a "no free space" NVRAM problem. Best way to clean NVRAM is to factory reset the device. If that's not possible - use this. 
