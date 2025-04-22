@@ -1,5 +1,9 @@
 # ASUS router hacks (Merlin FW)
 ASUS builds nice routers. Best hardware and worst software.. If you really want a good router - check gl.inet. 
+# DPI bypass
+copy wgclient-start file to /jffs/scripts directory. 
+Everytime Wireguard client connection is established a chunks of random data are sent to fool the DPI. This helps to mask the WireGuard signature, but this approach is not working if DPI is set to block "unknown" traffic. 
+
 # Get interface speed
 ```
 ethctl eth0 media-type
