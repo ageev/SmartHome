@@ -2,27 +2,16 @@
 ASUS builds nice routers. Best hardware and worst software.. If you really want a good router - check gl.inet. 
 # DPI bypass
 copy wgclient-start file to /jffs/scripts directory. 
-Everytime Wireguard client connection is established a chunks of random data are sent to fool the DPI. This helps to mask the WireGuard signature, but this approach is not working if DPI is set to block "unknown" traffic. 
+Everytime Wireguard client connection is established a chunks of random data are sent to fool the DPI. This helps to mask the WireGuard signature, but this approach will not work if DPI is set to block "unknown" traffic. 
 
 # Get interface speed
 ```
 ethctl eth0 media-type
 ```
-# ASUS GT-AXE1600 port mapping
-
-[10G eth6][10G eth5]----[2.5G eth0]----[1G eth2][1G eth1]
-
----------------------------------------[1G eth4][1G eth3]
-
-Wifi:
-* eth10 - 2.4GHz
-* eth8 - 5GHz#2
-* eth7 - 5GHz#1
-* eth9 - 6GHz
 
 # Free NVRAM space
 Some old ASUS routers with a new firmware may have a "no free space" NVRAM problem. Best way to clean NVRAM is to factory reset the device. If that's not possible - use this. 
-Script below will remove empty NVRAM parameters (e.g., "var="). Will clear some memory, looks harmless, but MAY ACTUALLY BREAK THINGS!
+Script below will remove empty NVRAM parameters (e.g., "var="). Will clear some memory, looks harmless, but *MAY ACTUALLY BREAK THINGS*!
 So backup NVRAM first with ```nvram dump > backup.txt``` 
 ```bash
 for line in `nvram show | grep ^[^=]*=$ `; do var=${line%*=}; nvram unset $var; done; nvram commit
@@ -35,7 +24,6 @@ How to pick a good wifi channel.
 1. run Inssider (PC) or Wifiman (Android). 
 2. find the least used channel
 3. check [wiki page](https://en.wikipedia.org/wiki/List_of_WLAN_channels) to make sure that this channel has 160Mhz band
-4. Run this once.
 
 ```bash
 # IMPORTANT! BACKUP NVRAM FIRST!
@@ -95,25 +83,12 @@ Master router VPN IP: VPN.VPN.VPN.0/24
 
 1. Generate proper certs for different users - https://github.com/RMerl/asuswrt-merlin.ng/wiki/Generating-OpenVPN-keys-using-Easy-RSA
 
-See the video here:
+Or see the video here:
 
 https://www.youtube.com/watch?v=cHaD-Bofj9A
 
 .. and create few certs for multiple users. User1 will be used solely for Slave router connection. It will have a dedicated routing rule attached to it so all hosts from Master router's LAN can access all systems in Slave router's LAN and vise versa. User2 and User3 will be just normal users.
 
-```bash
-easyrsa --batch init-pki
-easyrsa --batch --silent --silent-ssl --days=3650 --req-cn="OpenVPN Server" --digest=sha512 build-ca nopass
-easyrsa --batch --silent --silent-ssl --req-cn="OpenVPN Server Key" gen-req Server nopass
-easyrsa --batch --silent --silent-ssl --days=3650 sign-req server Server
-easyrsa --batch --silent --silent-ssl --req-cn="user1" gen-req User1 nopass
-easyrsa --batch --silent --silent-ssl --days=3650 sign-req client User1
-easyrsa --batch --silent --silent-ssl --req-cn="user2" gen-req User2 nopass
-easyrsa --batch --silent --silent-ssl --days=3650 sign-req client User2
-easyrsa --batch --silent --silent-ssl --req-cn="user3" gen-req User3 nopass
-easyrsa --batch --silent --silent-ssl --days=3650 sign-req client User3
-easyrsa gen-dh --silent --silent-ssl
-```
 2. In OpenVPN server general settings set "Both" to access both LAN and Internet.
 3. In OpenVPN advanced settings:
 
