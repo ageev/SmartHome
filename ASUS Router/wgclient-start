@@ -1,0 +1,64 @@
+#!/bin/sh
+
+# Set the number of times a random message would be sent
+NUM_MESSAGES_SENT=3
+
+# Random message generation params
+block_size=512
+block_count=5
+
+# Enable exit on error
+set -e
+
+# Function to generate a random number between 49152 and 65535
+generate_random_port() {
+    awk -v min=49152 -v max=65535 'BEGIN { srand(); print int(min + rand() * (max - min + 1)) }'
+}
+
+# Function to generate a random message and send it
+send_random_message() {
+    message=$(dd if=/dev/urandom bs=$block_size count=$block_count 2>/dev/null | tr -dc 'A-Za-z0-9')
+    echo "$message" | socat - UDP-SENDTO:"$wg_server:$wg_port",sourceport="$l_port"
+    logger -t WireGuardClient -p user.notice "Message sent to WG server $wg_server:$wg_port from client's port $l_port"
+    sleep 1
+}
+
+interface="wgc$1"
+sleep 3
+# Log the start of the script
+logger -t WireGuardClient -p user.notice "Starting junk-udp-hack script"
+logger -t WireGuardClient -p user.notice "Processing WG interface - $interface"
+
+# Retrieve the server and port
+wg_endpoint=$(wg show "$interface" endpoints 2>/dev/null || echo "")
+if [ -z "$wg_endpoint" ]; then
+    logger -s -t WireGuardClient -p user.err "Unable to retrieve endpoint for interface $interface" >&2
+    exit 1
+fi
+
+wg_server=$(echo "$wg_endpoint" | awk '{print $2}' | cut -d':' -f1 2>/dev/null || echo "")
+wg_port=$(echo "$wg_endpoint" | awk '{print $2}' | cut -d':' -f2 2>/dev/null || echo "")
+
+if [ -z "$wg_server" ] || [ -z "$wg_port" ]; then
+    logger -s -t WireGuardClient -p user.err "Unable to extract server or port for interface $interface" >&2
+    exit 1
+fi
+
+l_port=$(generate_random_port)
+while netstat -an | grep -qE '(^|[^0-9])'"$l_port"'([^0-9]|$)'; do
+    logger -t WireGuardClient -p user.warn "Port $l_port is already in use. Generating new one"
+    sleep 1
+    l_port=$(generate_random_port)
+done
+
+# Send random messages specified number of times
+i=1
+while [ "$i" -le "$NUM_MESSAGES_SENT" ]; do
+    send_random_message
+    i=$((i + 1))
+done
+
+# Update the WireGuard interface with the new listen port
+wg set "$interface" listen-port "$l_port"
+
+logger -t WireGuardClient -p user.notice "Done"
