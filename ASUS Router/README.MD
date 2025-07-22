@@ -12,7 +12,7 @@ Add this to ```/jffs/scripts/services-start```
 
 ```bash
 #!/bin/sh
-cru a wgupdate "*/5 * * * * /jffs/scripts/wgc_restart_ip_change.sh"
+cru a wgipupdate "*/5 * * * * /jffs/scripts/wgc_restart_ip_change"
 ```
 
 # Get interface speed
