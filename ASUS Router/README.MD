@@ -134,7 +134,7 @@ If you need to redirect traffic to YouTube, for example, via your VPN, do the fo
 
 Step 1. Get the list of YouTube IPs from here https://rockblack.su/vpn/dopolnitelno/diapazon-ip-adresov
 
-Step 2. Create a script and run it. 
+Step 2. Create a script and run it. *OVPN1* is the first OpenVPN client on your router. If you use WireGuard, it should be WGC1.
 ```bash
 #!/bin/sh
 
