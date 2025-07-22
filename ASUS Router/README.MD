@@ -3,7 +3,7 @@ ASUS builds nice routers. Best hardware and worst software.. If you really want 
 
 # DPI bypass
 copy and "chmod +x" ```wgclient-start``` file to ```/jffs/scripts``` directory. 
-Everytime first Wireguard client connection (e.g., "wgc1". Please adjust scripts if you have multiple WG clients) is established a chunks of random data are sent to fool the DPI. This helps to mask the WireGuard signature, but this approach will not work if DPI is set to block "unknown" traffic. 
+Everytime first Wireguard client connection (e.g., "wgc1". *Please adjust script if you have different or multiple WG clients!*) is established a chunks of random data are sent to fool the DPI. This helps to mask the WireGuard signature, but this approach will not work if DPI is set to block "unknown" traffic. 
 
 # WireGuard client restart on server's IP change
 WG client resolves server IP once during the start. If Server has dynamic IP, you need to restart the client to update the IP every time server's IP changes. 
