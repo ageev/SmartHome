@@ -23,7 +23,7 @@ send_random_message() {
     sleep 1
 }
 
-interface="wgc$1"
+interface="wgc1"
 sleep 3
 # Log the start of the script
 logger -t WireGuardClient -p user.notice "Starting junk-udp-hack script"
