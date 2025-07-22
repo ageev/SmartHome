@@ -1,8 +1,19 @@
 # ASUS router hacks (Merlin FW)
 ASUS builds nice routers. Best hardware and worst software.. If you really want a good router - check gl.inet. 
+
 # DPI bypass
-copy wgclient-start file to /jffs/scripts directory. 
-Everytime Wireguard client connection is established a chunks of random data are sent to fool the DPI. This helps to mask the WireGuard signature, but this approach will not work if DPI is set to block "unknown" traffic. 
+copy and "chmod +x" ```wgclient-start``` file to ```/jffs/scripts``` directory. 
+Everytime first Wireguard client connection (e.g., "wgc1". Please adjust scripts if you have multiple WG clients) is established a chunks of random data are sent to fool the DPI. This helps to mask the WireGuard signature, but this approach will not work if DPI is set to block "unknown" traffic. 
+
+# WireGuard client restart on server's IP change
+WG client resolves server IP once during the start. If Server has dynamic IP, you need to restart the client to update the IP every time server's IP changes. 
+Copy and "chmod +x" ```wgc_restart_ip_change``` to ```/jffs/scripts/``` directory.
+Add this to ```/jffs/scripts/services-start```
+
+```bash
+#!/bin/sh
+cru a wgupdate "*/5 * * * * /jffs/scripts/wgc_restart_ip_change.sh"
+```
 
 # Get interface speed
 ```
