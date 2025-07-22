@@ -1,0 +1,16 @@
+#!/bin/sh
+
+WG_PEER_DNS="vpn.domain.com"
+INTERFACE="1"
+STORED_IP_FILE="/tmp/wg_server_ip"
+
+CURRENT_IP=$(nslookup $WG_PEER_DNS | awk '/^Name:/ {getline; if ($1 == "Address") print $3}')
+
+
+if [ -n "$CURRENT_IP" ]; then
+    if [ ! -f "$STORED_IP_FILE" ] || [ "$(cat "$STORED_IP_FILE")" != "$CURRENT_IP" ]; then
+        echo "$CURRENT_IP" > "$STORED_IP_FILE"
+        logger -t WireGuardClient "IP for $WG_PEER_DNS changed to $CURRENT_IP, restarting WireGuard client $INTERFACE"
+        service "restart_wgc $INTERFACE" >/dev/null 2>&1
+    fi
+fi
