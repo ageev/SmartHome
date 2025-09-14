@@ -36,7 +36,28 @@ iptables -A DOCKER-USER -s 172.19.0.0/16 -j DROP
 View routes
 
 ```bash
-sudo iptables -L DOCKER-USER --line-numbers
+sudo iptables -vL -n --line-numbers
 ```
+You should see smthng like this:
+```
+# traffic first hits FORWARD chain, then is redirected to DEFAULT_FORWARD.. looks like it's Synology behaviour
+Chain FORWARD (policy ACCEPT 2949 packets, 2455K bytes)
+num   pkts bytes target     prot opt in     out     source               destination
+1     2949 2455K DEFAULT_FORWARD  all  --  *      *       0.0.0.0/0            0.0.0.0/0
+...
+# chain Default_forward sends the traffic further to DOCKER-USER
+Chain DEFAULT_FORWARD (1 references)
+num   pkts bytes target     prot opt in     out     source               destination
+1     2949 2455K DOCKER-USER  all  --  *      *       0.0.0.0/0            0.0.0.0/0
+...
 
+Chain DOCKER-USER (1 references)
+num   pkts bytes target     prot opt in     out     source               destination
+1        0     0 RETURN     all  --  *      *       172.19.0.0/16        192.168.0.0/16
+2     5925  901K RETURN     all  --  *      *       172.19.0.0/16        172.16.0.0/12
+3        3   252 RETURN     all  --  *      *       172.19.0.0/16        10.0.0.0/8
+4        9   756 DROP       all  --  *      *       172.19.0.0/16        0.0.0.0/0
+# after the last rule traffic returns to FORWARD chain back
+...
+```
 Note: Synology's iptables doesnt support REJECT -> so I used DROP instead. REJECT is almost instant, while DROP cancels connection attempt after few seconds delay. 
