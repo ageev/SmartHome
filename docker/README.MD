@@ -23,9 +23,7 @@ services:
       - internet_blocked
 ```
 3. Go to Synology task scheduler and create a root task triggered after boot:
----
-⚠️ **Warning:** Somehow redirect to DOCKER-USER chain got disabled with a docker upgrade on Synology (bug? feature?). So I added it manually with ```sudo iptables -I FORWARD 1 -j DOCKER-USER```
----
+> ⚠️ Warning: Somehow redirect to DOCKER-USER chain got disabled with a docker upgrade on Synology (bug? feature?). So I added it manually with ```sudo iptables -I FORWARD 1 -j DOCKER-USER```
 
 ```bash
 iptables -F DOCKER-USER
