@@ -42,4 +42,5 @@ Amazon Fire TV 4k Pro - лучший стик, на распродаже оч д
     - для удаления мусора из докера (syno_docker_cleanup)
   - Скрипты-снайперы, которые я пишу когда мне нужно что-то отслеживать.
   - Скрипт для обновления ["режима разработчика"](https://github.com/webosbrew/dev-manager-desktop) на телевизорах LG чтоб можно было запускать свои apk файлы.
-- [Docker](https://github.com/ageev/SmartHome/blob/master/docker/README.MD) - всё самое важное крутится тут. 
+- [Docker](https://github.com/ageev/SmartHome/blob/master/docker/README.MD) - всё самое важное крутится тут.
+> вообще то у меня 2 докера - один в DSM, другой в VirtualDSM. Это нужно для того, чтобы правильно работал контейнер Nginx Proxy Manager. 
