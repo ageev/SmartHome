@@ -1,4 +1,6 @@
-  - [adguard](https://github.com/ageev/SmartHouse/tree/master/adguard) - продвинутая резалка рекламы. Лучше чем [pihole](https://github.com/ageev/SmartHouse/tree/master/pi-hole)
+Текущий состав моих докер контейнеров для умного дома.
+
+- [adguard](https://github.com/ageev/SmartHouse/tree/master/adguard) - продвинутая резалка рекламы. Лучше чем [pihole](https://github.com/ageev/SmartHouse/tree/master/pi-hole)
   - [caddy](https://github.com/ageev/SmartHouse/tree/master/docker/caddy) - вебсервер с поддержкой ACME (автоматическая выдача HTTPS сертификатов) - *заменил на Nginx Proxy Manager + acme.sh*
   - [esphome](https://github.com/ageev/SmartHouse/tree/master/docker/esphome) - генератор прошивок и дэшборд для ESP32 (дешевый чип с поддержкой Wi-Fi и BLE). Позволяет перепрошивать всякие Tuya Smart и прочии девайсы для интеграции с Home Assistant
   - *home-assistant* (HA, homeass, хомяк)- универсальный интеграционный сервис умного дома. За счёт огромного количества аддонов позволяет связывать в единую систему очень разные компоненты. Например, Яндекс Станцию и Телеграм, датчики IKEA и вентилятор Xiaomi. Примеры автоматизаций внутри
