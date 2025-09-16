@@ -28,7 +28,26 @@
     - Если вдруг вышла раздача лучшего качества - скачивает её пока максимальное качество не достигнуто
   - [torrserver](https://github.com/ageev/SmartHome/tree/master/docker/torrserver) - сервер для NUM. В путешествиях я вожу с собой Amazon Fire TV стик. Воткнул в телевизор в отеле и можно смотреть свой Netflix. NUM в связке с домашним torrserver позволяет смотреть еще и торренты в странах, где за это наказывают
 
+# пользователь docker
+У меня создан специальный DSM пользователь docker. Этот пользователь имеет доступ только к папке docker, scans (для paperless) и media. Доступ ко всем приложениям запрещен. Контейнеры запускаются с полномочиями пользователя docker (не все это поддерживают!) через переменные PUID и PGID. Узнать свой идентификатор пользователя (uid) и группы (gid) можно через ```sudo synouser --get docker```. Более безопасный подход - создавать уникального пользователя под каждый контейнер.
 
+# Структура папок docker и docker-compose
+Так выглядит структура папок docker:
+/volume2 #ssd
+-/docker
+--/container1
+--/container2
+...
+--docker-compose.yml
+
+Я совсем не использую GUI Synology для управления контейнерами. Соответственно вся конфигурация контейнеров происходит либо через docker-compose.yml либо через индувидуальные файлы конфигурации в папке контейнера. 
+Если мне нужно обновить контейнеры я захожу на НАС через SSH...
+```bash
+cd /volume1/docker
+sudo docker-compose pull #скачать новые образы контейнеров
+sudo docker-compose up -d #создать или пересоздать контейнеры
+sudo docker system prune -a #удалить кэш, старые образы и неиспользуемые контейнеры
+```
 
 ## Blocking internet access FROM docker containers
 Containers should not go to Internet unless absolutely must
