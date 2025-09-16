@@ -31,9 +31,10 @@ services:
 # Маскировка и доступ снаружи
 
 1. Создайте неприметный домен, что-то типа video.your-domain.com, и добавьте для него А запись на внешний IP вашего роутера.
-2. В папке контейнера nginx-proxy-manager создайте простенький вебсайт используя ИскИна. Можно добавить ```robots.txt``` в корень с ```User-agent: *``` и ```Disallow: /``` чтобы отбить ботам желание его индексировать.
+2. Настройте роутер на прием соединений по 443 порту и пересылку на контейнер nginx proxy manager (Асус называет это Virtual Server / Port Forwarding).
+3. В папке контейнера nginx-proxy-manager создайте простенький вебсайт используя ИскИна. Можно добавить ```robots.txt``` в корень с ```User-agent: *``` и ```Disallow: /``` чтобы отбить ботам желание его индексировать.
 ![пример папки с сайтом](https://github.com/ageev/SmartHome/blob/master/Pictures/vless_website.png)
-3. Теперь нужно добавить правильную конфигурацию в контейнер nginx-proxy-manager.
+4. Теперь нужно добавить правильную конфигурацию в контейнер nginx-proxy-manager.
    - добавьте новый хост video.your-domain.com с редиректом на http://<NAS_IP>:8082. Обязательно тыкнуть "websocket support"!
    - идите на вкладку Advanced и добавьте такую конфигурацию:
 ```nginx
@@ -69,5 +70,12 @@ location /<secret_token>/ {
     proxy_pass http://<NAS_IP>:2053;
 }
 ```
-Теперь админка у вас сидит по адресу ```https://video.your-domain.com/<secret_token>, а клиенты стучатся через websocket на ```https://video.your-domain.com/ws```.
+Теперь админка у вас сидит по адресу ```https://video.your-domain.com/<secret_token>```, а клиенты стучатся через websocket на ```https://video.your-domain.com/ws```.
 Все остальные видят безобидный вебсайт. 
+
+# конфигурация inbound
+Создайте vless inbound на порту 8082. 8082 - это внутренний порт. Клиенты будут стучаться на 443. Так что конфигурации, которые генерирует 3x-ui, нужно будет подправлять. 
+Из такой ```vless://blablablabla@video.your-website.com:8082?type=ws&encryption=none&path=%2Fws&host=&security=none#User``` в такую:
+vless://blablablabla@video.your-website.com:<span style="color:red">443</span>?type=ws&encryption=none&path=%2Fws&host=&security=<span style="color:red">tls</span>#User
+
+Теперь её можно добавлять в клиента и пробовать достучаться снаружи. 
