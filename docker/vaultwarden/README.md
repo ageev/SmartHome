@@ -42,11 +42,11 @@ COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
 2. create directories 
 ```
-/volume1/docker/caddy
-/volume1/docker/caddy/data
-/volume1/docker/caddy/config
-/volume1/docker/caddy/log
-/volume1/docker/vaultwarden
+/volume2/docker/caddy
+/volume2/docker/caddy/data
+/volume2/docker/caddy/config
+/volume2/docker/caddy/log
+/volume2/docker/vaultwarden
 ```
 6. create a file ```/volume1/docker/caddy/caddyfile```. This file has some variables like DOMAIN or EMAIL, which are defined later in the docker-compose file
 
@@ -95,57 +95,29 @@ caddyfile
 }
 ```
 
-4. create/edit ```/volume1/docker/docker-compose.yml``` file
+4. create/edit ```/volume2/docker/docker-compose.yml``` file
 
 docker-compose.yml
 ```yaml
 ---
 version: "3.9"
 services:
-  caddy:
-    container_name: caddy
-    build: .  #builds caddy + gandi version. see Dockerfile for details
-    environment:
-      - PUID=<your docker user PID>
-      - PGID=<users group PGID>
-      - TZ=Europe/Amsterdam
-      - ACME_AGREE=true
-      - DOMAIN=*.example.com # i suggest to get the wildcard cert - you can reuse them in other containers!
-      - EMAIL=<email>
-      - GANDI_API_TOKEN=<token>
-      - LOG_FILE=/var/log/caddy/caddy.log
-    volumes:
-      - /volume1/docker/caddy/caddyfile:/etc/caddy/Caddyfile
-      - /volume1/docker/caddy/data:/data
-      - /volume1/docker/caddy/config:/config
-      - /volume1/docker/caddy/log:/var/log/caddy
-    restart: unless-stopped
-    network_mode: "host"
-  
   vaultwarden:
     container_name: vaultwarden
-    image: vaultwarden/server:latest
+    image: vaultwarden/server
+    user: 1028:100
     environment:
-      - PUID=<your_docker_user_PUID>
-      - PGID=<users_group_PGID>
-      - TZ=Europe/Amsterdam
+      - TZ=Europe/Zurich
       - WEBSOCKET_ENABLED=true # Required to use websockets
 #      - SIGNUPS_ALLOWED=false   # set to false to disable signups
-      - DOMAIN=https://vw.example.com # change this to the actual domain you use. It should be real & match the certificate issued by Caddy
-#      - SMTP_HOST=[MAIL-SERVER]
-#      - SMTP_FROM=[E-MAIL]
-#      - SMTP_PORT=587
-#      - SMTP_SSL=true
-#      - SMTP_USERNAME=[E-MAIL]
-#      - SMTP_PASSWORD=[SMTP-PASS]
+      - DOMAIN=https://vw.example.com # change this to the actual domain you use.
+      ## enable for admin + use only local IP
       - ADMIN_TOKEN=<random_token> # run <openssl rand -base64 48> to get random token
       - ROCKET_PORT=8088
-#      - YUBICO_CLIENT_ID=[OPTIONAL]
-#      - YUBICO_SECRET_KEY=[OPTIONAL]
+      - ROCKET_WORKERS=20
       - LOG_FILE=/data/bitwarden.log
       - EXTENDED_LOGGING=true
       - LOG_LEVEL=warn
-      - ROCKET_WORKERS=10
       - SHOW_PASSWORD_HINT=false
 #      - DISABLE_ICON_DOWNLOAD=true
     volumes:
@@ -155,6 +127,10 @@ services:
       - 8088:8088
       - 3012:3012
     network_mode: "bridge"
+    networks:
+      - internet_blocked #my special net with no internet access. More details on the docker page. 
+    dns:
+      - 10.0.1.9
 ```
 
 5. SSH to NAS & run docker-compose
