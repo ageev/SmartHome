@@ -75,7 +75,13 @@ location /<secret_token>/ {
 
 # конфигурация inbound
 Создайте vless inbound на порту 8082. 8082 - это внутренний порт. Клиенты будут стучаться на 443. Так что конфигурации, которые генерирует 3x-ui, нужно будет подправлять. 
-Из такой ```vless://blablablabla@video.your-website.com:8082?type=ws&encryption=none&path=%2Fws&host=&security=none#User``` в такую:
-vless://blablablabla@video.your-website.com:<span style="color:red">443</span>?type=ws&encryption=none&path=%2Fws&host=&security=<span style="color:red">tls</span>#User
+Из такой:
+```
+vless://blablablabla@video.your-website.com:8082?type=ws&encryption=none&path=%2Fws&host=&security=none#User
+```
+в такую:
+```
+vless://blablablabla@video.your-website.com:443?type=ws&encryption=none&path=%2Fws&host=&security=tls#User
+```
 
 Теперь её можно добавлять в клиента и пробовать достучаться снаружи. 
