@@ -2,19 +2,23 @@
   - [adguard](https://github.com/ageev/SmartHouse/tree/master/adguard) - продвинутая резалка рекламы. Лучше чем [pihole](https://github.com/ageev/SmartHouse/tree/master/pi-hole)
   - (неактивен) [caddy](https://github.com/ageev/SmartHouse/tree/master/docker/caddy) - вебсервер с поддержкой ACME (автоматическая выдача HTTPS сертификатов) - *заменил на Nginx Proxy Manager + acme.sh*
   - [esphome](https://github.com/ageev/SmartHouse/tree/master/docker/esphome) - генератор прошивок и дэшборд для ESP32 (дешевый чип с поддержкой Wi-Fi и BLE). Позволяет перепрошивать всякие Tuya Smart и прочии девайсы для интеграции с Home Assistant
-  - *home-assistant* (HA, homeass, хомяк)- универсальный интеграционный сервис умного дома. За счёт огромного количества аддонов позволяет связывать в единую систему очень разные компоненты. Например, Яндекс Станцию и Телеграм, датчики IKEA и вентилятор Xiaomi. Примеры автоматизаций внутри
+  - (неактивен) *home-assistant* (HA, homeass, хомяк)- универсальный интеграционный сервис умного дома. За счёт огромного количества аддонов позволяет связывать в единую систему очень разные компоненты. Например, Яндекс Станцию и Телеграм, датчики IKEA и вентилятор Xiaomi. Примеры автоматизаций внутри
   - [homer](https://github.com/ageev/SmartHome/tree/master/docker/homer) - простой вебсервер, на котором удобно сделать стартовую страницу умного дома. Когда мне нужно что-то открыть в домашней сети - я использую стартовую страницу Гомера
-  - [transmission](https://github.com/ageev/SmartHome/tree/master/docker/transmission) - качалка торрентов. Выбрал её потому что у нее самая удобная интеграция с HA. Использую с плагином для браузера Torrent Control - позволяет скачивать всё сразу на НАС
+  - (неактивен) [transmission](https://github.com/ageev/SmartHome/tree/master/docker/transmission) - качалка торрентов. Выбрал её потому что у нее самая удобная интеграция с HA. Использую с плагином для браузера Torrent Control - позволяет скачивать всё сразу на НАС
   - [acme.sh](https://github.com/ageev/SmartHouse/tree/master/acme.sh) - позволяет автоматизировать получение HTTPS сертификатов, посылает уведомоления в телегу, может закидывать обновленный сертификат прямо в DSM
   - [vaultwarden](https://github.com/ageev/SmartHouse/tree/master/vaultwarden) - форк BitWarden - очень хороший менеджер паролей с клиентами под все платформы
   - [nginx proxy manager](https://github.com/ageev/SmartHouse/tree/master/Nginx%20Proxy%20Manager) - единое окно (ну почти) для всех внутренних веб-порталов. Позволяет сделать "зеленый замочек" (HTTP -> HTTPS) там, где его отродясь не было. Один минус NGM - нужно искать уникальный кастомный прокси конфиг под каждое приложение. С Traefik такой проблемы нет. Надо сравнить
-  - mariadb - база данных. Нужна для Nginx Proxy Manager
-  - [mosquitto](https://github.com/ageev/SmartHome/tree/master/docker/zigbee2mqtt) - MQTT брокер. Нужен для zigbee2mqtt. Работает с очередью запросов к ZigBee устройствам для умного дома
-  - [zigbee2mqtt](https://github.com/ageev/SmartHome/tree/master/docker/zigbee2mqtt) - позволяет интегрировать Zigbee устройства умного дома с home-assistant. Работает с USB стиком Sonoff Zigbee 3.0, воткнутым в USB порт НАСа. В целом, можно было использовать и встроенный в Home Assistant zigbee модуль
-  - [plex](https://github.com/ageev/SmartHome/tree/master/docker/plex) - каталогизатор видео. Позволяет на лету транскодировать видеопотоки (если железо позволяет. DS218+ позволяет) под различные разрешения и устройства. Ну то есть можно стримить мультики на детские планшеты, и они сами могут выбирать, что смотреть. Пользуюсь редко. В основном, фильмы смотрим через NFS шары и Kodi
+  - (неактивен) [mosquitto](https://github.com/ageev/SmartHome/tree/master/docker/zigbee2mqtt) - MQTT брокер. Нужен для zigbee2mqtt. Работает с очередью запросов к ZigBee устройствам для умного дома
+  - (неактивен) [zigbee2mqtt](https://github.com/ageev/SmartHome/tree/master/docker/zigbee2mqtt) - позволяет интегрировать Zigbee устройства умного дома с home-assistant. Работает с USB стиком Sonoff Zigbee 3.0, воткнутым в USB порт НАСа. В целом, можно было использовать и встроенный в Home Assistant zigbee модуль
+  - (неактивен) [plex](https://github.com/ageev/SmartHome/tree/master/docker/plex) - каталогизатор видео. Позволяет на лету транскодировать видеопотоки (если железо позволяет. DS218+ позволяет) под различные разрешения и устройства. Ну то есть можно стримить мультики на детские планшеты, и они сами могут выбирать, что смотреть. Пользуюсь редко. В основном, фильмы смотрим через NFS шары и Kodi
   - [paperless](https://github.com/ageev/SmartHome/tree/master/docker/zigbee2mqtt) - домашняя система архива документов. Удобно интегрируется со сканером и позволяет хранить копии всех бумажных документов (включая кассовые чеки для гарантий).
-  - prowlarr - интегратор торрент треккеров. Даешь ему команду найти торрент - он ищет сразу по всем твоим любимым треккерам. Используется в связке с radarr
-  - radarr - менеджер домашней видеобиблиотеки (тут писал про него подробнее https://habr.com/ru/post/505814/). Работает как-то так:
+  - [3x-ui](https://github.com/ageev/SmartHome/tree/master/docker/3x-ui) - ВПН сервер на протоколе VLESS для доступа к локальной сети, Youtube и всего остального
+  - [wyl](https://github.com/ageev/SmartHome/tree/master/docker/wyl) - простой контейнер, который позволяет мне видеть все устройства в локальной сети
+  - [qBittorrent](https://github.com/ageev/SmartHome/tree/master/docker/qbittorrent) - торрент клиент. Нравиться GUI больше, чем у Transmission + есть интеграция с Телеграммом. 
+  - [snowflake-proxy](https://github.com/ageev/SmartHome/tree/master/docker/snowflake-proxy) - у меня жирный интернет канал, поэтому часть траффика я даю проекту TOR. 
+  - [zerotier](https://github.com/ageev/SmartHome/tree/master/docker/zerotier) - как-бы-ВПН, который позволяет засунуть очень разные системы в одну виртуальную сеть. Использую для бэкапа с НАСа на НАС. 
+  - [prowlarr](https://github.com/ageev/SmartHome/tree/master/docker/prowlarr) - интегратор торрент треккеров. Даешь ему команду найти торрент - он ищет сразу по всем твоим любимым треккерам. Используется в связке с radarr
+  - [radarr](https://github.com/ageev/SmartHome/tree/master/docker/radarr) - менеджер домашней видеобиблиотеки (тут писал про него подробнее https://habr.com/ru/post/505814/). Работает как-то так:
     - Добавляешь фильм в Watchlist на IMDB.com
     - лист синхронизируется с Radarr
     - Radarr даёт команду Prowlarr найти все раздачи с этим фильмом
@@ -22,7 +26,7 @@
     - Если после фильтрации осталась нужная раздача, Radarr дает команду Transmission скачать нужный торрент
     - Кладёт раздачу в папочку Movies на НАСе, посылает уведомление через телегу
     - Если вдруг вышла раздача лучшего качества - скачивает её пока максимальное качество не достигнуто
-  - torrserver - сервер для NUM. В путешествиях я вожу с собой Amazon Fire TV стик. Воткнул в телевизор в отеле и можно смотреть свой Netflix. NUM в связке с домашним torrserver позволяет смотреть еще и торренты в странах, где за это наказывают
+  - [torrserver](https://github.com/ageev/SmartHome/tree/master/docker/torrserver) - сервер для NUM. В путешествиях я вожу с собой Amazon Fire TV стик. Воткнул в телевизор в отеле и можно смотреть свой Netflix. NUM в связке с домашним torrserver позволяет смотреть еще и торренты в странах, где за это наказывают
 
 
 
