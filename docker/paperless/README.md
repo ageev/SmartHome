@@ -24,7 +24,8 @@ services:
       - USERMAP_GID=100 # use yours!
       - PAPERLESS_TIME_ZONE=Europe/Zurich
       - PAPERLESS_REDIS=redis://paperless-redis:6379
-      - PAPERLESS_OCR_LANGUAGE=eng+deu+rus
+      - PAPERLESS_OCR_LANGUAGE=eng+deu+rus # Runtime OCR languages
+      - PAPERLESS_OCR_LANGUAGES=rus # download additional languages
       - PAPERLESS_URL=https://scans.your-domain.com
     depends_on:
       - paperless-redis
