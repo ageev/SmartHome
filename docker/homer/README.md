@@ -31,6 +31,9 @@ networks:
 ```
 
 ## config.yml
+
+*СОВЕТ!* - скачайте все иконки [отсюда](https://github.com/NX211/homer-icons/tree/master) и бросьте в папку icons для последующего использования.
+
 ```yml
 ---
 # Homepage configuration
