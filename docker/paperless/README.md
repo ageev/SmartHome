@@ -58,3 +58,20 @@ services:
 1. Всем новым документам назначается тэг "inbox", ну или "review".
 2. Раз в недельку другую вы заходите, проверяете правильность автоматического категорирования документов. Убираете тэг "inbox".
 3. Когда добавляете новых корреспондентов или тэги, выбираете опцию "Auto: Learn matching automatically". После нескольких ручных операций, система начинает ставить правильные тэги и корреспондентов автоматически. Современем ручное редактирование сводится к минимуму.
+
+# Nginx Proxy Manager Configuration
+Я работаю с Paperless через URL вида ```scans.your-domain.com```. Для чего в мой NPM контейнер нужно добавить такую конфигурацию:
+```nginx
+location / {
+    proxy_pass http://10.0.1.5:8000; # NAS IP
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_redirect off;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Host $server;
+    add_header Referrer-Policy "strict-origin-when-cross-origin";
+}
+```
