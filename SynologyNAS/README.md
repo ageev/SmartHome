@@ -46,8 +46,48 @@ save it, test it via GUI.
 
 to fully enjoy the benefits you need to instal the Synology Log center. In "Notification" menu you can set the fillter using words "signed in" (for web) and "logged in" (for SSH). This will generate telegram messages when someone is logged in on your NAS
 
+# Covertly opening Synology Photos for external users
+It is possible to open Synology Photos for Internet access in a covert manner.
+First go to Settings > Login Portal > Applications and create an Alias for Synology photos. 
+
+Then go to your [NPM Container](https://github.com/ageev/SmartHome/tree/master/docker/nginx-proxy-manager) and add a host with this Custom Configuration:
+```
+location / {
+    if ($remote_addr !~ "^(10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|192\.168\.|fc00:|fe80:|fd[0-9a-f]{2}:)") {
+        return 302 https://google.com; # redirect all external users to Google
+    }
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Range $http_range;
+    proxy_set_header If-Range $http_if_range; 
+    proxy_redirect off;
+    proxy_pass https://10.0.1.5/;  # your NAS IP
+}
+
+location /secret_alias {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Range $http_range;
+    proxy_set_header If-Range $http_if_range; 
+    proxy_redirect off;
+    proxy_pass https://10.0.1.5/secret_alias; # your secret app alias URL
+}
+```
+
+Now dont forget to add external users with a limited access (only to Photos app) and MFA enabled! 
+
+# limiting internet access
+Create 2 user groups on your NAS:
+1. "local". Add all local users there. Go to group's settings > Applications. Limit access to Synology photos by IP to your local network.
+2. "external". Add all external users of Synology Photos there. Go to group's settings > applications. Deny all except Synology photos.
+3. Go to Synology Photos > settings > Shared Space > Access Permissions. Set limited permissions for your external users. 
 
 # USB ZigBee donlge on DSM 7 (Synology)
+> This was never stable, so I moved to Virtual Machine instead, where external USB works flawlessly
 ## Sonoff Zigbee 3.0 Dongle Plus
 1. get your CPU architecture. Run ```uname -a``` and note the CPU codename. Example: ```Linux DS218 4.4.180+ #42218 SMP Mon Oct 18 19:17:56 CST 2021 x86_64 GNU/Linux synology_apollolake_218+``` -> apollolake
 
@@ -67,20 +107,3 @@ chmod 666 /dev/ttyUSB0
 Some comments here. After DSM upgrade the ```cp210x.io``` file will disappear. The boot-up script will catch this and redownload it.  
 
 If your ZigBee works slow, just re-plug the Sonoff stick!
-
-## Route to docker
-```bash
-ip link add macvlan0 link ovs_eth0 type macvlan mode bridge
-ip addr add 10.0.1.8/29 dev macvlan0
-ip link set macvlan0 up
-```
-## Sync Radarr every 5 min
-Radarr can be nicely integrated with IMDB list. So every time you add anything to your IMDB watchlist - Radarr will catch it and lanch the download. 
-BUT because Radarr uses it's own servers for that they've set up a throttling mechanism - you can check all lists minimum every 7 hours...
-To bypass this check you can trigger a "list update" task manually in Radarr GUI. I use Burp Suite to catch such requests and export them to curl & set a synology task scheduler to run those every 5 min. 
-```bash
-curl -i -s -k -X $'POST' \
-    -H $'Host: ds.local:7878' -H $'Content-Type: application/json' -H $'X-Api-Key: <PUT_YOUR_API_KEY_HERE>' -H $'Referer: http://ds.local:7878/system/tasks' \
-    --data-binary $'{\"name\":\"ImportListSync\"}' \
-    $'http://<NAS_IP>:7878/api/v3/command'
-```
