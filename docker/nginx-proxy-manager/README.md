@@ -9,6 +9,7 @@ Disadvantages: you need a custom config for most of the apps you publish. Someti
 ## Setting up NPM with Synology
 I want NPM to directly handle HTTP/HTTPS traffic on the standard ports (80/443, TCP). Unfortunately those are not available for docker for Synology NAS. DSM uses those ports for itself (just to redirect the traffic to 5001..). Also docker container can't see macvlan docker containers (no local route), so you need 2 dockers.
 Best solution I've found so far - Install Synology VM Manager, setup Virtual DSM (you have 1 free license), setup another Docker instance in the Virtual DSM. Setup your NPM docker there. 
+> UPDATE: MariaDB is not needed anymore
 ![NPM network scheme](https://github.com/ageev/SmartHome/raw/master/Pictures/npm.jpg)
 
 Disadvantages:
@@ -40,63 +41,33 @@ networks:
           ip_range: 192.168.1.16/29
 
 services:
+  # if Gandi certificates can't be issued, run this:
+  # terminal -> pip install six
   nginx-proxy-manager:
     image: 'jc21/nginx-proxy-manager'
-    container_name: nginx_proxy_manager
+    container_name: nginx-proxy-manager
     hostname: nginx_proxy_manager
-    #user: 1027:100   #CHANGE ME!
+    #user: 1027:100
     domainname: local
-    mac_address: 00:fa:c0:fa:c0:af
-    cap_add:
-      - NET_ADMIN
-    dns:
-      - 192.168.1.9 # CHANGE ME!
+    mac_address: 00:fa:c0:fa:c0:aa
+    cap_add: [NET_ADMIN]
+    dns: 10.0.1.1
     environment:
-     - PUID=1027 # CHANGE ME!
-     - PGID=100  # CHANGE ME!
-     - TZ=Europe/Amsterdam
-     - DB_MYSQL_HOST=192.168.1.5  #CHANGE ME!
-     - DB_MYSQL_PORT=3306
-     - DB_MYSQL_USER=npm
-     - DB_MYSQL_PASSWORD=p@55w0rd #CHANGE ME!
-     - DB_MYSQL_NAME=npm
-      # Uncomment this if IPv6 is not enabled on your host
-     - DISABLE_IPV6=true
+      - TZ=Europe/Zurich
+      - DISABLE_IPV6=true
     volumes:
       - /volume1/docker/nginx_proxy_manager/config.json:/app/config/production.json
       - /volume1/docker/nginx_proxy_manager/data:/data
       - /volume1/docker/nginx_proxy_manager/letsencrypt:/etc/letsencrypt
+      - /volume1/docker/nginx_proxy_manager/websites:/opt/websites
+    healthcheck:
+      test: ["CMD", "/bin/check-health"]
+      interval: 10s
+      timeout: 3s
     restart: unless-stopped
     networks:
       macvlan_network:
-        ipv4_address: 192.168.1.17
-```
-
-## docker-compose.yml for MariaDB (main docker on a normal DSM)
-
-```yml
----
-version: "3.9"
-services:
-  mariadb:
-    image: linuxserver/mariadb
-    container_name: mariadb
-    hostname: mariadb
-    environment:
-     - PUID=1029 #change me!
-     - PGID=100 #change me!
-     - TZ=Europe/Zurich
-     - MYSQL_ROOT_PASSWORD= #change me!
-     - MYSQL_DATABASE=npm
-     - MYSQL_USER=npm
-     - MYSQL_PASSWORD= #change me!
-    volumes:
-     - /volume1/docker/mariadb:/config
-    ports:
-     - "3306:3306"
-    restart: unless-stopped
-    network_mode: "bridge"
-
+        ipv4_address: 10.0.1.11
 ```
 
 # Configs for NGINX proxy manager
