@@ -25,3 +25,15 @@
 # проброс портов на роутере
 В настройках своего роутера не забудьте отправлять трафик с TCP/IP 51337 на НАС. 
 Проверьте, что всё работает, с помощью [портчеккера](https://portchecker.co/)
+
+# настройка бота в Телеграме
+Не забудьте настроить бота в Телеграме. 
+
+# отключение аутентификации
+```/volume2/docker/qbittorent/qBittorrent/qBittorrent.conf```
+```
+[Preferences]
+...
+WebUI\AuthSubnetWhitelist=0.0.0.0/0
+WebUI\AuthSubnetWhitelistEnabled=true
+```
