@@ -150,7 +150,8 @@ E.g.
 ```
 
 # Nginx Proxy Manager configuration
-add this to NPM host advanced configuration:
+As I've said already, I dont use Caddy anymore. 
+Here is Nginx Proxy Manager config I use to access Vaultwarden via HTTPS:
 ```nginx
 # a fake website shown to all external users, except those who know secret_token
 root /opt/websites/fake_website;
