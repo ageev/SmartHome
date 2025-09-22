@@ -24,8 +24,8 @@ services:
 # Nginx Proxy Manager Configuration
 Чтобы контейнер был доступен по адресу ```your-domain.com/prowlarr" добавьте это в Advanced -> Custom Nginx Configuration в настройках контейнера Nginx Proxy Manager
 ```
-# Radarr. Go to settings in Radarr and set "URL base" to "/radarr"
-location /radarr {
+# Prowlarr. Go to settings in Prowlarr and set "URL base" to "/prowlarr"
+location /prowlarr {
     allow 10.0.0.0/8;
     deny all;
 
