@@ -1,5 +1,5 @@
 # torrserver
-[Торсервер](https://github.com/YouROK/TorrServer) работает в связке с [NUM](https://4pda.to/forum/index.php?showtopic=959756) чтобы стримить фильмы и сериалы на андроид ТВ приставки на телевизоры. 
+[Торсервер](https://github.com/YouROK/TorrServer) работает в связке с [NUM](https://4pda.to/forum/index.php?showtopic=959756) чтобы стримить фильмы и сериалы через андроид ТВ приставки на телевизоры. 
 В принципе, торсервер можно запускать и напрямую на стиках, но выделенный контейнер разгружает память стиков. 
 
 # docker-compose.yml
