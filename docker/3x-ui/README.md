@@ -41,6 +41,8 @@ services:
 ```nginx
 root /opt/websites/jodeln;
 index index.html;
+autoindex off;
+
 location / {
     try_files $uri /index.html;
 }
@@ -49,8 +51,7 @@ location /ws {
     if ($http_upgrade != "websocket") {
         return 404;
     }
-    proxy_pass http://<NAS_IP>:8082;
-    proxy_redirect off;
+    proxy_pass http://10.0.1.5:8082; # NAS IP
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
@@ -61,14 +62,19 @@ location /ws {
 }
 
 location /<secret_token>/ {
+#    allow 10.0.0.0/8;
+    proxy_pass http://10.0.1.5:2053; # NAS IP
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_set_header Host $http_host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header Range $http_range;
-    proxy_set_header If-Range $http_if_range; 
-    proxy_redirect off;
-    proxy_pass http://<NAS_IP>:2053;
+
+    proxy_hide_header X-Powered-By;
+    proxy_hide_header Server;
+
+    add_header X-Frame-Options DENY;
+    add_header X-Content-Type-Options nosniff;
+    add_header Referrer-Policy no-referrer;
 }
 ```
 Теперь админка у вас сидит по адресу ```https://video.your-domain.com/<secret_token>```, а клиенты стучатся через websocket на ```https://video.your-domain.com/ws```.
