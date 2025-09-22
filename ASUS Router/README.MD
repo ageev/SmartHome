@@ -1,5 +1,5 @@
 # ASUS router hacks (Merlin FW)
-ASUS builds nice routers. Best hardware and worst software.. If you really want a good router - check gl.inet. 
+ASUS builds nice routers. Best hardware and worst software.. It takes a lot of nerve cells to setup everything like you want it, but usually afterwards you just never really touch it anymore.. and all works! 
 
 # DPI bypass
 copy and "chmod +x" ```wgclient-start``` file to ```/jffs/scripts``` directory. 
