@@ -13,7 +13,7 @@
       - PGID=100 # not implemented
       - TZ=Europe/Zurich
       - IFACES=ovs_eth2  # required: 1 or more interface
-#      - ARP_STRS_JOINED=-gNx 10.0.2.0/24 -I ovs_eth2
+#      - ARP_STRS_JOINED=-gNx 10.0.2.0/24 -I ovs_eth2 # if you have a guest network add it here
       - PORT=8840                      # optional, default: 8840
       - TIMEOUT=120                    # optional, time in seconds, default: 120
 #      - SHOUTRRR_URL=                  # optional, set url to notify
