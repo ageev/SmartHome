@@ -58,9 +58,23 @@ curl -i -s -k -X $'POST' \
 ```
 # Radarr. Go to settings in Radarr and set "URL base" to "/radarr"
 location /radarr {
-    proxy_pass http://10.0.1.5:7878; #NAS IP
+    allow 10.0.0.0/8;
+    deny all;
+
+    proxy_pass http://10.0.1.5:7878;
+
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+
+    proxy_hide_header X-Powered-By;
+    proxy_hide_header Server;
+
+    proxy_redirect off;
+}
+
 ```
