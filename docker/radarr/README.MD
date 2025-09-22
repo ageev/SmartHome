@@ -52,3 +52,15 @@ curl -i -s -k -X $'POST' \
     --data-binary $'{\"name\":\"ImportListSync\"}' \
     $'http://nas.local:7878/api/v3/command'
 ```
+
+# Nginx Proxy Manager Configuration
+Чтобы контейнер был доступен по адресу ```your-domain.com/radarr" добавьте это в Advanced -> Custom Nginx Configuration в настройках контейнера Nginx Proxy Manager
+```
+# Radarr. Go to settings in Radarr and set "URL base" to "/radarr"
+location /radarr {
+    proxy_pass http://10.0.1.5:7878; #NAS IP
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+```
