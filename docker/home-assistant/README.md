@@ -87,3 +87,41 @@ sequence:
       entity_id: media_player.ShieldADB
 ```
 
+# Nginx Proxy Manager Configuration
+чтобы Home Assistant был доступен через Nginx Proxy Manager добавьте в последний такую конфигурацию:
+```
+# this configuration can be used for external access to api/webhook only if NPM/router allows. 
+
+location / {
+    if ($remote_addr !~ "^(10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|192\.168\.|fc00:|fe80:|fd[0-9a-f]{2}:)")  {
+        return 301 https://google.com; # redirect non-local IPs to Google.com.
+    }
+    proxy_pass http://10.0.1.10:8123; # Home Assistant IP
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+
+location /api/websocket {
+    if ($remote_addr !~ "^(10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|192\.168\.|fc00:|fe80:|fd[0-9a-f]{2}:)")  {
+        return 301 https://google.com;
+    }
+    proxy_pass http://10.0.1.10:8123/api/websocket; # Home Assistant IP
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    }
+
+location /api/webhook {
+    proxy_pass http://10.0.1.10:8123/api/webhook; # Home Assistant IP
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    }
+```
