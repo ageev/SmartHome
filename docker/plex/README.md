@@ -34,3 +34,19 @@ services:
     restart: unless-stopped
     network_mode: host
 ```
+
+# Nginx Proxy Manager Configuration
+Чтобы контейнер был доступен по адресу ```your-domain.com/plex" добавьте это в Advanced -> Custom Nginx Configuration в настройках контейнера Nginx Proxy Manager
+```
+# Plex. Go to settings, network, custom server access - set your-domain.com/plex
+location /web {
+    proxy_pass http://10.0.1.5:32400;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+
+location /plex {
+    proxy_pass http://10.0.1.5:32400/web;
+  }
+```
