@@ -110,16 +110,16 @@ services:
       - TZ=Europe/Zurich
       - WEBSOCKET_ENABLED=true # Required to use websockets
 #      - SIGNUPS_ALLOWED=false   # set to false to disable signups
-      - DOMAIN=https://vw.example.com # change this to the actual domain you use.
+      - DOMAIN=https://vw.example.com/secret_path # change this to the actual domain you use.
       ## enable for admin + use only local IP
-      - ADMIN_TOKEN=<random_token> # run <openssl rand -base64 48> to get random token
+#      - ADMIN_TOKEN=<random_token> # run <openssl rand -base64 48> to get random token # disable when not needed!
       - ROCKET_PORT=8088
       - ROCKET_WORKERS=20
       - LOG_FILE=/data/bitwarden.log
       - EXTENDED_LOGGING=true
       - LOG_LEVEL=warn
       - SHOW_PASSWORD_HINT=false
-#      - DISABLE_ICON_DOWNLOAD=true
+      - DISABLE_ICON_DOWNLOAD=true # outgoing internet traffic is blocked. Incoming is always allowed
     volumes:
       - /volume1/docker/vaultwarden:/data
     restart: unless-stopped
@@ -147,4 +147,47 @@ If you want to disable the admin panel - remove/comment "ADMIN_TOKEN" string fro
 E.g.
 ```
 /volume1/docker/caddy/data/caddy/certificates:/opt/adguardhome/cert
+```
+
+# Nginx Proxy Manager configuration
+add this to NPM host advanced configuration:
+```nginx
+# a fake website shown to all external users, except those who know secret_token
+root /opt/websites/fake_website;
+index index.html;
+location / {
+    try_files $uri /index.html;
+}
+
+location /secret_token/admin {
+  return 404;
+  }
+
+location /secret_token/ {
+    proxy_pass http://10.0.1.5:8088; # NAS IP
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $forward_scheme;
+  }
+  
+ location /secret_token/notifications/hub {
+    proxy_pass http://10.0.1.5:3012; # NAS IP
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Forwarded $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $forward_scheme;
+  }
+  
+ location /secret_token/notifications/hub/negotiate {
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $forward_scheme;
+    proxy_pass http://10.0.1.5:8088; # NAS IP
+ }
+
 ```
