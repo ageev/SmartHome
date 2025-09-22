@@ -24,3 +24,27 @@
     restart: unless-stopped
     network_mode: "host"
 ```
+
+# Nginx Proxy Manager Configuration
+Чтобы wyl был доступен по адрессу ```wyl.your-domain.com```, эта конфигурация должна быть добавлена в [NPM](https://github.com/ageev/SmartHome/tree/master/docker/nginx-proxy-manager):
+
+```nginx
+location / {
+    allow 10.0.0.0/8;
+    deny all;
+
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+    proxy_redirect off;
+    proxy_pass http://10.0.1.5:8840; # NAS IP
+
+    # Security hardening
+    proxy_hide_header X-Powered-By; # don’t leak backend info
+    proxy_hide_header Server;       # hide upstream server header
+    proxy_http_version 1.1;         # needed for keep-alive
+    proxy_set_header Connection ""; # prevent header injection
+}
+```
