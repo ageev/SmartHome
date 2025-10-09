@@ -1,4 +1,4 @@
-#Nginx Proxy Manager
+# Nginx Proxy Manager
 Nginx Proxy Manager (aka, NPM) is a tool which allows you:
 1. deploy HTTPS inside your network
 2. publish something in a secure way to internet 
@@ -68,6 +68,33 @@ services:
     networks:
       macvlan_network:
         ipv4_address: 10.0.1.11
+```
+# Gandi DNS challenge
+* ONLY if you use GANDI for your domains like I do *
+Gandi tokens are always set to expire, so you need to rotate them at least yearly.
+Setup a root task in Task Scheduler to rotate the token.
+```bash
+#!/bin/sh
+set -e
+
+# Path to credentials file inside NPM container
+CREDENTIALS_FILE="/volume1/docker/nginx_proxy_manager/letsencrypt/credentials/credentials-1"
+
+# Gandi API endpoint for renewing PAT
+# Replace <TOKEN_ID> with your actual PAT ID
+GANDI_PAT_RENEW_URL="https://api.gandi.net/v5/organization/access-tokens"
+
+# Extract current token from credentials file
+CURRENT_PAT=$(awk -F= '/dns_gandi_token/ {print $2}' "$CREDENTIALS_FILE" | tr -d ' ')
+
+# Request new PAT from Gandi
+NEW_PAT=$(curl -s -X POST \
+  -H "Authorization: Bearer ${CURRENT_PAT}" \
+  -H "Content-Type: application/json" \
+  "$GANDI_PAT_RENEW_URL" | jq -r '.access_token')
+
+# Overwrite credentials file with new token
+echo "dns_gandi_token=${NEW_PAT}" > "$CREDENTIALS_FILE"
 ```
 
 # Configs for NGINX proxy manager
