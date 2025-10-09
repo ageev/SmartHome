@@ -70,7 +70,8 @@ services:
         ipv4_address: 10.0.1.11
 ```
 # Gandi DNS challenge
-* ONLY if you use GANDI for your domains like I do *
+*ONLY if you use GANDI for your domains like I do*
+
 Gandi tokens are always set to expire, so you need to rotate them at least yearly.
 Setup a root task in Task Scheduler to rotate the token.
 ```bash
