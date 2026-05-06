@@ -1,6 +1,6 @@
 # Toilet Timer
 
-**[🇬🇧 English](#english)** &nbsp;|&nbsp; **[🇷🇺 Русский](#русский)**
+**[English](#english)** | **[Русский](#russian)**
 
 A toilet timer on M5StickC Plus 1.1 + VL53L1X laser rangefinder.
 Tracks how long someone sits, rewards on-time exits with a cheerful
@@ -188,7 +188,7 @@ flatmate gets offended by the `TOO LONG` screen.
 
 ---
 
-<a id="русский"></a>
+<a id="russian"></a>
 
 ## Русский
 
