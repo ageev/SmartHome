@@ -1,11 +1,16 @@
 #include <M5StickCPlus.h>
 #include <Wire.h>
 #include <VL53L1X.h>
+#include <esp_sleep.h>
 
 // ---- pins ----
 static const int PIN_SDA   = 32;   // Grove yellow
 static const int PIN_SCL   = 33;   // Grove white
 static const int PIN_BUZZ  = 2;    // built-in buzzer
+static const int PIN_BTN_A = 37;   // big front button (active low)
+
+// ---- power ----
+static const uint32_t POWEROFF_HOLD_MS = 2000;  // hold BtnA this long to power off
 
 // ---- timer settings ----
 static const uint32_t TIMER_TOTAL_S    = 4 * 60;     // 4 minutes
@@ -54,6 +59,27 @@ static void touchInteraction() {
         setBacklight(true);
         lastDrawnState = (State)-1;
     }
+}
+
+static void powerDown() {
+    // brief visual + audio "bye"
+    M5.Beep.tone(2000); delay(80); M5.Beep.mute();
+    M5.Lcd.fillScreen(BLACK);
+    M5.Lcd.setTextDatum(MC_DATUM);
+    M5.Lcd.setTextColor(DARKGREY, BLACK);
+    M5.Lcd.setTextSize(2);
+    M5.Lcd.drawString("bye", screenW/2, screenH/2);
+    delay(500);
+    // kill backlight via AXP192 (only LDO2 is exposed in this lib build)
+    M5.Axp.SetLDO2(false);
+    // wait for BtnA release so we don't immediately wake on the same press
+    while (digitalRead(PIN_BTN_A) == LOW) {
+        delay(10);
+    }
+    delay(100);  // debounce
+    // wake on next BtnA press (GPIO37, active low). setup() will run on resume.
+    esp_sleep_enable_ext0_wakeup((gpio_num_t)PIN_BTN_A, 0);
+    esp_deep_sleep_start();
 }
 
 // ring buffer of recent (timestamp, distance) samples covering ~WINDOW_MS
@@ -406,13 +432,30 @@ void loop() {
         lastDrawnState = (State)-1;
         beepShort();
     }
+    // BtnA: short press = cancel, long press (>=2s) = power off
+    static uint32_t btnAPressStart = 0;
+    static bool longPressFired = false;
     if (M5.BtnA.wasPressed()) {
-        touchInteraction();
-        if (state == RUNNING || state == FINISHED || state == CELEBRATE) {
-            state = IDLE;
-            ringClear();
-            lastDrawnState = (State)-1;
-            beepShort();
+        btnAPressStart = millis();
+        longPressFired = false;
+    }
+    if (M5.BtnA.isPressed() && !longPressFired &&
+        btnAPressStart != 0 && (millis() - btnAPressStart) >= POWEROFF_HOLD_MS) {
+        longPressFired = true;
+        powerDown();  // does not return
+    }
+    if (M5.BtnA.wasReleased()) {
+        bool wasLong = longPressFired;
+        btnAPressStart = 0;
+        longPressFired = false;
+        if (!wasLong) {
+            touchInteraction();
+            if (state == RUNNING || state == FINISHED || state == CELEBRATE) {
+                state = IDLE;
+                ringClear();
+                lastDrawnState = (State)-1;
+                beepShort();
+            }
         }
     }
 
